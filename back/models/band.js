@@ -1,0 +1,26 @@
+const mongoose = require('mongoose')
+
+const bandSchema = new mongoose.Schema({
+    name: String,
+    about: String,
+    started: Number,
+    active: Boolean,
+    genre: String,
+    hometown: String,
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+})
+
+bandSchema.statics.format = (band) => {
+    return {
+      name: band.name,
+      about: band.about,
+      genre: band.genre,
+      user: band.user,
+      hometown: band.hometown,
+      id: band._id
+    }
+  }
+
+  const Band = mongoose.model('Band', bandSchema)
+
+  module.exports = Band
