@@ -15,10 +15,10 @@ const bandReducer = (state = [], action) => {
 
 export const creation = (content) => {
   return async (dispatch) => {
-    const newAnec = await bandService.createNew(content)
+    const newBand = await bandService.createNew(content)
     dispatch({
       type: 'CREATE',
-      content: newAnec
+      content: newBand
     })
   }
 }

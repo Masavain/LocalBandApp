@@ -3,9 +3,11 @@ import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
 import bandReducer from './reducers/bandReducer'
+import loginReducer from './reducers/loginReducer'
 
 const reducer = combineReducers({
-  bands: bandReducer
+  bands: bandReducer,
+  user: loginReducer
 })
 const store = createStore(reducer,
   composeWithDevTools(applyMiddleware(thunk))
