@@ -1,43 +1,20 @@
 import React from 'react'
 import { connect } from 'react-redux'
 
-const BandList = (props) => {
-
-  const allBands = () => (
+const ProfilePage = (props) => {
+  return(
     <div>
-      <h2>All Bands</h2>
-      {props.bands.map(band =>
-        <div key={band.id}>
-          <div>
-            {band.name} {band.genre} {band.hometown}
-          </div>
-        </div>
-      )}
-    </div>
-  )
-  if (props.user === null) {
-    return (allBands())
-  } else {
-    return(
+      <h3>{props.user}</h3>
       <div>
-        {allBands()}
-        <h2>My bands</h2>
         {props.userbands.map(b =>
           <div key={b.id}>
-            <div>
-              {b.name} {b.genre} {b.hometown}
-            </div>
+            {b.name}
           </div>
         )}
       </div>
-    )
-  }
-
-
-
-
+    </div>
+  )
 }
-
 
 const userBands = (bands, user) => {
   const bandsWithUsers = bands.filter(b => b.user !== undefined)
@@ -54,4 +31,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps
-)(BandList)
+)(ProfilePage)
