@@ -1,34 +1,39 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { login } from './../reducers/loginReducer'
+import { login, logout } from './../reducers/loginReducer'
 
 class LoginForm extends React.Component {
 
-    submitLogin = async (event) => {
-      event.preventDefault()
-      const username = event.target.username.value
-      const password = event.target.password.value
-      event.target.username.value = ''
-      event.target.password.value = ''
-      console.log(username, password)
-      this.props.login(username, password)
-    }
+  logOut = async () => {
+    this.props.logout()
+  }
 
-    render() {
+  submitLogin = async (event) => {
+    event.preventDefault()
+    const username = event.target.username.value
+    const password = event.target.password.value
+    event.target.username.value = ''
+    event.target.password.value = ''
+    console.log(username, password)
+    this.props.login(username, password)
+  }
+
+  render() {
+    if (this.props.user === null) {
       return (
         <div>
           <h2>Login</h2>
 
           <form onSubmit={this.submitLogin}>
             <div>
-                  Username
+                Username
               <input
                 name="username"
               />
             </div>
             <div>
-                  Password
+                Password
               <input
                 type="password"
                 name="password"
@@ -36,16 +41,24 @@ class LoginForm extends React.Component {
             </div>
             <button type="submit">login</button>
           </form>
-          <div>
-            logout
-          </div>
+
         </div>
-
       )
-    }
-
+    } else {
+      return (
+        <div>
+          {this.props.user}
+          <button onClick={this.logOut}> log out</button>
+        </div>
+      )}
+  }
 }
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.user
+  }
+}
 
 LoginForm.propTypes = {
   username: PropTypes.string.isRequired,
@@ -53,5 +66,5 @@ LoginForm.propTypes = {
 }
 
 export default connect(
-  null, { login }
+  mapStateToProps, { login, logout }
 )(LoginForm)

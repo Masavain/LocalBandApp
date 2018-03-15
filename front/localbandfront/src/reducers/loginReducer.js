@@ -5,7 +5,7 @@ const loginReducer = (state = null, action) => {
   console.log('ACTION: ', action)
   switch (action.type) {
   case 'LOGIN':
-    return action.data
+    return action.user
   case 'LOGOUT':
     return null
   default:
@@ -25,7 +25,7 @@ export const login = (username, password) => {
 
     dispatch({
       type: 'LOGIN',
-      data: user
+      user: user.username
     })
 
   }
@@ -40,5 +40,24 @@ export const logout = () => {
     })
   }
 }
+
+export const initUser = () => {
+  return async (dispatch) => {
+    const loggedUser = window.localStorage.getItem('loggedUser')
+    if (loggedUser) {
+      const user = JSON.parse(loggedUser)
+      dispatch({
+        type: 'LOGIN',
+        user: user.username
+      })
+    } else {
+      dispatch({
+        type: 'LOGIN',
+        user: null
+      })
+    }
+  }
+}
+
 
 export default loginReducer
