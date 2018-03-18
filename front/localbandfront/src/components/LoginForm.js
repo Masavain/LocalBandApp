@@ -1,57 +1,38 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-import { login, logout } from './../reducers/loginReducer'
+import { login } from './../reducers/loginReducer'
 
-class LoginForm extends React.Component {
 
-  logOut = async () => {
-    this.props.logout()
-  }
+const LoginForm = (props) => {
 
-  submitLogin = async (event) => {
+  const submitLogin = async ( event ) => {
     event.preventDefault()
     const username = event.target.username.value
     const password = event.target.password.value
     event.target.username.value = ''
     event.target.password.value = ''
-    console.log(username, password)
-    this.props.login(username, password)
+    props.login(username, password)
+    props.history.push('/')
   }
 
-  render() {
-    if (this.props.user === null) {
-      return (
+  return (
+    <div>
+      <h2>Login</h2>
+      <form onSubmit={submitLogin}>
         <div>
-          <h2>Login</h2>
-
-          <form onSubmit={this.submitLogin}>
-            <div>
-                Username
-              <input
-                name="username"
-              />
-            </div>
-            <div>
-                Password
-              <input
-                type="password"
-                name="password"
-              />
-            </div>
-            <button type="submit">login</button>
-          </form>
-
+            Username
+          <input name="username"/>
         </div>
-      )
-    } else {
-      return (
         <div>
-          {this.props.user}
-          <button onClick={this.logOut}> log out</button>
+            Password
+          <input type="password" name="password"/>
         </div>
-      )}
-  }
+        <button type="submit">login</button>
+      </form>
+    </div>
+  )
+
 }
 
 const mapStateToProps = (state) => {
@@ -66,5 +47,5 @@ LoginForm.propTypes = {
 }
 
 export default connect(
-  mapStateToProps, { login, logout }
+  mapStateToProps, { login }
 )(LoginForm)

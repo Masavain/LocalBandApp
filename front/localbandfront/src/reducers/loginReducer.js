@@ -59,5 +59,4 @@ export const initUser = () => {
   }
 }
 
-
 export default loginReducer
