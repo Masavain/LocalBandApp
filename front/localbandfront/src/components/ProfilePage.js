@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import BandForm from './BandForm'
 
 const ProfilePage = (props) => {
   return(
@@ -12,6 +13,7 @@ const ProfilePage = (props) => {
           </div>
         )}
       </div>
+      <BandForm history={props.history}/>
     </div>
   )
 }

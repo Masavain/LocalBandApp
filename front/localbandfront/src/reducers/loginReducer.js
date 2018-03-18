@@ -1,5 +1,6 @@
 import loginService from '.././services/login'
 import bandService from '.././services/bands'
+import userService from '.././services/users'
 
 const loginReducer = (state = null, action) => {
   console.log('ACTION: ', action)
@@ -10,6 +11,25 @@ const loginReducer = (state = null, action) => {
     return null
   default:
     return state
+  }
+}
+
+export const sign = (username, password) => {
+  return async (dispatch) => {
+
+    const newuser = await userService.sign({
+      username: username,
+      password: password
+    })
+    const user = await loginService.login(newuser)
+
+    bandService.setToken(user.token)
+    window.localStorage.setItem('loggedUser', JSON.stringify(user))
+
+    dispatch({
+      type: 'LOGIN',
+      user: user.username
+    })
   }
 }
 
@@ -27,9 +47,7 @@ export const login = (username, password) => {
       type: 'LOGIN',
       user: user.username
     })
-
   }
-
 }
 
 export const logout = () => {

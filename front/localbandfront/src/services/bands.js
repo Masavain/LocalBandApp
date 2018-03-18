@@ -10,8 +10,12 @@ const getAll = async () => {
 const setToken = (newToken) => {
   token = `bearer ${newToken}`
 }
-const createNew = async (content) => {
-  const response = await axios.post(url, { content, votes:0 })
+const createNew = async (newObject) => {
+  const config = {
+    headers: { 'Authorization': token }
+  }
+
+  const response = await axios.post(url, newObject, config)
   return response.data
 }
 

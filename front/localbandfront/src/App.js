@@ -7,6 +7,7 @@ import { initUser, logout } from './reducers/loginReducer'
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import ProfilePage from './components/ProfilePage'
 import About from './components/About'
+import JoinForm from './components/JoinForm'
 
 class App extends React.Component {
   componentWillMount = async () => {
@@ -35,12 +36,16 @@ class App extends React.Component {
                   <em>{this.props.user} logged in</em>
                   <button onClick={this.logOut}> log out</button>
                 </div>
-                : <Link to="/login">login</Link>
+                : <div>
+                  <Link to="/login">Login</Link>  &nbsp;
+                  <Link to="/join">Join</Link>
+                </div>
               }
             </div>
             <Route exact path="/login" render={({ history }) => <LoginForm history={history}/>} />
+            <Route exact path="/join" render={({ history }) => <JoinForm history={history}/>} />
             <Route exact path="/" render={() => <BandList />} />
-            <Route path="/profile" render={() => <ProfilePage />} />
+            <Route path="/profile" render={({ history }) => <ProfilePage history={history} />} />
             <Route path="/about" render={() => <About />} />
           </div>
         </Router>
