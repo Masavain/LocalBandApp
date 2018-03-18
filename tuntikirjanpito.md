@@ -6,3 +6,5 @@
 |15.3.|2,5| redux-front, login/logout|
 |15.3.|1| routerin aloitus|
 |16.3.|2| routeria ja loginin parantelua|
+
+total: 9h
