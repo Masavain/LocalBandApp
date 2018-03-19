@@ -7,6 +7,6 @@
 |15.3.|1| routerin aloitus|
 |16.3.|2| routeria ja loginin parantelua|
 |17.3.|1| uuden käyttäjän rekisteröinti ja uuden bändin lisääminen|
-|19.3.|2.5| yksittäisen bändin sivu route|
+|19.3.|3.5| yksittäisen bändin sivu route, refresh ongelmat korjattu|
 
-total: 12.5h
+total: 13.5h
