@@ -1,6 +1,7 @@
 const http = require('http')
 const express = require('express')
 const app = express()
+
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const mongoose = require('mongoose')
@@ -19,11 +20,14 @@ app.use(bodyParser.json())
 app.use(express.static('build'))
 app.use(middleware.logger)
 app.use(middleware.tokenExtractor)
-
 app.use('/api/bands', bandsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use(express.static(__dirname + '/public'))
 
+app.get('/*', (req, res) => {
+  res.sendFile(__dirname + '/build/index.html')
+})
 
 app.use(middleware.error)
 
