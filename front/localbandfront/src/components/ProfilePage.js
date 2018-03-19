@@ -9,7 +9,7 @@ const ProfilePage = (props) => {
       <h3>{props.user && props.user.username}</h3>
       <div>
         {props.userbands.map(b =>
-          <div key={b.id}>
+          <div key={b._id}>
             <Link to={`/bands/${b._id}`}>{b.name}</Link>
           </div>
         )}
@@ -21,7 +21,7 @@ const ProfilePage = (props) => {
 
 const userBands = (bands, user) => {
   const bandsWithUsers = bands.filter(b => b.user !== undefined)
-  return bandsWithUsers.filter(band => band.user.username === user)
+  return bandsWithUsers.filter(band => band.user.username === user.username)
 }
 
 const mapStateToProps = (state) => {

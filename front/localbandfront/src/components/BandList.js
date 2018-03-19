@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
+
+
 const BandList = (props) => {
 
   const allBands = () => (
@@ -14,6 +16,12 @@ const BandList = (props) => {
           </div>
         </div>
       )}
+      <div>
+        <p>Showcase:
+        <Link to={`/bands/${props.randomBand._id}`}>{props.randomBand.name}</Link>
+        </p>
+
+      </div>
     </div>
   )
   if (props.user === null) {
@@ -34,16 +42,19 @@ const BandList = (props) => {
     )
   }
 
-
-
-
 }
 
+const randomBand = (bands) => {
+  return bands[Math.floor(Math.random() * bands.length)]
+}
 
 const userBands = (bands, user) => {
   const bandsWithUsers = bands.filter(b => b.user !== undefined)
   console.log('bandswithusers', bandsWithUsers)
   console.log('user', user)
+  if (user === null) {
+    return null
+  }
   return bandsWithUsers.filter(band =>
     band.user.username === user.username
   )
@@ -53,7 +64,8 @@ const mapStateToProps = (state) => {
   return {
     bands: state.bands,
     user: state.user,
-    userbands: userBands(state.bands, state.user)
+    userbands: userBands(state.bands, state.user),
+    randomBand: randomBand(state.bands)
   }
 }
 

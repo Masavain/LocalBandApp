@@ -11,7 +11,11 @@ const Band = (props) => {
     props.addAbout(updatedBand)
     window.location.reload()
   }
-
+  const BCstyle = {
+    border: 0,
+    width: 350,
+    height: 470
+  }
   if (props.band.about) {
     return(
       <div>
@@ -20,6 +24,12 @@ const Band = (props) => {
         <form onSubmit={handleAboutSubmit}>
           <div>edit about<input name='about' /></div>
         </form>
+
+        <iframe title={props.band._id} style={BCstyle} src="https://bandcamp.com/EmbeddedPlayer/album=398010334/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=1347202632/transparent=true/"
+          seamless>
+          <a href="http://memobandfin.bandcamp.com/album/mustavalkofilmi">Mustavalkofilmi by MEMO</a>
+        </iframe>
+
       </div>
     )
   } else {
