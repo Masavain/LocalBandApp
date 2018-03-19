@@ -1,15 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import BandForm from './BandForm'
+import { Link } from 'react-router-dom'
 
 const ProfilePage = (props) => {
   return(
     <div>
-      <h3>{props.user}</h3>
+      <h3>{props.user && props.user.username}</h3>
       <div>
         {props.userbands.map(b =>
           <div key={b.id}>
-            {b.name}
+            <Link to={`/bands/${b._id}`}>{b.name}</Link>
           </div>
         )}
       </div>

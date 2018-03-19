@@ -45,6 +45,10 @@ LoginForm.propTypes = {
   username: PropTypes.string.isRequired,
   password: PropTypes.string.isRequired
 }
+LoginForm.defaultProps = {
+  username:'',
+  password:''
+}
 
 export default connect(
   mapStateToProps, { login }

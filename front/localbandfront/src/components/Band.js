@@ -4,31 +4,28 @@ import { addAbout } from './../reducers/bandReducer'
 import bandService from './../services/bands'
 
 const Band = (props) => {
-
-  const bandById = props.bands.find(band => band._id === props.id)
-
-  console.log(props.id)
-  console.log(props.bands)
   const handleAboutSubmit = async (event) => {
     event.preventDefault()
-    const newObject = { ...bandById, about: event.target.about.value }
+    const newObject = { ...props.band, about: event.target.about.value }
     const updatedBand = await bandService.update(newObject._id, newObject)
     props.addAbout(updatedBand)
     window.location.reload()
   }
 
-  if (bandById.about) {
+  if (props.band.about) {
     return(
       <div>
-        <h3>{bandById.name}</h3>
-        <div>{bandById.about}</div>
-
+        <h3>{props.band.name}</h3>
+        <div>{props.band.about}</div>
+        <form onSubmit={handleAboutSubmit}>
+          <div>edit about<input name='about' /></div>
+        </form>
       </div>
     )
   } else {
     return(
       <div>
-        <h3>{bandById.name}</h3>
+        <h3>{props.band.name}</h3>
         <form onSubmit={handleAboutSubmit}>
           <div>about<input name='about' /></div>
         </form>

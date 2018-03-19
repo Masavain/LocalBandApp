@@ -1,8 +1,8 @@
 import loginService from '.././services/login'
 import bandService from '.././services/bands'
 import userService from '.././services/users'
-
-const loginReducer = (state = null, action) => {
+console.log('loggedUser:', JSON.parse(window.localStorage.getItem('loggedUser')))
+const loginReducer = (state = JSON.parse(window.localStorage.getItem('loggedUser')), action) => {
   console.log('ACTION: ', action)
   switch (action.type) {
   case 'LOGIN':
@@ -28,7 +28,7 @@ export const sign = (username, password) => {
 
     dispatch({
       type: 'LOGIN',
-      user: user.username
+      user
     })
   }
 }
@@ -45,7 +45,7 @@ export const login = (username, password) => {
 
     dispatch({
       type: 'LOGIN',
-      user: user.username
+      user
     })
   }
 }
@@ -66,7 +66,7 @@ export const initUser = () => {
       const user = JSON.parse(loggedUser)
       dispatch({
         type: 'LOGIN',
-        user: user.username
+        user: user
       })
     } else {
       dispatch({

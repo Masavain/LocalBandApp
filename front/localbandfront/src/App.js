@@ -21,8 +21,11 @@ class App extends React.Component {
   }
 
   render() {
-
-
+    if(this.props.bands.length === 0) {
+      return null
+    }
+    console.log('user:',this.props.user)
+    const blogById = (id) => this.props.bands.find(b => b._id === id)
 
 
     return (
@@ -38,7 +41,7 @@ class App extends React.Component {
               {this.props.user
                 ? <div>
                   <Link to="/profile">profile</Link> &nbsp;
-                  <em>{this.props.user} logged in</em>
+                  <em>{this.props.user.username} logged in</em>
                   <button onClick={this.logOut}> log out</button>
                 </div>
                 : <div>
@@ -47,8 +50,10 @@ class App extends React.Component {
                 </div>
               }
             </div>
-            <Route exact path="/bands/:id" render={({ match }) =>
-              <Band id={match.params.id} />}
+            <Route exact path="/bands/:id" render={({ match }) => {
+              console.log('router match', match)
+              console.log('blog by id', blogById(match.params.id))
+              return <Band band={blogById(match.params.id)} />}}
             />
             <Route exact path="/login" render={({ history }) => <LoginForm history={history}/>} />
             <Route exact path="/join" render={({ history }) => <JoinForm history={history}/>} />

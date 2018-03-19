@@ -18,7 +18,8 @@ bandsRouter.post('/', async (req, res) => {
     try {
         const token = req.token
         const decodedToken = jwt.verify(token, process.env.SECRET)
-        
+        console.log('decoded', decodedToken)
+
         if (!token || !decodedToken.id) {
             return res.status(401).json({ error: 'token missing or invalid' })
         }
