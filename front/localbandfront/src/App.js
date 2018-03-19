@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 import ProfilePage from './components/ProfilePage'
 import About from './components/About'
 import JoinForm from './components/JoinForm'
+import Band from './components/Band'
 
 class App extends React.Component {
   componentWillMount = async () => {
@@ -20,6 +21,10 @@ class App extends React.Component {
   }
 
   render() {
+
+
+
+
     return (
       <div>
         <h1>LocalBands app</h1>
@@ -42,6 +47,9 @@ class App extends React.Component {
                 </div>
               }
             </div>
+            <Route exact path="/bands/:id" render={({ match }) =>
+              <Band id={match.params.id} />}
+            />
             <Route exact path="/login" render={({ history }) => <LoginForm history={history}/>} />
             <Route exact path="/join" render={({ history }) => <JoinForm history={history}/>} />
             <Route exact path="/" render={() => <BandList />} />

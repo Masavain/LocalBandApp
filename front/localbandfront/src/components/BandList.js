@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 const BandList = (props) => {
 
@@ -7,9 +8,9 @@ const BandList = (props) => {
     <div>
       <h2>All Bands</h2>
       {props.bands.map(band =>
-        <div key={band.id}>
+        <div key={band._id}>
           <div>
-            {band.name} {band.genre} {band.hometown}
+            <Link to={`/bands/${band._id}`}>{band.name}</Link>
           </div>
         </div>
       )}

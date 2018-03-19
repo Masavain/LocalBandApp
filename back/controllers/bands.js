@@ -43,4 +43,19 @@ bandsRouter.post('/', async (req, res) => {
     
 })
 
+bandsRouter.put('/:id', async (request, response) => {
+    try {
+        const vanha = Band.findById(request.params.id)
+        const uusi = { ...vanha, about: request.body.about}
+        console.log(vanha, uusi)
+        const updated = await Band.findByIdAndUpdate(request.params.id, uusi, { new: true }).populate('user')
+        response.json(Band.format(updated))
+    
+    } catch (exception) {
+        console.log(error)
+        response.status(400).send({ error: 'malformatted id' })
+    }
+  })
+  
+
 module.exports = bandsRouter

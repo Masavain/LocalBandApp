@@ -5,6 +5,8 @@ const bandReducer = (state = [], action) => {
   switch (action.type) {
   case 'INIT_BANDS':
     return action.data
+  case 'ADD_ABOUT':
+    return [ ...state.filter(b => b.id !==action.data.id), action.data ]
   case 'CREATE':
     return [ ...state, action.content]
   default:
@@ -19,6 +21,15 @@ export const creation = (content) => {
     dispatch({
       type: 'CREATE',
       content: newBand
+    })
+  }
+}
+
+export const addAbout = (updatedBand) => {
+  return async (dispatch) => {
+    dispatch({
+      type: 'ADD_ABOUT',
+      data: updatedBand
     })
   }
 }
