@@ -8,5 +8,5 @@
 |16.3.|2| routeria ja loginin parantelua|
 |17.3.|1| uuden käyttäjän rekisteröinti ja uuden bändin lisääminen|
 |19.3.|3.5| yksittäisen bändin sivu route, refresh ongelmat korjattu|
-
-total: 13.5h
+|19.3.|1| showcase-bändi ja alustava bandcamp-embed|
+total: 14.5h
