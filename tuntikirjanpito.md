@@ -10,4 +10,6 @@
 |19.3.|3.5| yksittäisen bändin sivu route, refresh ongelmat korjattu|
 |19.3.|1| showcase-bändi ja alustava bandcamp-embed|
 |20.3.|3.5| backin säätöä, bandcamp-linkin postaaminen|
-total: 18h
+|20.3.|1.5| bandcamp-linkin postaaminen myös frontissa|
+
+total: 19.5h
