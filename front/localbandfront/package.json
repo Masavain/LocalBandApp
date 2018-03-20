@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "bandcamp-scraper": "^1.2.2",
     "json-server": "^0.12.1",
     "prop-types": "^15.6.1",
     "react": "^16.2.0",
@@ -28,5 +29,5 @@
     "eslint-plugin-jest": "^21.14.1",
     "eslint-plugin-react": "^7.7.0"
   },
-  "proxy":"http://localhost:3001"
+  "proxy": "http://localhost:3001"
 }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { addAbout } from './../reducers/bandReducer'
 import bandService from './../services/bands'
 
+
 const Band = (props) => {
   const handleAboutSubmit = async (event) => {
     event.preventDefault()
@@ -16,7 +17,12 @@ const Band = (props) => {
     width: 350,
     height: 470
   }
+
+
+
+
   if (props.band.about) {
+
     return(
       <div>
         <h3>{props.band.name}</h3>
@@ -25,7 +31,8 @@ const Band = (props) => {
           <div>edit about<input name='about' /></div>
         </form>
 
-        <iframe title={props.band._id} style={BCstyle} src="https://bandcamp.com/EmbeddedPlayer/album=398010334/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=1347202632/transparent=true/"
+        <iframe title={props.band._id} style={BCstyle}
+          src="https://bandcamp.com/EmbeddedPlayer/album=398010334/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=1347202632/transparent=true/"
           seamless>
           <a href="http://memobandfin.bandcamp.com/album/mustavalkofilmi">Mustavalkofilmi by MEMO</a>
         </iframe>

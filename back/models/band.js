@@ -7,6 +7,9 @@ const bandSchema = new mongoose.Schema({
     active: Boolean,
     genre: String,
     hometown: String,
+    bcURL: String,
+    bcAlbumID: String,
+    bcTrackID: String,
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 })
 
