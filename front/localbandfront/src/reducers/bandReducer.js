@@ -7,6 +7,8 @@ const bandReducer = (state = [], action) => {
     return action.data
   case 'ADD_ABOUT':
     return [ ...state.filter(b => b.id !==action.data.id), action.data ]
+  case 'ADD_BANDCAMP':
+    return [ ...state.filter(b => b.id !==action.data.id), action.data ]
   case 'CREATE':
     return [ ...state, action.content]
   default:
@@ -29,6 +31,15 @@ export const addAbout = (updatedBand) => {
   return async (dispatch) => {
     dispatch({
       type: 'ADD_ABOUT',
+      data: updatedBand
+    })
+  }
+}
+
+export const addBandcamp = (updatedBand) => {
+  return async (dispatch) => {
+    dispatch({
+      type: 'ADD_BANDCAMP',
       data: updatedBand
     })
   }

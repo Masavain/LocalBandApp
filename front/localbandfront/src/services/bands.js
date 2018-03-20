@@ -21,8 +21,14 @@ const createNew = async (newObject) => {
 
 const update = async (id, newObject) => {
   const response = await axios.put(`${url}/${id}`, newObject)
+  console.log('tässä')
+  return response.data
+}
+
+const postBC = async (id, BCurl) => {
+  const response = await axios.post(`${url}/${id}/bandcamp`, BCurl)
   return response.data
 }
 
 
-export default { getAll , createNew, setToken, update }
+export default { getAll , createNew, setToken, update, postBC }

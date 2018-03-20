@@ -47,7 +47,7 @@ bandsRouter.post('/', async (req, res) => {
 bandsRouter.post('/:id/bandcamp', async (req, res) => {
     try {
         const body = req.body
-        const url = body.albumUrl
+        const url = `${body.albumUrl}`
         function promisify(url) {
             return new Promise(function (resolve, reject) {
                 bandcamp.getAlbumInfo(url, async (error, albumInfo) => {
@@ -82,9 +82,7 @@ bandsRouter.post('/:id/bandcamp', async (req, res) => {
 
 bandsRouter.put('/:id', async (request, response) => {
     try {
-        const vanha = await Band.findById(request.params.id)
-        const uusi = { ...vanha, about: request.body.about }
-        console.log(vanha, uusi)
+        const uusi = { about: request.body.about }
         const updated = await Band.findByIdAndUpdate(request.params.id, uusi, { new: true }).populate('user')
         response.json(Band.format(updated))
 
