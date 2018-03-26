@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { creation } from './../reducers/bandReducer'
+import { Form, Button } from 'react-bootstrap'
 
 
 const BandForm = (props) => {
@@ -18,13 +19,25 @@ const BandForm = (props) => {
   return (
     <div>
       <h2>add new band</h2>
-      <form onSubmit={handleSubmit}>
-        <div>Name<input name='name' /></div>
-        <div>Genre<input name='genre' /></div>
-        <div>Hometown<input name='hometown' /></div>
-        <div>Starting year<input name='started' /></div>
-        <button type="submit">add</button>
-      </form>
+      <Form onSubmit={handleSubmit}>
+        <Form.Field>
+          <label>Name</label>
+          <input name='name' />
+        </Form.Field>
+        <Form.Field>
+          <label>Genre</label>
+          <input name='genre' />
+        </Form.Field>
+        <Form.Field>
+          <label>Hometown</label>
+          <input name='hometown' />
+        </Form.Field>
+        <Form.Field>
+          <label>Starting year</label>
+          <input name='started' />
+        </Form.Field>
+        <Button type='submit'>add</Button>
+      </Form>
     </div>
   )
 

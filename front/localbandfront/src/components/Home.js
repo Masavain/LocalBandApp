@@ -4,9 +4,13 @@ import { Link } from 'react-router-dom'
 
 
 
-const BandList = (props) => {
-
+const Home = (props) => {
+  const style = {
+    marginTop: 10,
+    marginBottom: 10
+  }
   const allBands = () => (
+
     <div>
       <h2>All Bands</h2>
       {props.bands.map(band =>
@@ -17,7 +21,7 @@ const BandList = (props) => {
         </div>
       )}
       <div>
-        <p>Showcase:
+        <p style={style}>Showcase:
         <Link to={`/bands/${props.randomBand._id}`}>{props.randomBand.name}</Link>
         </p>
 
@@ -71,4 +75,4 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps
-)(BandList)
+)(Home)

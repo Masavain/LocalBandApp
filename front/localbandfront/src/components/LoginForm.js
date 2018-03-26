@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { login } from './../reducers/loginReducer'
-
+import { FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap'
 
 const LoginForm = (props) => {
 
@@ -20,15 +20,19 @@ const LoginForm = (props) => {
     <div>
       <h2>Login</h2>
       <form onSubmit={submitLogin}>
-        <div>
-            Username
-          <input name="username"/>
-        </div>
-        <div>
-            Password
-          <input type="password" name="password"/>
-        </div>
-        <button type="submit">login</button>
+        <FormGroup>
+          <ControlLabel>username:</ControlLabel>
+          <FormControl
+            type="text"
+            name="username"
+          />
+          <ControlLabel>password:</ControlLabel>
+          <FormControl
+            type="password"
+            name="password"
+          />
+          <Button bsStyle="success" type="submit">login</Button>
+        </FormGroup>
       </form>
     </div>
   )

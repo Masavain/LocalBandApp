@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { sign } from './../reducers/loginReducer'
+import { Form, Button } from 'react-bootstrap'
 
 const JoinForm = (props) => {
 
@@ -17,17 +18,17 @@ const JoinForm = (props) => {
   return (
     <div>
       <h2>Sign</h2>
-      <form onSubmit={submitSign}>
-        <div>
-              Username
-          <input name="username"/>
-        </div>
-        <div>
-              Password
-          <input type="password" name="password"/>
-        </div>
-        <button type="submit">login</button>
-      </form>
+      <Form onSubmit={submitSign}>
+        <Form.Field>
+          <label>Username</label>
+          <input name='username' />
+        </Form.Field>
+        <Form.Field>
+          <label>Password</label>
+          <input type='password' name='password' />
+        </Form.Field>
+        <Button type="submit">login</Button>
+      </Form>
     </div>
   )
 

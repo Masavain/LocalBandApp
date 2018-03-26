@@ -1,10 +1,12 @@
 import React from 'react'
 import { initialization } from './reducers/bandReducer'
 import { connect } from 'react-redux'
-import BandList from './components/BandList'
+import Home from './components/Home'
 import LoginForm from './components/LoginForm'
+import Explore from './components/Explore'
 import { initUser, logout } from './reducers/loginReducer'
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
+import { Navbar, Nav, NavItem } from 'react-bootstrap'
 import ProfilePage from './components/ProfilePage'
 import About from './components/About'
 import JoinForm from './components/JoinForm'
@@ -29,36 +31,67 @@ class App extends React.Component {
 
 
     return (
-      <div>
-        <h1>LocalBands app</h1>
-
+      <div className="container">
         <Router>
           <div>
-            <div>
-              <Link to="/">home</Link> &nbsp;
+            <Navbar inverse collapseOnSelect>
+              <Navbar.Header>
+                <Navbar.Brand>
+              LocalBands app
+                </Navbar.Brand>
+                <Navbar.Toggle />
+              </Navbar.Header>
+              <Navbar.Collapse>
+                <Nav>
+                  <NavItem href="#">
+                    <div>
+                      <Link to="/">Home</Link>
+                    </div>
+                  </NavItem>
+                  <NavItem href="#">
+                    <div>
+                      <Link to="/search">Explore</Link>
+                    </div>
+                  </NavItem>
+                  <NavItem href="#">
+                    <div>
+                      <Link to="/about">About</Link>
+                    </div>
+                  </NavItem>
+                  <NavItem>
+                    {this.props.user
+                      ? <div>
+                        <Link to="/profile">Profile</Link>
+                      </div>
+                      : <div>
+                        <Link to="/login">Login</Link>  &nbsp;
+                      </div>
+                    }
+                  </NavItem>
+                  <NavItem>
+                    {this.props.user
+                      ? <div>
+                        <em>{this.props.user.username} logged in</em>
+                        <button onClick={this.logOut}> log out</button>
+                      </div>
+                      :<div>
+                        <Link to="/join">Join</Link>
+                      </div>
+                    }
+                  </NavItem>
 
-              <Link to="/about">about</Link> &nbsp;
-              {this.props.user
-                ? <div>
-                  <Link to="/profile">profile</Link> &nbsp;
-                  <em>{this.props.user.username} logged in</em>
-                  <button onClick={this.logOut}> log out</button>
-                </div>
-                : <div>
-                  <Link to="/login">Login</Link>  &nbsp;
-                  <Link to="/join">Join</Link>
-                </div>
-              }
-            </div>
+                </Nav>
+              </Navbar.Collapse>
+            </Navbar>
+
             <Route exact path="/bands/:id" render={({ match }) => {
-              console.log('router match', match)
-              console.log('blog by id', blogById(match.params.id))
               return <Band band={blogById(match.params.id)} />}}
             />
             <Route exact path="/login" render={({ history }) => <LoginForm history={history}/>} />
+            <Route exact path="/search" render={() => <Explore/>} />
             <Route exact path="/join" render={({ history }) => <JoinForm history={history}/>} />
-            <Route exact path="/" render={() => <BandList />} />
-            <Route path="/profile" render={({ history }) => <ProfilePage history={history} />} />
+            <Route exact path="/" render={() => <Home />} />
+            <Route path="/profile" render={({ history }) => this.props.user ? <ProfilePage history={history} />: <Redirect to="/login" />} />
             <Route path="/about" render={() => <About />} />
           </div>
         </Router>
