@@ -11,5 +11,6 @@
 |19.3.|1| showcase-bändi ja alustava bandcamp-embed|
 |20.3.|3.5| backin säätöä, bandcamp-linkin postaaminen|
 |20.3.|1.5| bandcamp-linkin postaaminen myös frontissa|
+|26.3.|3| bootsrap-asioita, hakutoiminto|
 
-total: 19.5h
+total: 22.5h
