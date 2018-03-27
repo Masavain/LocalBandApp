@@ -12,5 +12,6 @@
 |20.3.|3.5| backin säätöä, bandcamp-linkin postaaminen|
 |20.3.|1.5| bandcamp-linkin postaaminen myös frontissa|
 |26.3.|3| bootsrap-asioita, hakutoiminto|
+|27.3.|2.5| bootsrap-asioita, debuggailua eilisen jäliltä|
 
-total: 22.5h
+total: 25h
