@@ -4,6 +4,7 @@ import BandForm from './BandForm'
 import { Link } from 'react-router-dom'
 
 const ProfilePage = (props) => {
+
   return(
     <div>
       <h3>{props.user && props.user.username}</h3>

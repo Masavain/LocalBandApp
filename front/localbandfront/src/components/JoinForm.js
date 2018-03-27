@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { sign } from './../reducers/loginReducer'
-import { Form, Button } from 'react-bootstrap'
+import { FormGroup, FormControl, ControlLabel, Button } from 'react-bootstrap'
 
 const JoinForm = (props) => {
 
@@ -18,17 +18,21 @@ const JoinForm = (props) => {
   return (
     <div>
       <h2>Sign</h2>
-      <Form onSubmit={submitSign}>
-        <Form.Field>
-          <label>Username</label>
-          <input name='username' />
-        </Form.Field>
-        <Form.Field>
-          <label>Password</label>
-          <input type='password' name='password' />
-        </Form.Field>
-        <Button type="submit">login</Button>
-      </Form>
+      <form onSubmit={submitSign}>
+        <FormGroup>
+          <ControlLabel>username:</ControlLabel>
+          <FormControl
+            type="text"
+            name="username"
+          />
+          <ControlLabel>password:</ControlLabel>
+          <FormControl
+            type="password"
+            name="password"
+          />
+          <Button bsStyle="success" type="submit">sign</Button>
+        </FormGroup>
+      </form>
     </div>
   )
 

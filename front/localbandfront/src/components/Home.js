@@ -9,8 +9,8 @@ const Home = (props) => {
     marginTop: 10,
     marginBottom: 10
   }
-  const allBands = () => (
 
+  return(
     <div>
       <h2>All Bands</h2>
       {props.bands.map(band =>
@@ -28,24 +28,6 @@ const Home = (props) => {
       </div>
     </div>
   )
-  if (props.user === null) {
-    return (allBands())
-  } else {
-    return(
-      <div>
-        {allBands()}
-        <h2>My bands</h2>
-        {props.userbands.map(b =>
-          <div key={b._id}>
-            <div>
-              {b.name} {b.genre} {b.hometown}
-            </div>
-          </div>
-        )}
-      </div>
-    )
-  }
-
 }
 
 const randomBand = (bands) => {

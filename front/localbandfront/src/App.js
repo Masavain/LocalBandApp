@@ -6,11 +6,13 @@ import LoginForm from './components/LoginForm'
 import Explore from './components/Explore'
 import { initUser, logout } from './reducers/loginReducer'
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
-import { Navbar, Nav, NavItem } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, Grid, Button } from 'react-bootstrap'
 import ProfilePage from './components/ProfilePage'
 import About from './components/About'
 import JoinForm from './components/JoinForm'
 import Band from './components/Band'
+import Background from './nakemys.jpg'
+import './App.css'
 
 class App extends React.Component {
   componentWillMount = async () => {
@@ -23,79 +25,99 @@ class App extends React.Component {
   }
 
   render() {
+    const style = {
+      backgroundImage: `url(${Background})`,
+      width: '100%',
+      height: '100%',
+    }
+    const containerStyle = {
+      backgroundColor: 'white',
+    }
     if(this.props.bands.length === 0) {
       return null
     }
     console.log('user:',this.props.user)
     const blogById = (id) => this.props.bands.find(b => b._id === id)
 
-
     return (
-      <div className="container">
-        <Router>
-          <div>
-            <Navbar inverse collapseOnSelect>
-              <Navbar.Header>
-                <Navbar.Brand>
-              LocalBands app
-                </Navbar.Brand>
-                <Navbar.Toggle />
-              </Navbar.Header>
-              <Navbar.Collapse>
-                <Nav>
-                  <NavItem href="#">
-                    <div>
-                      <Link to="/">Home</Link>
-                    </div>
-                  </NavItem>
-                  <NavItem href="#">
-                    <div>
-                      <Link to="/search">Explore</Link>
-                    </div>
-                  </NavItem>
-                  <NavItem href="#">
-                    <div>
-                      <Link to="/about">About</Link>
-                    </div>
-                  </NavItem>
-                  <NavItem>
-                    {this.props.user
-                      ? <div>
-                        <Link to="/profile">Profile</Link>
+      <div style={style}>
+        <Grid style={containerStyle}>
+          <Router>
+            <div>
+              <Navbar inverse collapseOnSelect>
+                <Navbar.Header>
+                  <Navbar.Brand>
+                    <Link to="/">Localbands App</Link>
+                  </Navbar.Brand>
+                  <Navbar.Toggle />
+                </Navbar.Header>
+                <Navbar.Collapse>
+                  <Nav pullLeft>
+                    <NavItem href="#">
+                      <div>
+                        <Link to="/">Home</Link>
                       </div>
-                      : <div>
-                        <Link to="/login">Login</Link>  &nbsp;
+                    </NavItem>
+                    <NavItem href="#">
+                      <div>
+                        <Link to="/search">Explore</Link>
                       </div>
-                    }
-                  </NavItem>
-                  <NavItem>
-                    {this.props.user
-                      ? <div>
-                        <em>{this.props.user.username} logged in</em>
-                        <button onClick={this.logOut}> log out</button>
+                    </NavItem>
+                    <NavItem href="#">
+                      <div>
+                        <Link to="/about">About</Link>
                       </div>
-                      :<div>
-                        <Link to="/join">Join</Link>
-                      </div>
-                    }
-                  </NavItem>
+                    </NavItem>
 
-                </Nav>
-              </Navbar.Collapse>
-            </Navbar>
+                  </Nav>
+                  <Nav pullRight>
+                    <NavItem>
+                      {this.props.user
+                        ?
+                        <div>
+                          <em>{this.props.user.username} logged in </em>
+                        </div>
+                        :<div>
+                        </div>
+                      }
+                    </NavItem>
+                    <NavItem>
+                      {this.props.user
+                        ? <div>
+                          <Link to="/profile">Profile</Link>
+                        </div>
+                        : <div>
+                          <Link to="/login"><Button bsStyle="success">Login</Button></Link>  &nbsp;
+                        </div>
+                      }
+                    </NavItem>
+                    <NavItem>
+                      {this.props.user
+                        ?
+                        <Button bsStyle="danger" onClick={this.logOut}> log out</Button>
+                        :<div>
+                          <Link to="/join"><Button bsStyle="primary">Sign</Button></Link>
+                        </div>
+                      }
+                    </NavItem>
+                  </Nav>
+                </Navbar.Collapse>
+              </Navbar>
 
-            <Route exact path="/bands/:id" render={({ match }) => {
-              return <Band band={blogById(match.params.id)} />}}
-            />
-            <Route exact path="/login" render={({ history }) => <LoginForm history={history}/>} />
-            <Route exact path="/search" render={() => <Explore/>} />
-            <Route exact path="/join" render={({ history }) => <JoinForm history={history}/>} />
-            <Route exact path="/" render={() => <Home />} />
-            <Route path="/profile" render={({ history }) => this.props.user ? <ProfilePage history={history} />: <Redirect to="/login" />} />
-            <Route path="/about" render={() => <About />} />
-          </div>
-        </Router>
+              <Route exact path="/bands/:id" render={({ match }) => {
+                return <Band band={blogById(match.params.id)} />}}
+              />
+              <Route exact path="/login" render={({ history }) => <LoginForm history={history}/>} />
+              <Route exact path="/search" render={() => <Explore/>} />
+              <Route exact path="/join" render={({ history }) => <JoinForm history={history}/>} />
+              <Route exact path="/" render={() => <Home />} />
+              <Route path="/profile" render={({ history }) => this.props.user ? <ProfilePage history={history} />: <Redirect to="/login" />} />
+              <Route path="/about" render={() => <About />} />
+            </div>
+          </Router>
+        </Grid>
       </div>
+
     )
   }
 }
