@@ -27,11 +27,12 @@ class App extends React.Component {
   render() {
     const style = {
       backgroundImage: `url(${Background})`,
-      width: '100%',
-      height: '100%',
+      // width: '100%',
+      // height: '100%',
     }
-    const containerStyle = {
+    const customStyle = {
       backgroundColor: 'white',
+      padding: '25px',
     }
     if(this.props.bands.length === 0) {
       return null
@@ -41,69 +42,71 @@ class App extends React.Component {
 
     return (
       <div style={style}>
-        <Grid style={containerStyle}>
-          <Router>
-            <div>
-              <Navbar inverse collapseOnSelect>
-                <Navbar.Header>
-                  <Navbar.Brand>
-                    <Link to="/">Localbands App</Link>
-                  </Navbar.Brand>
-                  <Navbar.Toggle />
-                </Navbar.Header>
-                <Navbar.Collapse>
-                  <Nav pullLeft>
-                    <NavItem href="#">
-                      <div>
-                        <Link to="/">Home</Link>
-                      </div>
-                    </NavItem>
-                    <NavItem href="#">
-                      <div>
-                        <Link to="/search">Explore</Link>
-                      </div>
-                    </NavItem>
-                    <NavItem href="#">
-                      <div>
-                        <Link to="/about">About</Link>
-                      </div>
-                    </NavItem>
 
-                  </Nav>
-                  <Nav pullRight>
-                    <NavItem>
-                      {this.props.user
-                        ?
-                        <div>
-                          <em>{this.props.user.username} logged in </em>
-                        </div>
-                        :<div>
-                        </div>
-                      }
-                    </NavItem>
-                    <NavItem>
-                      {this.props.user
-                        ? <div>
-                          <Link to="/profile">Profile</Link>
-                        </div>
-                        : <div>
-                          <Link to="/login"><Button bsStyle="success">Login</Button></Link>  &nbsp;
-                        </div>
-                      }
-                    </NavItem>
-                    <NavItem>
-                      {this.props.user
-                        ?
+        <Router>
+          <div>
+            <Navbar staticTop inverse collapseOnSelect >
+              <Navbar.Header>
+                <Navbar.Brand>
+                  <Link to="/">Localbands App</Link>
+                </Navbar.Brand>
+                <Navbar.Toggle />
+              </Navbar.Header>
+              <Navbar.Collapse>
+                <Nav pullLeft>
+                  <NavItem href="#">
+                    <div>
+                      <Link to="/">Home</Link>
+                    </div>
+                  </NavItem>
+                  <NavItem href="#">
+                    <div>
+                      <Link to="/search">Explore</Link>
+                    </div>
+                  </NavItem>
+                  <NavItem href="#">
+                    <div>
+                      <Link to="/about">About</Link>
+                    </div>
+                  </NavItem>
+
+                </Nav>
+                <Nav float pullRight>
+                  <NavItem>
+                    {this.props.user
+                      ?
+                      <div>
+                        <em>{this.props.user.username} logged in </em>
+                      </div>
+                      :<div>
+                      </div>
+                    }
+                  </NavItem>
+                  <NavItem>
+                    {this.props.user
+                      ? <div>
+                        <Link to="/profile">Profile</Link>
+                      </div>
+                      : <div>
+                        <Link to="/login"><Button bsStyle="success">Login</Button></Link>  &nbsp;
+                      </div>
+                    }
+                  </NavItem>
+                  <NavItem>
+                    {this.props.user
+                      ?
+                      <div>
                         <Button bsStyle="danger" onClick={this.logOut}> log out</Button>
-                        :<div>
-                          <Link to="/join"><Button bsStyle="primary">Sign</Button></Link>
-                        </div>
-                      }
-                    </NavItem>
-                  </Nav>
-                </Navbar.Collapse>
-              </Navbar>
-
+                      </div>
+                      :<div>
+                        <Link to="/join"><Button bsStyle="primary">Sign</Button></Link>
+                      </div>
+                    }
+                  </NavItem>
+                </Nav>
+              </Navbar.Collapse>
+            </Navbar>
+            <Grid style={customStyle}>
               <Route exact path="/bands/:id" render={({ match }) => {
                 return <Band band={blogById(match.params.id)} />}}
               />
@@ -113,9 +116,10 @@ class App extends React.Component {
               <Route exact path="/" render={() => <Home />} />
               <Route path="/profile" render={({ history }) => this.props.user ? <ProfilePage history={history} />: <Redirect to="/login" />} />
               <Route path="/about" render={() => <About />} />
-            </div>
-          </Router>
-        </Grid>
+            </Grid>
+          </div>
+        </Router>
+
       </div>
 
     )

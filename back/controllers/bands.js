@@ -1,8 +1,23 @@
 const bandsRouter = require('express').Router()
 const jwt = require('jsonwebtoken')
 const Band = require('../models/band')
+const Image = require('../models/Image')
 const User = require('../models/user')
 const bandcamp = require('bandcamp-scraper')
+const multer = require('multer')
+const path = require('path')
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+     cb(null, './uploads/');
+        },
+     filename: function (req, file, cb) {
+        const originalname = file.originalname;
+        const extension = originalname.split(".");
+        filename = Date.now() + '.' + extension[extension.length-1];
+        cb(null, filename);
+      }
+    })
+    
 
 bandsRouter.get('/', async (req, res) => {
     const bands = await Band
@@ -75,8 +90,35 @@ bandsRouter.post('/:id/bandcamp', async (req, res) => {
         console.log(exception)
         res.status(400).json({ error: 'malformatted id' })
     }
-
 })
+
+bandsRouter.get("/:id/avatar", async (req, res) => {
+    const band = await Band.findById(req.params._id)
+
+    Image.findOne({_id: band.avatar._id}, (err, image) => {
+      if (err) return res.sendStatus(404)
+      fs.createReadStream(path.resolve(UPLOAD_PATH, image.filename)).pipe(res)
+    })
+  })
+
+
+bandsRouter.post('/:id/addAvatar', multer({storage: storage, dest: './uploads/'}).single('uploads'), async (req, res) => {
+    console.log('backissa', req.file)
+
+    const image = new Image ({
+        fieldname: req.file.fieldname,
+        originalname: req.file.originalname,
+        encoding: req.file.encoding,
+        mimetype: req.file.mimetype,
+        destination:req.file.destination,
+        filename: req.file.filename,
+        path: req.file.path,
+        size: req.file.size
+    })
+    await image.save()
+    const updatedBand = await Band.findByIdAndUpdate(req.params.id, image, { new: true })
+    res.status(200).json(updatedBand)
+  })
 
 
 

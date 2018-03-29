@@ -30,5 +30,14 @@ const postBC = async (id, BCurl) => {
   return response.data
 }
 
+const postAvatar = async (id, file) => {
 
-export default { getAll , createNew, setToken, update, postBC }
+  // const files = document.getElementById('INPUT_TAG').files
+  const formData = new FormData()
+  formData.append('image', file)
+  const response = await axios.post(`${url}/${id}/addAvatar`, formData)
+  return response.data
+}
+
+
+export default { getAll , createNew, setToken, update, postBC, postAvatar }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { addAbout, addBandcamp } from './../reducers/bandReducer'
+import { Grid, Row, Col } from 'react-bootstrap'
+import { addAbout, addBandcamp, addAvatar } from './../reducers/bandReducer'
 import bandService from './../services/bands'
 
 
@@ -21,6 +22,13 @@ const Band = (props) => {
     props.addBandcamp(updatedBand)
     window.location.reload()
   }
+  const handleAvatarSubmit = async (event) => {
+    event.preventDefault()
+    await console.log('frontissa', event.target.myimage.value)
+    const updatedBand = await bandService.postAvatar(props.band._id, { file: event.target.myimage.value })
+    props.addAvatar(updatedBand)
+    window.location.reload()
+  }
 
   const BCstyle = {
     border: 0,
@@ -30,37 +38,50 @@ const Band = (props) => {
 
   console.log('bcAlbumID', props.band.bcAlbumID, 'bctrackID', props.band.bcAlbumID)
   return (
-    <div>
-      <h3>{props.band.name}</h3>
-      {props.band.about
-        ? <div>{props.band.about}
-          <form onSubmit={handleAboutSubmit}>
-            <div>edit about<input type='text' name='about' /></div>
-          </form>
-        </div>
-        : <div>
-          <form onSubmit={handleAboutSubmit}>
-            <div>add about<input type='text' name='about' /></div>
-          </form>
-        </div>}
-
-      {props.band.bcURL
-        ? <div>
-          <form onSubmit={handleBandcampSubmit}>
-            <div>edit bandcamp url<input type='text' name='bcurl' /></div>
-          </form>
-          <iframe title={props.band._id} style={BCstyle}
-            src={src}
-            seamless>
-            <a href={props.band.bcURL}>Mustavalkofilmi by MEMO</a>
-          </iframe>
-        </div>
-        : <div>
-          <form onSubmit={handleBandcampSubmit}>
-            <div>add bandcamp url<input type='text' name='bcurl' /></div>
-          </form>
-        </div>}
-    </div>
+    <Grid>
+      <Row>
+        <h3>{props.band.name}</h3>
+      </Row>
+      <Row>
+        <Col xs={6}>
+          {props.band.about
+            ? <div>{props.band.about}
+              <form onSubmit={handleAboutSubmit}>
+                <div>edit about<input type='text' name='about' /></div>
+              </form>
+            </div>
+            : <div>
+              <form onSubmit={handleAboutSubmit}>
+                <div>add about<input type='text' name='about' /></div>
+              </form>
+            </div>}
+        </Col>
+        <Col xsOffset={7}>
+          {props.band.bcURL
+            ? <div>
+              <iframe title={props.band._id} style={BCstyle}
+                src={src}
+                seamless>
+                <a href={props.band.bcURL}>asd</a>
+              </iframe>
+              <form onSubmit={handleBandcampSubmit}>
+                <div>edit bandcamp url<input type='text' name='bcurl' /></div>
+              </form>
+            </div>
+            : <div>
+              <form onSubmit={handleBandcampSubmit}>
+                <div>add bandcamp url<input type='text' name='bcurl' /></div>
+              </form>
+            </div>}
+        </Col>
+      </Row>
+      <Row>
+        <form onSubmit={handleAvatarSubmit} encType="multipart/form-data">
+          <input type="file" name="myimage"/>
+          <input type="submit" name="submit"/>
+        </form>
+      </Row>
+    </Grid>
   )
 }
 
@@ -72,5 +93,5 @@ const mapStateToProps = (state) => {
   }
 }
 export default connect(
-  mapStateToProps, { addAbout, addBandcamp }
+  mapStateToProps, { addAbout, addBandcamp, addAvatar }
 )(Band)
