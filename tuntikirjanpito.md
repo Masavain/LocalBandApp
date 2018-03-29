@@ -13,5 +13,6 @@
 |20.3.|1.5| bandcamp-linkin postaaminen myös frontissa|
 |26.3.|3| bootsrap-asioita, hakutoiminto|
 |27.3.|2.5| bootsrap-asioita, debuggailua eilisen jäliltä|
+|29.3.|3| bootsrap-hiontaa, kuvan postaamisen aloitus|
 
-total: 25h
+total: 28h
