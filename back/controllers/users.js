@@ -2,23 +2,23 @@ const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
 const User = require('../models/user')
 
-usersRouter.get('/', async (request, response) => {
+usersRouter.get('/', async (req, res) => {
     const users = await User
         .find({})
         .populate('bands', { __v: 0, user: 0})
-    response.json(users.map(User.format))
+    res.json(users.map(User.format))
 })
 
-usersRouter.post('/', async (request, response) => {
+usersRouter.post('/', async (req, res) => {
     try {
-        const body = request.body
+        const body = req.body
 
         const existingUser = await User.find({ username: body.username })
         if (body.password.length < 3) {
-            return response.status(400).json({ error: 'password too short (must be at least 3 characters long)'})
+            return res.status(400).json({ error: 'password too short (must be at least 3 characters long)'})
         }
         if (existingUser.length > 0) {
-            return response.status(400).json({ error: 'username must be unique' })
+            return res.status(400).json({ error: 'username must be unique' })
         }
 
         const saltRounds = 10
@@ -32,10 +32,10 @@ usersRouter.post('/', async (request, response) => {
 
         const savedUser = await user.save()
 
-        response.json(savedUser)
+        res.json(savedUser)
     } catch (exception) {
         console.log(exception)
-        response.status(500).json({ error: 'something went wrong...' })
+        res.status(500).json({ error: 'something went wrong...' })
     }
 })
 

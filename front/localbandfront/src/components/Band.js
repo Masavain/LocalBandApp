@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { addAbout, addBandcamp, addAvatar } from './../reducers/bandReducer'
 import bandService from './../services/bands'
+import imageService from './../services/images'
 
 
 const Band = (props) => {
@@ -22,13 +23,15 @@ const Band = (props) => {
     props.addBandcamp(updatedBand)
     window.location.reload()
   }
-  const handleAvatarSubmit = async (event) => {
+  const handleAvatarUrlSubmit = async (event) => {
     event.preventDefault()
-    const image = event.target.image.files[0]
-    await console.log('formissa', image)
-    const updatedBand = await bandService.postAvatar(props.band._id, { image })
-    // props.addAvatar(updatedBand)
-    // window.location.reload()
+    const image = event.target.image.value
+    const imgurUrl = await imageService.postImgur({ image })
+    const avatarUrl = imgurUrl.data.link
+    const updatedBand = await bandService.postAvatar(props.band._id, { avatarUrl })
+    props.addAvatar(updatedBand)
+    console.log('avatarUrli: ',updatedBand.avatarUrl)
+    window.location.reload()
   }
 
   const BCstyle = {
@@ -45,6 +48,13 @@ const Band = (props) => {
       </Row>
       <Row>
         <Col xs={6}>
+          {props.band.avatarUrl
+            ? <div>
+              <img src={props.band.avatarUrl} width="300" height="300"/>
+            </div>
+            : <div>
+              <img src='/default_band_icon.png' width="300" height="300"/>
+            </div>}
           {props.band.about
             ? <div>{props.band.about}
               <form onSubmit={handleAboutSubmit}>
@@ -77,10 +87,10 @@ const Band = (props) => {
         </Col>
       </Row>
       <Row>
-        <form onSubmit={handleAvatarSubmit}>
+        <form onSubmit={handleAvatarUrlSubmit}>
           <div>
             avatar url:
-            <input type="file" name="image"/>
+            <input type="text" name="image"/>
           </div>
           <input type="submit" name="submit"/>
         </form>

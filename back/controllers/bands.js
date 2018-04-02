@@ -1,7 +1,6 @@
 const bandsRouter = require('express').Router()
 const jwt = require('jsonwebtoken')
 const Band = require('../models/band')
-const Image = require('../models/Image')
 const User = require('../models/user')
 const bandcamp = require('bandcamp-scraper')
 
@@ -80,20 +79,33 @@ bandsRouter.post('/:id/bandcamp', async (req, res) => {
     }
 })
 
-bandsRouter.get("/:id/avatar", async (req, res) => {
+bandsRouter.post("/:id/avatar", async (req, res) => {
+    try {
+        console.log('routerissa: ', req.body.avatarUrl)
+
+        const uusi = { avatarUrl: req.body.avatarUrl }
+        console.log('routerissa uusi: ', uusi)
+        const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
+        console.log('routerissa updated: ', updated)
+        res.json(Band.format(updated))
+
+    } catch (exception) {
+        console.log(error)
+        res.status(400).send({ error: 'malformatted id' })
+    }
   })
 
 
 
-bandsRouter.put('/:id', async (request, response) => {
+bandsRouter.put('/:id', async (req, res) => {
     try {
-        const uusi = { about: request.body.about }
-        const updated = await Band.findByIdAndUpdate(request.params.id, uusi, { new: true }).populate('user')
-        response.json(Band.format(updated))
+        const uusi = { about: req.body.about }
+        const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
+        res.json(Band.format(updated))
 
     } catch (exception) {
         console.log(error)
-        response.status(400).send({ error: 'malformatted id' })
+        res.status(400).send({ error: 'malformatted id' })
     }
 })
 

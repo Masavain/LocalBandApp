@@ -16,6 +16,13 @@ const Explore = (props) => (
         </tr>
         {props.visibleBands.map(band =>
           <tr key={band._id}>
+            {band.avatarUrl
+              ? <td>
+                <img src={band.avatarUrl} width="75" height="75"/>
+              </td>
+              : <td>
+                <img src='/default_band_icon.png' width="75" height="75"/>
+              </td>}
             <td>
               <Link to={`/bands/${band._id}`}>{band.name}</Link>
             </td>
