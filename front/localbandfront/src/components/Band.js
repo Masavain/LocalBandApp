@@ -24,10 +24,11 @@ const Band = (props) => {
   }
   const handleAvatarSubmit = async (event) => {
     event.preventDefault()
-    await console.log('frontissa', event.target.myimage.value)
-    const updatedBand = await bandService.postAvatar(props.band._id, { file: event.target.myimage.value })
-    props.addAvatar(updatedBand)
-    window.location.reload()
+    const image = event.target.image.files[0]
+    await console.log('formissa', image)
+    const updatedBand = await bandService.postAvatar(props.band._id, { image })
+    // props.addAvatar(updatedBand)
+    // window.location.reload()
   }
 
   const BCstyle = {
@@ -76,8 +77,11 @@ const Band = (props) => {
         </Col>
       </Row>
       <Row>
-        <form onSubmit={handleAvatarSubmit} encType="multipart/form-data">
-          <input type="file" name="myimage"/>
+        <form onSubmit={handleAvatarSubmit}>
+          <div>
+            avatar url:
+            <input type="file" name="image"/>
+          </div>
           <input type="submit" name="submit"/>
         </form>
       </Row>
