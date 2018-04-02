@@ -23,6 +23,13 @@ const Home = (props) => {
       <div>
         <p style={style}>Showcase:
         <Link to={`/bands/${props.randomBand._id}`}>{props.randomBand.name}</Link>
+        {props.randomBand.avatarUrl
+          ? <div>
+            <img src={props.randomBand.avatarUrl} width="300" height="300" alt="avatar"/>
+          </div>
+          : <div>
+            <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
+          </div>}
         </p>
 
       </div>

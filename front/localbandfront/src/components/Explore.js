@@ -18,10 +18,10 @@ const Explore = (props) => (
           <tr key={band._id}>
             {band.avatarUrl
               ? <td>
-                <img src={band.avatarUrl} width="75" height="75"/>
+                <img src={band.avatarUrl} width="75" height="75" alt="thumbnail"/>
               </td>
               : <td>
-                <img src='/default_band_icon.png' width="75" height="75"/>
+                <img src='/default_band_icon.png' width="75" height="75" alt="default thumbnail"/>
               </td>}
             <td>
               <Link to={`/bands/${band._id}`}>{band.name}</Link>

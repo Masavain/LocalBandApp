@@ -23,15 +23,34 @@ const Band = (props) => {
     props.addBandcamp(updatedBand)
     window.location.reload()
   }
+
   const handleAvatarUrlSubmit = async (event) => {
     event.preventDefault()
     const image = event.target.image.value
     const imgurUrl = await imageService.postImgur({ image })
-    const avatarUrl = imgurUrl.data.link
-    const updatedBand = await bandService.postAvatar(props.band._id, { avatarUrl })
+    const updatedBand = await bandService.postAvatar(props.band._id, { avatarUrl: imgurUrl.data.link })
     props.addAvatar(updatedBand)
     console.log('avatarUrli: ',updatedBand.avatarUrl)
     window.location.reload()
+  }
+
+  const handleAvatarSubmit = async (event) => {
+    event.preventDefault()
+    const file  = document.getElementById('imageFile').files[0]
+    var reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = async function () {
+      const result = reader.result.substr(reader.result.indexOf(',')+1, reader.result.length)
+      const imgurUrl = await imageService.postImgur( result )
+      const updatedBand = await bandService.postAvatar(props.band._id, { avatarUrl: imgurUrl.data.link })
+      props.addAvatar(updatedBand)
+      window.location.reload()
+
+
+    }
+    reader.onerror = function (error) {
+      console.log('Error: ', error)
+    }
   }
 
   const BCstyle = {
@@ -50,10 +69,10 @@ const Band = (props) => {
         <Col xs={6}>
           {props.band.avatarUrl
             ? <div>
-              <img src={props.band.avatarUrl} width="300" height="300"/>
+              <img src={props.band.avatarUrl} width="300" height="300" alt="avatar"/>
             </div>
             : <div>
-              <img src='/default_band_icon.png' width="300" height="300"/>
+              <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
             </div>}
           {props.band.about
             ? <div>{props.band.about}
@@ -91,6 +110,13 @@ const Band = (props) => {
           <div>
             avatar url:
             <input type="text" name="image"/>
+          </div>
+          <input type="submit" name="submit"/>
+        </form>
+        <form onSubmit={handleAvatarSubmit}>
+          <div>
+            avatar file:
+            <input type="file" accept="image/*" id="imageFile" name="image"/>
           </div>
           <input type="submit" name="submit"/>
         </form>
