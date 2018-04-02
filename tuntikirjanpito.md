@@ -15,4 +15,6 @@
 |27.3.|2.5| bootsrap-asioita, debuggailua eilisen jäliltä|
 |29.3.|3| bootsrap-hiontaa, kuvan postaamisen aloitus|
 |2.4.|2.5| kuvan postaaminen imgur-api:lla alkuun|
-total: 30.5h
+|2.4.|2.5| kuvan postaaminen imgur-api:lla toimii URL:illa|
+
+total: 33h
