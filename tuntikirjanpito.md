@@ -16,5 +16,6 @@
 |29.3.|3| bootsrap-hiontaa, kuvan postaamisen aloitus|
 |2.4.|2.5| kuvan postaaminen imgur-api:lla alkuun|
 |2.4.|2.5| kuvan postaaminen imgur-api:lla toimii URL:illa|
+|2.4.|1| kuvan postaaminen imgur-api:lla toimii myös tiedostolla|
 
-total: 33h
+total: 34h
