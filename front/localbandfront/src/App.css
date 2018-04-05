@@ -20,6 +20,10 @@
 
 .wrapper:hover .button {
     display: inline-block;
+    
 }
 
+.wrapper {
+    padding:10;
+}
 

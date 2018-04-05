@@ -33,7 +33,10 @@ class App extends React.Component {
       paddingLeft: 0,
       paddingRight: 0,
       marginTop: 65
-      // padding: '25px',
+    }
+    const navbarStyle = {
+      borderBottom: 'solid',
+      borderWidth: 2
     }
     if(this.props.bands.length === 0) {
       return null
@@ -45,7 +48,7 @@ class App extends React.Component {
       <div style={style}>
         <Router>
           <div>
-            <Navbar fixedTop inverse collapseOnSelect >
+            <Navbar fixedTop inverse collapseOnSelect style={navbarStyle}>
               <Navbar.Header>
                 <Navbar.Brand>
                   <Link to="/">Localbands App</Link>

@@ -24,16 +24,6 @@ const Band = (props) => {
     window.location.reload()
   }
 
-  const handleAvatarUrlSubmit = async (event) => {
-    event.preventDefault()
-    const image = event.target.image.value
-    const imgurUrl = await imageService.postImgur({ image })
-    const updatedBand = await bandService.postAvatar(props.band._id, { avatarUrl: imgurUrl.data.link })
-    props.addAvatar(updatedBand)
-    console.log('avatarUrli: ',updatedBand.avatarUrl)
-    window.location.reload()
-  }
-
   const handleAvatarSubmit = async (event) => {
     event.preventDefault()
     const file  = document.getElementById('imageFile').files[0]
@@ -75,6 +65,10 @@ const Band = (props) => {
   }
 
   const emptydivStyle = {
+    height: 250,
+    backgroundColor: 'black',
+    opacity: 0.5,
+    padding: 20
   }
   const headerStyle = {
     marginTop: 0,
@@ -120,31 +114,49 @@ const Band = (props) => {
         </div>
       </Row>
       <Row style={gridStyle}>
-        <Col xs={6} className="wrapper">
+        <Col xs={4}>
           {props.band.avatarUrl
-            ? <div>
+            ? <div className="wrapper">
               <img src={props.band.avatarUrl} width="300" height="300" alt="avatar"/>
-              <form className="button" onSubmit={handleAvatarSubmit}>
-                <input type="file" accept="image/*" id="imageFile" name="image"/>
-                <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
-              </form>
+              {props.user ?
+                <div>
+                  {props.band.user.name === props.user.name ?
+                    <form className="button" onSubmit={handleAvatarSubmit}>
+                      <input type="file" accept="image/*" id="imageFile" name="image"/>
+                      <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
+                    </form>
+                    : <div></div>}
+                </div>
+                : <div></div>}
             </div>
-            : <div>
+            : <div className="wrapper">
               <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
+              {props.user ?
+                <div>
+                  {props.band.user.name === props.user.name ?
+                    <form className="button" onSubmit={handleAvatarSubmit}>
+                      <input type="file" accept="image/*" id="imageFile" name="image"/>
+                      <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
+                    </form>
+                    : <div></div>}
+                </div>
+                : <div></div>}
             </div>}
-          {props.band.about
-            ? <div>{props.band.about}
-              <form onSubmit={handleAboutSubmit}>
-                <div>edit about<input type='text' name='about' /></div>
-              </form>
-            </div>
-            : <div>
-              <form onSubmit={handleAboutSubmit}>
-                <div>add about<input type='text' name='about' /></div>
-              </form>
-            </div>}
+          <div>
+            {props.band.about
+              ? <div>{props.band.about}
+                <form onSubmit={handleAboutSubmit}>
+                  <div>edit about<input type='text' name='about' /></div>
+                </form>
+              </div>
+              : <div>
+                <form onSubmit={handleAboutSubmit}>
+                  <div>add about<input type='text' name='about' /></div>
+                </form>
+              </div>}
+          </div>
         </Col>
-        <Col xsOffset={7}>
+        <Col xsOffset={8}>
           {props.band.bcURL
             ? <div>
               <iframe title={props.band._id} style={BCstyle}
@@ -163,17 +175,8 @@ const Band = (props) => {
             </div>}
         </Col>
       </Row>
-      <Row style={gridStyle}>
-        <form onSubmit={handleAvatarUrlSubmit}>
-          <div>
-            avatar url:
-            <input type="text" name="image"/>
-          </div>
-          <input type="submit" name="submit"/>
-        </form>
-        <div >
+      <Row>
 
-        </div>
       </Row>
     </Grid>
   )
