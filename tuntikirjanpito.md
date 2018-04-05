@@ -17,6 +17,6 @@
 |2.4.|2.5| kuvan postaaminen imgur-api:lla alkuun|
 |2.4.|2.5| kuvan postaaminen imgur-api:lla toimii URL:illa|
 |2.4.|1| kuvan postaaminen imgur-api:lla toimii myös tiedostolla|
-|5.4.|2.5| bändikohtaisen taustakuvan postaus ja hover-buttonit|
+|5.4.|3| bändikohtaisen taustakuvan postaus ja hover-buttonit|
 
-total: 36.5h
+total: 37h
