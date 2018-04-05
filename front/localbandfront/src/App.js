@@ -27,12 +27,13 @@ class App extends React.Component {
   render() {
     const style = {
       backgroundImage: `url(${Background})`,
-      // width: '100%',
-      // height: '100%',
     }
     const customStyle = {
       backgroundColor: 'white',
-      padding: '25px',
+      paddingLeft: 0,
+      paddingRight: 0,
+      marginTop: 65
+      // padding: '25px',
     }
     if(this.props.bands.length === 0) {
       return null
@@ -42,10 +43,9 @@ class App extends React.Component {
 
     return (
       <div style={style}>
-
         <Router>
           <div>
-            <Navbar staticTop inverse collapseOnSelect >
+            <Navbar fixedTop inverse collapseOnSelect >
               <Navbar.Header>
                 <Navbar.Brand>
                   <Link to="/">Localbands App</Link>

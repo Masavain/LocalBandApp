@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row, Col, Button } from 'react-bootstrap'
 import { addAbout, addBandcamp, addAvatar } from './../reducers/bandReducer'
 import bandService from './../services/bands'
 import imageService from './../services/images'
-
+import defaultBackground from './../nakemys_opa.jpg'
 
 const Band = (props) => {
   const src = `https://bandcamp.com/EmbeddedPlayer/album=${props.band.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=${props.band.bcTrackID}/transparent=true/`
@@ -45,8 +45,23 @@ const Band = (props) => {
       const updatedBand = await bandService.postAvatar(props.band._id, { avatarUrl: imgurUrl.data.link })
       props.addAvatar(updatedBand)
       window.location.reload()
+    }
+    reader.onerror = function (error) {
+      console.log('Error: ', error)
+    }
+  }
 
-
+  const handleBgSubmit = async (event) => {
+    event.preventDefault()
+    const file  = document.getElementById('bgImage').files[0]
+    var reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = async function () {
+      const result = reader.result.substr(reader.result.indexOf(',')+1, reader.result.length)
+      const imgurUrl = await imageService.postImgur( result )
+      const updatedBand = await bandService.postBackground(props.band._id, { backgroundUrl: imgurUrl.data.link })
+      props.addAvatar(updatedBand)
+      window.location.reload()
     }
     reader.onerror = function (error) {
       console.log('Error: ', error)
@@ -59,17 +74,60 @@ const Band = (props) => {
     height: 470
   }
 
-  console.log('bcAlbumID', props.band.bcAlbumID, 'bctrackID', props.band.bcAlbumID)
+  const emptydivStyle = {
+  }
+  const headerStyle = {
+    marginTop: 0,
+    backgroundImage: props.band.backgroundUrl ? `url(${props.band.backgroundUrl})` : `url(${defaultBackground})`,
+    height: 250,
+    backgroundSize:'cover',
+    backgroundRepeat:   'no-repeat',
+    backgroundPosition: 'center center'
+  }
+  const hThreeStyle = {
+    marginLeft: 10,
+    color: 'white',
+  }
+
+  const gridStyle = {
+    padding: 10
+  }
+
   return (
     <Grid>
-      <Row>
-        <h3>{props.band.name}</h3>
+      <Row className='wrapper' style={headerStyle}>
+        <div style={emptydivStyle}>
+          <Col>
+            <h3 style={hThreeStyle}>{props.band.name}</h3>
+          </Col>
+          <Col className='pull-right'>
+            {props.user ?
+              <div>
+                {props.band.user.name === props.user.name ?
+                  <form className="button" onSubmit={handleBgSubmit}>
+                    <input type="file" accept="image/*" id="bgImage" name="bgimage"></input>
+                    <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit background</Button>
+                  </form>
+                  :
+                  <div>
+                  </div>
+                }
+              </div>
+              : <div>
+              </div>
+            }
+          </Col>
+        </div>
       </Row>
-      <Row>
-        <Col xs={6}>
+      <Row style={gridStyle}>
+        <Col xs={6} className="wrapper">
           {props.band.avatarUrl
             ? <div>
               <img src={props.band.avatarUrl} width="300" height="300" alt="avatar"/>
+              <form className="button" onSubmit={handleAvatarSubmit}>
+                <input type="file" accept="image/*" id="imageFile" name="image"/>
+                <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
+              </form>
             </div>
             : <div>
               <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
@@ -105,7 +163,7 @@ const Band = (props) => {
             </div>}
         </Col>
       </Row>
-      <Row>
+      <Row style={gridStyle}>
         <form onSubmit={handleAvatarUrlSubmit}>
           <div>
             avatar url:
@@ -113,13 +171,9 @@ const Band = (props) => {
           </div>
           <input type="submit" name="submit"/>
         </form>
-        <form onSubmit={handleAvatarSubmit}>
-          <div>
-            avatar file:
-            <input type="file" accept="image/*" id="imageFile" name="image"/>
-          </div>
-          <input type="submit" name="submit"/>
-        </form>
+        <div >
+
+        </div>
       </Row>
     </Grid>
   )

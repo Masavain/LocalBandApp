@@ -31,10 +31,15 @@ const postBC = async (id, BCurl) => {
 }
 
 const postAvatar = async (id, avatarUrl) => {
-  console.log('postAvatarissa: ', avatarUrl)
   const response = await axios.post(`${url}/${id}/avatar`, avatarUrl)
   return response.data
 }
 
+const postBackground = async (id, backgroundUrl) => {
+  const response = await axios.post(`${url}/${id}/background`, backgroundUrl)
+  return response.data
+}
 
-export default { getAll , createNew, setToken, update, postBC, postAvatar }
+
+
+export default { getAll , createNew, setToken, update, postBC, postAvatar, postBackground }

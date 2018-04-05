@@ -7,11 +7,12 @@ import { Link } from 'react-router-dom'
 const Home = (props) => {
   const style = {
     marginTop: 10,
-    marginBottom: 10
+    marginBottom: 10,
+    marginLeft: 10
   }
 
   return(
-    <div>
+    <div style={style}>
       <h2>All Bands</h2>
       {props.bands.map(band =>
         <div key={`all-${band._id}`}>
@@ -21,7 +22,7 @@ const Home = (props) => {
         </div>
       )}
       <div>
-        <p style={style}>Showcase:
+        <p>Showcase:
         <Link to={`/bands/${props.randomBand._id}`}>{props.randomBand.name}</Link>
         {props.randomBand.avatarUrl
           ? <div>

@@ -11,6 +11,7 @@ const bandSchema = new mongoose.Schema({
   bcAlbumID: String,
   bcTrackID: String,
   avatarUrl: String,
+  backgroundUrl: String,
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 })
 
@@ -26,6 +27,7 @@ bandSchema.statics.format = (band) => {
     bcAlbumID: band.bcAlbumID,
     bcTrackID: band.bcTrackID,
     avatarUrl: band.avatarUrl,
+    backgroundUrl: band.backgroundUrl,
   }
 }
 

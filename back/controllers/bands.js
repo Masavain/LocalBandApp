@@ -95,6 +95,21 @@ bandsRouter.post("/:id/avatar", async (req, res) => {
     }
   })
 
+  bandsRouter.post("/:id/background", async (req, res) => {
+    try {
+        console.log('routerissa: ', req.body.backgroundUrl)
+
+        const uusi = { backgroundUrl: req.body.backgroundUrl }
+        console.log('routerissa uusi: ', uusi)
+        const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
+        console.log('routerissa updated: ', updated)
+        res.json(Band.format(updated))
+
+    } catch (exception) {
+        console.log(error)
+        res.status(400).send({ error: 'malformatted id' })
+    }
+  })
 
 
 bandsRouter.put('/:id', async (req, res) => {

@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { filterChange, filtertypeChange } from './../reducers/filterReducer'
-import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap'
+import { Form, FormControl, FormGroup, ControlLabel } from 'react-bootstrap'
 
 class Filter extends React.Component {
   changeFilter = (event) => {
@@ -14,25 +14,29 @@ class Filter extends React.Component {
   }
   render() {
     const style = {
-      marginBottom: 10
+      marginBottom: 10,
+      marginLeft: 10,
+      marginRight: 100
     }
+
 
     return(
       <div style={style}>
-        <FormGroup controlId="formControlsSelect">
-          <FormControl
-            type="text"
-            name="filter"
-            onChange={this.changeFilter}/>
-          <ControlLabel>Filter by</ControlLabel>
-          <FormControl componentClass="select" placeholder="name" onChange={this.changeFiltertype}>
-            <option value="name">name</option>
-            <option value="hometown">hometown</option>
-            <option value="genre">genre</option>
-          </FormControl>
-        </FormGroup>
+        <form className='form-inline'>
+          <FormGroup className='form-group' controlId="formControlsSelect">
+            <FormControl className='input-group'
+              type="text"
+              name="filter"
+              onChange={this.changeFilter}/>{' '}
+            <ControlLabel>Filter by</ControlLabel>{'  '}
+            <FormControl componentClass="select" placeholder="name" onChange={this.changeFiltertype}>
+              <option value="name">name</option>
+              <option value="genre">genre</option>
+              <option value="hometown">hometown</option>
+            </FormControl>
+          </FormGroup>
+        </form>
       </div>
-
     )
   }
 }
