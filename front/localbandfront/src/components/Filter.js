@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { filterChange, filtertypeChange } from './../reducers/filterReducer'
-import { Form, FormControl, FormGroup, ControlLabel } from 'react-bootstrap'
+import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap'
 
 class Filter extends React.Component {
   changeFilter = (event) => {

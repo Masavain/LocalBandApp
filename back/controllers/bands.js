@@ -79,6 +79,21 @@ bandsRouter.post('/:id/bandcamp', async (req, res) => {
     }
 })
 
+bandsRouter.post("/:id/youtube", async (req, res) => {
+    try {
+
+        const uusi = { youtubeID: req.body.youtubeID }
+        console.log('routerissa uusi: ', uusi)
+        const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
+        console.log('routerissa updated: ', updated)
+        res.json(Band.format(updated))
+
+    } catch (exception) {
+        console.log(error)
+        res.status(400).send({ error: 'malformatted id' })
+    }
+  })
+
 bandsRouter.post("/:id/avatar", async (req, res) => {
     try {
         console.log('routerissa: ', req.body.avatarUrl)

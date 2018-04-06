@@ -19,9 +19,8 @@ const bandReducer = (state = [], action) => {
 
 }
 
-export const creation = (content) => {
+export const creation = (newBand) => {
   return async (dispatch) => {
-    const newBand = await bandService.createNew(content)
     dispatch({
       type: 'CREATE',
       content: newBand

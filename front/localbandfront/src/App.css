@@ -1,19 +1,19 @@
-/* .navbar{
-    width:100%;
-} */
-
 .form-inline {
     width: 100%;
   }
 
 .form-group {
-    width: 90%;
+    width: 50%;
 }
 
 .input-group {
     width: 50% !important;
 }
-  
+
+.input-label {
+    padding:5px;
+}
+
 .button {
     display: none;
 }

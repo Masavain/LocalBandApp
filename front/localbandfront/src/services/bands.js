@@ -30,6 +30,11 @@ const postBC = async (id, BCurl) => {
   return response.data
 }
 
+const postYT = async (id, youtubeID) => {
+  const response = await axios.post(`${url}/${id}/youtube`, youtubeID)
+  return response.data
+}
+
 const postAvatar = async (id, avatarUrl) => {
   const response = await axios.post(`${url}/${id}/avatar`, avatarUrl)
   return response.data
@@ -42,4 +47,4 @@ const postBackground = async (id, backgroundUrl) => {
 
 
 
-export default { getAll , createNew, setToken, update, postBC, postAvatar, postBackground }
+export default { getAll , createNew, setToken, update, postBC, postAvatar, postBackground, postYT }

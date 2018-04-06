@@ -4,9 +4,11 @@ import BandForm from './BandForm'
 import { Link } from 'react-router-dom'
 
 const ProfilePage = (props) => {
-
+  const style = {
+    padding: 10
+  }
   return(
-    <div>
+    <div style={style}>
       <h3>{props.user && props.user.username}</h3>
       <div>
         {props.userbands.map(b =>

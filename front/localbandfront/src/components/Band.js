@@ -58,6 +58,16 @@ const Band = (props) => {
     }
   }
 
+  const handleYoutubeSubmit = async (event) => {
+    event.preventDefault()
+    console.log(event.target.yturl.value.toString())
+    const id = event.target.yturl.value.toString().substr(32, 43)
+    console.log(id)
+    const updatedBand = await bandService.postYT(props.band._id, { youtubeID: id })
+    props.addBandcamp(updatedBand)
+    window.location.reload()
+  }
+
   const BCstyle = {
     border: 0,
     width: 350,
@@ -87,6 +97,8 @@ const Band = (props) => {
     padding: 10
   }
 
+  const ytId = props.band.youtubeID ? props.band.youtubeID : 'So6Qa_4QHYY'
+  const ytUrli = `https://www.youtube.com/embed/${ytId}?autoplay=0`
   return (
     <Grid>
       <Row className='wrapper' style={headerStyle}>
@@ -176,7 +188,16 @@ const Band = (props) => {
         </Col>
       </Row>
       <Row>
-
+        <Col className={gridStyle} xs={4}>
+          <iframe id="ytplayer" type="text/html" width="640" height="360"
+            src={ytUrli}
+            frameBorder="0"></iframe>
+          <div>
+            <form onSubmit={handleYoutubeSubmit}>
+              <div>add youtube url<input type='text' name='yturl' /></div>
+            </form>
+          </div>
+        </Col>
       </Row>
     </Grid>
   )

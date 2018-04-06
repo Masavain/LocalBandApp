@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { creation } from './../reducers/bandReducer'
-import { FormControl, Button, FormGroup, ControlLabel } from 'react-bootstrap'
-
+import { Form, FormControl, Button, FormGroup, ControlLabel, Col } from 'react-bootstrap'
+import bandService from './../services/bands'
 
 const BandForm = (props) => {
   const handleSubmit = async (event) => {
@@ -12,38 +12,40 @@ const BandForm = (props) => {
       hometown: event.target.hometown.value,
       started: event.target.started.value
     }
-    props.creation(newBand)
-    props.history.push('/')
+    const savedBand = await bandService.createNew(newBand)
+    props.creation(savedBand)
+    props.history.push(`/bands/${savedBand._id}`)
   }
 
   return (
     <div>
-      <h2>add new band</h2>
-      <form onSubmit={handleSubmit}>
-        <FormGroup>
-          <ControlLabel>Name: </ControlLabel>
-          <FormControl
+      <h2>Add new band</h2>
+      <Form horizontal onSubmit={handleSubmit} className='form-inline'>
+        <FormGroup className='form-group' bsSize='sm'>
+          <Col className='input-label' componentClass={ControlLabel} xs={3}>Name: </Col>
+          <Col className='input-label' xs={9}><FormControl
             type="text"
             name="name"
-          />
-          <ControlLabel>Genre: </ControlLabel>
-          <FormControl
+          /></Col>
+
+          <Col className='input-label' componentClass={ControlLabel} xs={3}>Genre: </Col>
+          <Col className='input-label' xs={9}><FormControl
             type="text"
             name="genre"
-          />
-          <ControlLabel>Hometown: </ControlLabel>
-          <FormControl
+          /></Col>
+          <Col className='input-label' componentClass={ControlLabel} xs={3}>Hometown: </Col>
+          <Col className='input-label' xs={9}><FormControl
             type="text"
             name="hometown"
-          />
-          <ControlLabel>Starting year:</ControlLabel>
-          <FormControl
+          /></Col>
+          <Col className='input-label' componentClass={ControlLabel} xs={3}>Starting Year: </Col>
+          <Col className='input-label' xs={9}><FormControl
             type="number"
             name="started"
-          />
-          <Button bsStyle="success" type="submit">Add</Button>
+          /></Col>
+          <Col className='input-label' smOffset={5}><Button bsStyle="success" type="submit">Add</Button></Col>
         </FormGroup>
-      </form>
+      </Form>
     </div>
   )
 
