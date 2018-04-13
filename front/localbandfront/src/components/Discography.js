@@ -1,12 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
+// import bandService from './../services/bands'
+// import imageService from './../services/images'
 import { Grid, Row, Col } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import BandFeed from './BandFeed'
+import { updateBand } from './../reducers/bandReducer'
 import BandHeader from './BandHeader'
 
-const Band = (props) => {
-  return (
+const Discography = (props) => {
+  return(
     <Grid>
       <Row>
         <BandHeader band={props.band}/>
@@ -18,13 +20,10 @@ const Band = (props) => {
           <Link to={`/bands/${props.band._id}/discography`}>discography</Link>
         </Col>
       </Row>
-      <Row>
-        <BandFeed band={props.band}/>
-      </Row>
     </Grid>
-
   )
 }
+
 export default connect(
-  null, null
-)(Band)
+  null, { updateBand }
+)(Discography)

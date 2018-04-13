@@ -11,6 +11,8 @@ import ProfilePage from './components/ProfilePage'
 import About from './components/About'
 import JoinForm from './components/JoinForm'
 import Band from './components/Band'
+import Gallery from './components/Gallery'
+import Discography from './components/Discography'
 import Background from './nakemys.jpg'
 import './App.css'
 
@@ -74,7 +76,7 @@ class App extends React.Component {
                   </NavItem>
 
                 </Nav>
-                <Nav float pullRight>
+                <Nav pullRight>
                   <NavItem>
                     {this.props.user
                       ?
@@ -112,6 +114,12 @@ class App extends React.Component {
             <Grid style={customStyle}>
               <Route exact path="/bands/:id" render={({ match }) => {
                 return <Band band={blogById(match.params.id)} />}}
+              />
+              <Route exact path="/bands/:id/gallery" render={({ match }) => {
+                return <Gallery band={blogById(match.params.id)} />}}
+              />
+              <Route exact path="/bands/:id/discography" render={({ match }) => {
+                return <Discography band={blogById(match.params.id)} />}}
               />
               <Route exact path="/login" render={({ history }) => <LoginForm history={history}/>} />
               <Route exact path="/search" render={() => <Explore/>} />

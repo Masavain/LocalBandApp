@@ -46,6 +46,9 @@ imagesRouter.post('/', async (req, res) => {
         if (type === 'avatar') {
             band.avatar = image._id
         }
+        if (type === 'gallery') {
+            band.gallery = band.gallery.concat(image._id)
+        }
         user.images = user.images.concat(image._id)
         await band.save()
         await user.save()

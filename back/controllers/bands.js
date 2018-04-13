@@ -11,6 +11,7 @@ bandsRouter.get('/', async (req, res) => {
         .populate('user', { username: 1, name: 1 })
         .populate('backgroundImage', { url: 1 })
         .populate('avatar', { url:1 })
+        .populate('gallery', { url: 1})
     res.json(bands)
 })
 
@@ -46,83 +47,6 @@ bandsRouter.post('/', async (req, res) => {
 
 })
 
-bandsRouter.post('/:id/bandcamp', async (req, res) => {
-    try {
-        const body = req.body
-        const url = `${body.albumUrl}`
-        function promisify(url) {
-            return new Promise(function (resolve, reject) {
-                bandcamp.getAlbumInfo(url, async (error, albumInfo) => {
-                    if (error) {
-                        reject(error)
-                    } else {
-                        resolve(albumInfo)
-                    }
-                })
-            })
-        }
-
-        const bandcampInfo = await promisify(url)
-
-        const uusi = {
-            bcURL: url,
-            bcAlbumID: bandcampInfo.raw.current.id,
-            bcTrackID: bandcampInfo.raw.current.featured_track_id
-        }
-        console.log('album:', uusi.bcAlbumID, 'track:', uusi.bcTrackID)
-        const updatedBand = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
-        console.log('updated', updatedBand)
-        res.status(200).json(Band.format(updatedBand))
-    } catch (exception) {
-        console.log(exception)
-        res.status(400).json({ error: 'malformatted id' })
-    }
-})
-
-bandsRouter.post("/:id/youtube", async (req, res) => {
-    try {
-
-        const uusi = { youtubeID: req.body.youtubeID }
-        console.log('routerissa uusi: ', uusi)
-        const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
-        console.log('routerissa updated: ', updated)
-        res.json(Band.format(updated))
-
-    } catch (exception) {
-        console.log(error)
-        res.status(400).send({ error: 'malformatted id' })
-    }
-  })
-
-// bandsRouter.post("/:id/avatar", async (req, res) => {
-//     try {
-//         const uusi = { avatarUrl: req.body.avatarUrl }
-//         const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
-//         res.json(Band.format(updated))
-
-//     } catch (exception) {
-//         console.log(error)
-//         res.status(400).send({ error: 'malformatted id' })
-//     }
-//   })
-
-//   bandsRouter.post("/:id/background", async (req, res) => {
-//     try {
-//         console.log('routerissa: ', req.body.bgImageId)
-//         const backgroundImage = await Image.findById( req.body.bgImageId )
-//         const uusi = { backgroundImage }
-//         console.log('routerissa uusi: ', uusi)
-//         const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
-//         console.log('routerissa updated: ', updated)
-//         res.json(Band.format(updated))
-
-//     } catch (exception) {
-//         console.log(error)
-//         res.status(400).send({ error: 'malformatted id' })
-//     }
-//   })
-
-
 bandsRouter.put('/:id', async (req, res) => {
     try {
         const uusi = { about: req.body.about }
@@ -146,5 +70,52 @@ bandsRouter.get('/:id', async (req, res) => {
     }
 })
 
+
+bandsRouter.post('/:id/bandcamp', async (req, res) => {
+    try {
+        const body = req.body
+        const url = `${body.albumUrl}`
+        function promisify(url) {
+            return new Promise(function (resolve, reject) {
+                bandcamp.getAlbumInfo(url, async (error, albumInfo) => {
+                    if (error) {
+                        reject(error)
+                    } else {
+                        resolve(albumInfo)
+                    }
+                })
+            })
+        }
+
+        const bandcampInfo = await promisify(url)
+
+        const uusi = {
+            bcURL: url,
+            bcAlbumID: bandcampInfo.raw.current.id,
+            bcTrackID: bandcampInfo.raw.current.featured_track_id
+        }
+        const updatedBand = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
+        console.log('updated', updatedBand)
+        res.status(200).json(Band.format(updatedBand))
+    } catch (exception) {
+        console.log(exception)
+        res.status(400).json({ error: 'malformatted id' })
+    }
+})
+
+bandsRouter.post("/:id/youtube", async (req, res) => {
+    try {
+
+        const uusi = { youtubeID: req.body.youtubeID }
+        console.log('routerissa uusi: ', uusi)
+        const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
+        console.log('routerissa updated: ', updated)
+        res.json(Band.format(updated))
+
+    } catch (exception) {
+        console.log(error)
+        res.status(400).send({ error: 'malformatted id' })
+    }
+  })
 
 module.exports = bandsRouter

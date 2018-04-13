@@ -10,6 +10,7 @@ const bandSchema = new mongoose.Schema({
   bcURL: String,
   bcAlbumID: String,
   bcTrackID: String,
+  gallery: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
   avatar: { type: mongoose.Schema.Types.ObjectId, ref: 'Image' },
   backgroundImage: { type: mongoose.Schema.Types.ObjectId, ref: 'Image' },
   youtubeID: String,
@@ -28,6 +29,7 @@ bandSchema.statics.format = (band) => {
     bcAlbumID: band.bcAlbumID,
     bcTrackID: band.bcTrackID,
     avatar: band.avatar,
+    gallery: band.gallery,
     backgroundImage: band.backgroundImage,
     youtubeID: band.youtubeID
   }
