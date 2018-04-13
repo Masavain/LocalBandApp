@@ -20,5 +20,6 @@
 |5.4.|3| bändikohtaisen taustakuvan postaus ja hover-buttonit|
 |6.4.|2| youtube-urlin postaaminen, parseaminen ja youtube-videon upottaminen|
 |13.4.|2.5| Image on oma mongo model ja kuvien käsittely omassa routerissa, myös pientä hienosäätöä frontissa|
+|13.4.|2.5| bändikohtainen galleria ja discografia sekä Band-komponentin eriyttämistä useammaksi komponentiksi|
 
-total: 41.5h
+total: 44h
