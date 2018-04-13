@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Grid, Row, Col, Button } from 'react-bootstrap'
-import { addAbout, addBandcamp, addAvatar } from './../reducers/bandReducer'
+import { updateBand } from './../reducers/bandReducer'
 import bandService from './../services/bands'
 import imageService from './../services/images'
 import defaultBackground from './../nakemys_opa.jpg'
@@ -14,27 +14,38 @@ const Band = (props) => {
     const newObject = { ...props.band, about: event.target.about.value }
     const updatedBand = await bandService.update(newObject._id, newObject)
 
-    props.addAbout(updatedBand)
+    props.updateBand(updatedBand)
     window.location.reload()
   }
+
   const handleBandcampSubmit = async (event) => {
     event.preventDefault()
     const updatedBand = await bandService.postBC(props.band._id, { albumUrl: event.target.bcurl.value.toString() })
-    props.addBandcamp(updatedBand)
+    props.updateBand(updatedBand)
     window.location.reload()
   }
 
   const handleAvatarSubmit = async (event) => {
     event.preventDefault()
+
     const file  = document.getElementById('imageFile').files[0]
     var reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = async function () {
+
       const result = reader.result.substr(reader.result.indexOf(',')+1, reader.result.length)
-      const imgurUrl = await imageService.postImgur( result )
-      const updatedBand = await bandService.postAvatar(props.band._id, { avatarUrl: imgurUrl.data.link })
-      props.addAvatar(updatedBand)
+      const imgurFile = await imageService.postImgur( result )
+
+      const image = { url: imgurFile.data.link, imageType: imgurFile.data.type, height: imgurFile.data.height,
+        width: imgurFile.data.width, animated: imgurFile.data.animated,
+        deleteHash: imgurFile.data.deletehash, size: imgurFile.data.size,
+        type: 'avatar', bandId: props.band._id }
+
+      await imageService.postImage(image)
+      const updatedBand = await bandService.getById(props.band._id)
+      props.updateBand(updatedBand)
       window.location.reload()
+
     }
     reader.onerror = function (error) {
       console.log('Error: ', error)
@@ -43,15 +54,25 @@ const Band = (props) => {
 
   const handleBgSubmit = async (event) => {
     event.preventDefault()
+
     const file  = document.getElementById('bgImage').files[0]
     var reader = new FileReader()
     reader.readAsDataURL(file)
     reader.onload = async function () {
+
       const result = reader.result.substr(reader.result.indexOf(',')+1, reader.result.length)
-      const imgurUrl = await imageService.postImgur( result )
-      const updatedBand = await bandService.postBackground(props.band._id, { backgroundUrl: imgurUrl.data.link })
-      props.addAvatar(updatedBand)
+      const imgurFile = await imageService.postImgur( result )
+
+      const image = { url: imgurFile.data.link, imageType: imgurFile.data.type, height: imgurFile.data.height,
+        width: imgurFile.data.width, animated: imgurFile.data.animated,
+        deleteHash: imgurFile.data.deletehash, size: imgurFile.data.size,
+        type: 'background', bandId: props.band._id }
+
+      await imageService.postImage(image)
+      const updatedBand = await bandService.getById(props.band._id)
+      props.updateBand(updatedBand)
       window.location.reload()
+
     }
     reader.onerror = function (error) {
       console.log('Error: ', error)
@@ -64,7 +85,7 @@ const Band = (props) => {
     const id = event.target.yturl.value.toString().substr(32, 43)
     console.log(id)
     const updatedBand = await bandService.postYT(props.band._id, { youtubeID: id })
-    props.addBandcamp(updatedBand)
+    props.updateBand(updatedBand)
     window.location.reload()
   }
 
@@ -80,9 +101,11 @@ const Band = (props) => {
     opacity: 0.5,
     padding: 20
   }
+
   const headerStyle = {
     marginTop: 0,
-    backgroundImage: props.band.backgroundUrl ? `url(${props.band.backgroundUrl})` : `url(${defaultBackground})`,
+    backgroundImage: props.band.backgroundImage ? `url(${props.band.backgroundImage.url})`
+      : `url(${defaultBackground})`,
     height: 250,
     backgroundSize:'cover',
     backgroundRepeat:   'no-repeat',
@@ -98,7 +121,7 @@ const Band = (props) => {
   }
 
   const ytId = props.band.youtubeID ? props.band.youtubeID : 'So6Qa_4QHYY'
-  const ytUrli = `https://www.youtube.com/embed/${ytId}?autoplay=0`
+  const ytUrli = `https://www.youtube.com/embed/${ytId}`
   return (
     <Grid>
       <Row className='wrapper' style={headerStyle}>
@@ -127,9 +150,9 @@ const Band = (props) => {
       </Row>
       <Row style={gridStyle}>
         <Col xs={4}>
-          {props.band.avatarUrl
+          {props.band.avatar
             ? <div className="wrapper">
-              <img src={props.band.avatarUrl} width="300" height="300" alt="avatar"/>
+              <img src={props.band.avatar.url} width="300" height="300" alt="avatar"/>
               {props.user ?
                 <div>
                   {props.band.user.name === props.user.name ?
@@ -189,7 +212,7 @@ const Band = (props) => {
       </Row>
       <Row>
         <Col className={gridStyle} xs={4}>
-          <iframe id="ytplayer" type="text/html" width="640" height="360"
+          <iframe title="youtube" id="ytplayer" type="text/html" width="640" height="360"
             src={ytUrli}
             frameBorder="0"></iframe>
           <div>
@@ -211,5 +234,5 @@ const mapStateToProps = (state) => {
   }
 }
 export default connect(
-  mapStateToProps, { addAbout, addBandcamp, addAvatar }
+  mapStateToProps, { updateBand }
 )(Band)

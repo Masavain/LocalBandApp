@@ -1,6 +1,8 @@
 import loginService from '.././services/login'
 import bandService from '.././services/bands'
+import imageService from '.././services/images'
 import userService from '.././services/users'
+
 console.log('loggedUser:', JSON.parse(window.localStorage.getItem('loggedUser')))
 const loginReducer = (state = JSON.parse(window.localStorage.getItem('loggedUser')), action) => {
   console.log('ACTION: ', action)
@@ -23,6 +25,7 @@ export const sign = (username, password) => {
     })
     const user = await loginService.login(newuser)
 
+    imageService.setToken(user.token)
     bandService.setToken(user.token)
     window.localStorage.setItem('loggedUser', JSON.stringify(user))
 
@@ -39,7 +42,7 @@ export const login = (username, password) => {
       username: username,
       password: password
     })
-
+    imageService.setToken(user.token)
     bandService.setToken(user.token)
     window.localStorage.setItem('loggedUser', JSON.stringify(user))
 
@@ -64,6 +67,8 @@ export const initUser = () => {
     const loggedUser = window.localStorage.getItem('loggedUser')
     if (loggedUser) {
       const user = JSON.parse(loggedUser)
+      imageService.setToken(user.token)
+      bandService.setToken(user.token)
       dispatch({
         type: 'LOGIN',
         user: user

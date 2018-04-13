@@ -14,7 +14,6 @@ const createNew = async (newObject) => {
   const config = {
     headers: { 'Authorization': token }
   }
-
   const response = await axios.post(url, newObject, config)
   return response.data
 }
@@ -45,6 +44,10 @@ const postBackground = async (id, backgroundUrl) => {
   return response.data
 }
 
+const getById = async (id) => {
+  const response = await axios.get(`${url}/${id}`)
+  return response.data
+}
 
 
-export default { getAll , createNew, setToken, update, postBC, postAvatar, postBackground, postYT }
+export default { getAll , getById, createNew, setToken, update, postBC, postAvatar, postBackground, postYT }

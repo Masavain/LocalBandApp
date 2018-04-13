@@ -1,8 +1,12 @@
 import axios from 'axios'
+const url = 'http://localhost:3001/api/images'
+let token = null
 
+const setToken = (newToken) => {
+  token = `bearer ${newToken}`
+}
 
 const postImgur = async ( image ) => {
-  console.log('täällä metodissa', image)
   const clientId = '51812115fbf0164'
   const config = {
     headers: { 'authorization': 'Client-ID ' + clientId }
@@ -11,4 +15,22 @@ const postImgur = async ( image ) => {
   return response.data
 }
 
-export default { postImgur }
+const getAll = async () => {
+  const response = await axios.get(url)
+  return response.data
+}
+
+const getById = async (id) => {
+  const response = await axios.get(`${url}/${id}`)
+  return response.data
+}
+
+const postImage = async (newObject) => {
+  const config = {
+    headers: { 'Authorization': token }
+  }
+  const response = await axios.post(url, newObject, config)
+  return response.data
+}
+
+export default { setToken, getAll, getById, postImgur, postImage }

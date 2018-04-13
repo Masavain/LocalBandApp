@@ -5,11 +5,7 @@ const bandReducer = (state = [], action) => {
   switch (action.type) {
   case 'INIT_BANDS':
     return action.data
-  case 'ADD_ABOUT':
-    return [ ...state.filter(b => b.id !==action.data.id), action.data ]
-  case 'ADD_BANDCAMP':
-    return [ ...state.filter(b => b.id !==action.data.id), action.data ]
-  case 'ADD_AVATAR':
+  case 'UPDATE':
     return [ ...state.filter(b => b.id !==action.data.id), action.data ]
   case 'CREATE':
     return [ ...state, action.content]
@@ -28,32 +24,15 @@ export const creation = (newBand) => {
   }
 }
 
-export const addAbout = (updatedBand) => {
+export const updateBand = (updatedBand) => {
   return async (dispatch) => {
     dispatch({
-      type: 'ADD_ABOUT',
+      type: 'UPDATE',
       data: updatedBand
     })
   }
 }
 
-export const addBandcamp = (updatedBand) => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'ADD_BANDCAMP',
-      data: updatedBand
-    })
-  }
-}
-
-export const addAvatar = (updatedBand) => {
-  return async (dispatch) => {
-    dispatch({
-      type: 'ADD_AVATAR',
-      data: updatedBand
-    })
-  }
-}
 
 export const initialization = () => {
   return async (dispatch) => {
