@@ -5,7 +5,6 @@ import imageService from './../services/images'
 import { Grid, Row, Col, Button } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
 import { Link } from 'react-router-dom'
-import BandHeader from './BandHeader'
 
 const Gallery = (props) => {
   const handleGallerySubmit = async (event) => {
@@ -34,21 +33,8 @@ const Gallery = (props) => {
       console.log('Error: ', error)
     }
   }
-  props.band.gallery.map(i =>
-    console.log(i.url))
-  console.log('gallery', props.band.gallery)
   return(
     <Grid>
-      <Row>
-        <BandHeader band={props.band}/>
-      </Row>
-      <Row>
-        <Col>
-          <Link to={`/bands/${props.band._id}`}>feed</Link> &nbsp;
-          <Link to={`/bands/${props.band._id}/gallery`}>gallery</Link> &nbsp;
-          <Link to={`/bands/${props.band._id}/discography`}>discography</Link>
-        </Col>
-      </Row>
       <Row>
         {props.band.gallery.length === 0 ?
           <div>

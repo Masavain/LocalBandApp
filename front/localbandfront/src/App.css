@@ -27,3 +27,10 @@
     padding:10;
 }
 
+.multiborder{
+    border-radius: 3px; 
+    border-bottom:none;
+    position:relative;
+    margin:10px;
+}
+
