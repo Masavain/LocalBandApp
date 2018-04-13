@@ -28,43 +28,17 @@ const Band = (props) => {
     borderTop: '1px solid lightgrey',
     borderLeft: '1px solid lightgrey',
     borderRight: '1px solid lightgrey',
-    borderRadius: '200',
+    borderBottom: '1px solid white',
+    position:'relative'
+
   }
   const inactiveStyle = {
     left: '5px',
     padding: 5,
     borderBottom: '0px solid',
-  }
-  let width1 = null
-  let width2 = null
-  if (props.toggleType === 0) {
-    width1 = '870px'
-    width2 = '5px'
-  }
-  if (props.toggleType === 1) {
-    width1 = '820px'
-    width2 = '42px'
-  }
-  if (props.toggleType === 2) {
-    width1 = '732px'
-    width2 = '93px'
+    position:'relative'
   }
 
-  const bottomBorder = {
-    borderBottom: '1px solid lightgrey',
-    width: width1,
-    position:'absolute',
-    bottom:'0px',
-    right:'0px',
-  }
-
-  const bottomBorder2 = {
-    borderBottom:'1px solid lightgrey',
-    width: width2,
-    position:'absolute',
-    bottom:'0px',
-    left:'0px'
-  }
 
   return (
 
@@ -72,18 +46,19 @@ const Band = (props) => {
       <Row>
         <BandHeader band={props.band}/>
       </Row>
-      <Row className='multiborder'>
+      <Row >
 
-        <table >
+        <table className='multiborder'>
           <tr>
             &nbsp;
             <td style={props.toggleType === 0 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(0)}>feed</td>
             <td style={props.toggleType === 1 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(1)}>gallery</td>
             <td style={props.toggleType === 2 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(2)}>discography</td>
+            &nbsp;
           </tr>
         </table>
-        <div style={bottomBorder}></div>
-        <div style={bottomBorder2}></div>
+        <div className='eka'></div>
+        <div className='toka'></div>
       </Row>
       <Row>
         {componentByToggle()}

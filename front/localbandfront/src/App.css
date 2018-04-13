@@ -28,9 +28,20 @@
 }
 
 .multiborder{
-    border-radius: 3px; 
-    border-bottom:none;
+    border-bottom: 1px solid lightgray;
     position:relative;
+    width: 98%;
     margin:10px;
 }
 
+.eka{
+    border-bottom:none;
+    position:absolute;
+    margin:10px;
+}
+
+.toka{
+    border-bottom:none;
+    position:absolute;
+    margin:10px;
+}
