@@ -19,5 +19,6 @@
 |2.4.|1| kuvan postaaminen imgur-api:lla toimii myös tiedostolla|
 |5.4.|3| bändikohtaisen taustakuvan postaus ja hover-buttonit|
 |6.4.|2| youtube-urlin postaaminen, parseaminen ja youtube-videon upottaminen|
+|13.4.|2.5| Image on oma mongo model ja kuvien käsittely omassa routerissa, myös pientä hienosäätöä frontissa|
 
-total: 39h
+total: 41.5h
