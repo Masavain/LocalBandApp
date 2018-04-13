@@ -21,5 +21,6 @@
 |6.4.|2| youtube-urlin postaaminen, parseaminen ja youtube-videon upottaminen|
 |13.4.|2.5| Image on oma mongo model ja kuvien käsittely omassa routerissa, myös pientä hienosäätöä frontissa|
 |13.4.|2.5| bändikohtainen galleria ja discografia sekä Band-komponentin eriyttämistä useammaksi komponentiksi|
+|13.4.|2.5| toggleReducer bändisivun välilehtiä varten|
 
-total: 44h
+total: 46.5h
