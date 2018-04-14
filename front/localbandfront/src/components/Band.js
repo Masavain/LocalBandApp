@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Col } from 'react-bootstrap'
+import { Grid, Row } from 'react-bootstrap'
 import BandFeed from './BandFeed'
 import Gallery from './Gallery'
 import Discography from './Discography'
@@ -47,7 +47,6 @@ const Band = (props) => {
         <BandHeader band={props.band}/>
       </Row>
       <Row >
-
         <table className='multiborder'>
           <tr>
             &nbsp;
