@@ -22,5 +22,6 @@
 |13.4.|2.5| Image on oma mongo model ja kuvien käsittely omassa routerissa, myös pientä hienosäätöä frontissa|
 |13.4.|2.5| bändikohtainen galleria ja discografia sekä Band-komponentin eriyttämistä useammaksi komponentiksi|
 |13.4.|2.5| toggleReducer bändisivun välilehtiä varten|
+|14.4.|1| galleriasivun toteutus, react-image-lightboxin käyttöönotto|
 
-total: 46.5h
+total: 47.5h
