@@ -24,5 +24,6 @@
 |13.4.|2.5| toggleReducer bändisivun välilehtiä varten|
 |14.4.|1| galleriasivun toteutus, react-image-lightboxin käyttöönotto|
 |15.4.|3| kosmeettisia muutoksia ja tuskailua bandfeedin handleUpdateSubmit -funktion kanssa|
+|15.4.|3| Album mongo modelin luominen backiin, sille router. Fronttiin discografian luonti alkuun (albumille form jne.)|
 
-total: 50.5h
+total: 53.5h
