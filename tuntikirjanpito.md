@@ -23,5 +23,6 @@
 |13.4.|2.5| bändikohtainen galleria ja discografia sekä Band-komponentin eriyttämistä useammaksi komponentiksi|
 |13.4.|2.5| toggleReducer bändisivun välilehtiä varten|
 |14.4.|1| galleriasivun toteutus, react-image-lightboxin käyttöönotto|
+|15.4.|3| kosmeettisia muutoksia ja tuskailua bandfeedin handleUpdateSubmit -funktion kanssa|
 
-total: 47.5h
+total: 50.5h
