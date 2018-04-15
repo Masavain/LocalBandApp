@@ -13,6 +13,7 @@ const bandSchema = new mongoose.Schema({
   gallery: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
   avatar: { type: mongoose.Schema.Types.ObjectId, ref: 'Image' },
   backgroundImage: { type: mongoose.Schema.Types.ObjectId, ref: 'Image' },
+  albums: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Album' }],
   youtubeID: String,
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 })
@@ -31,6 +32,7 @@ bandSchema.statics.format = (band) => {
     avatar: band.avatar,
     gallery: band.gallery,
     backgroundImage: band.backgroundImage,
+    albums: band.albums,
     youtubeID: band.youtubeID
   }
 }

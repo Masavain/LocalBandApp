@@ -12,6 +12,7 @@ bandsRouter.get('/', async (req, res) => {
         .populate('backgroundImage', { url: 1 })
         .populate('avatar', { url:1 })
         .populate('gallery', { url: 1})
+        .populate('albums')
     res.json(bands)
 })
 

@@ -1,6 +1,7 @@
 import loginService from '.././services/login'
 import bandService from '.././services/bands'
 import imageService from '.././services/images'
+import albumService from '.././services/albums'
 import userService from '.././services/users'
 
 console.log('loggedUser:', JSON.parse(window.localStorage.getItem('loggedUser')))
@@ -24,7 +25,7 @@ export const sign = (username, password) => {
       password: password
     })
     const user = await loginService.login(newuser)
-
+    albumService.setToken(user.token)
     imageService.setToken(user.token)
     bandService.setToken(user.token)
     window.localStorage.setItem('loggedUser', JSON.stringify(user))
@@ -42,6 +43,7 @@ export const login = (username, password) => {
       username: username,
       password: password
     })
+    albumService.setToken(user.token)
     imageService.setToken(user.token)
     bandService.setToken(user.token)
     window.localStorage.setItem('loggedUser', JSON.stringify(user))
@@ -67,6 +69,7 @@ export const initUser = () => {
     const loggedUser = window.localStorage.getItem('loggedUser')
     if (loggedUser) {
       const user = JSON.parse(loggedUser)
+      albumService.setToken(user.token)
       imageService.setToken(user.token)
       bandService.setToken(user.token)
       dispatch({

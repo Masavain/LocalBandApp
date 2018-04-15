@@ -30,7 +30,8 @@
 .multiborder{
     border-bottom: 1px solid lightgray;
     position:relative;
-    width: 98%;
+    width: 95%;
+    left: 20px;
     margin:10px;
 }
 

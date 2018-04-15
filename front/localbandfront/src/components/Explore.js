@@ -42,7 +42,6 @@ const Explore = (props) => {
   )
 }
 const bandsToShow = (bands, filter) => {
-  console.log(filter)
   const filteroity = bands.filter(function (band) {
     if (filter.filterType === 'name') {
       return band.name.toLowerCase().includes(filter.filter)

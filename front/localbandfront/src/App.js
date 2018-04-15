@@ -27,12 +27,15 @@ class App extends React.Component {
   render() {
     const style = {
       backgroundImage: `url(${Background})`,
+      backgroundRepeat: 'repeat-x',
+      backgroundColor: 'lightgray',
+      height: '1000px'
 
     }
     const customStyle = {
       backgroundColor: 'white',
       marginTop: 65,
-      height: '800px',
+      height: '1000px',
       paddingLeft: 0,
       paddingRight: 0,
     }

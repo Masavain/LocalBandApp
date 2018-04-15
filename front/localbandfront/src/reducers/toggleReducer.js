@@ -5,7 +5,7 @@ const toggleReducer = (state = { type: 0, photoIndex: 0, isOpen:false }, action)
   case 'TOGGLE':
     return { ...state, type: action.toggle }
   case 'PHOTOINDEX':
-    return { ... state, photoIndex: action.index }
+    return { ...state, photoIndex: action.index }
   case 'INITPHOTOINDEX':
     return { ...state, photoIndex:0, isOpen:false }
   case 'TOGGLEOPEN':
