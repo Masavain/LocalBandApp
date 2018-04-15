@@ -1,40 +1,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
-
+import { Grid, Row, Col } from 'react-bootstrap'
 
 
 const Home = (props) => {
-  const style = {
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 10
-  }
 
   return(
-    <div style={style}>
-      <h2>All Bands</h2>
-      {props.bands.map(band =>
-        <div key={`all-${band._id}`}>
-          <div>
-            <Link to={`/bands/${band._id}`}>{band.name}</Link>
-          </div>
-        </div>
-      )}
-      <div>
-        <p>Showcase:
-        <Link to={`/bands/${props.randomBand._id}`}>{props.randomBand.name}</Link>
-        {props.randomBand.avatarUrl
-          ? <div>
-            <img src={props.randomBand.avatarUrl} width="300" height="300" alt="avatar"/>
-          </div>
-          : <div>
-            <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
-          </div>}
-        </p>
-
-      </div>
-    </div>
+    <Grid >
+      <Row>
+        <Col xs={7}>
+          <h2>All Bands</h2>
+          {props.bands.map(band =>
+            <div key={`all-${band._id}`}>
+              <div>
+                <Link to={`/bands/${band._id}`}>{band.name}</Link>
+              </div>
+            </div>
+          )}
+        </Col>
+        <Col xs={3} style={{ marginTop: 25 }}>
+          <p>Showcase:
+          <Link to={`/bands/${props.randomBand._id}`}>{props.randomBand.name}</Link>
+          {props.randomBand.avatarUrl
+            ? <div>
+              <img src={props.randomBand.avatarUrl} width="300" height="300" alt="avatar"/>
+            </div>
+            : <div>
+              <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
+            </div>}
+          </p>
+        </Col>
+      </Row>
+    </Grid>
   )
 }
 

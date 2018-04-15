@@ -8,9 +8,10 @@ import imageService from './../services/images'
 const BandFeed = (props) => {
   const src = `https://bandcamp.com/EmbeddedPlayer/album=${props.band.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=${props.band.bcTrackID}/transparent=true/`
 
-  const handleAboutSubmit = async (event) => {
+  const handleUpdateSubmit = async (event) => {
     event.preventDefault()
-    const newObject = { ...props.band, about: event.target.about.value }
+    let newObject
+    (event.target.about ? newObject = { ...props.band, about: event.target.about.value } : newObject = { ...props.band, genre: event.target.genre.value } )
     const updatedBand = await bandService.update(newObject._id, newObject)
     props.updateBand(updatedBand)
     window.location.reload()
@@ -60,6 +61,7 @@ const BandFeed = (props) => {
   }
 
   const BCstyle = {
+    position: 'relative',
     border: 0,
     width: 350,
     height: 470
@@ -75,10 +77,10 @@ const BandFeed = (props) => {
   return(
     <Grid>
       <Row style={gridStyle}>
-        <Col xs={4}>
+        <Col xs={3}>
           {props.band.avatar
             ? <div className="wrapper">
-              <img src={props.band.avatar.url} width="300" height="300" alt="avatar"/>
+              <img src={props.band.avatar.url} width="250" height="250" alt="avatar"/>
               {props.user ?
                 <div>
                   {props.band.user.name === props.user.name ?
@@ -91,7 +93,7 @@ const BandFeed = (props) => {
                 : <div></div>}
             </div>
             : <div className="wrapper">
-              <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
+              <img src='/default_band_icon.png' width="250" height="250" alt="default avatar"/>
               {props.user ?
                 <div>
                   {props.band.user.name === props.user.name ?
@@ -103,21 +105,24 @@ const BandFeed = (props) => {
                 </div>
                 : <div></div>}
             </div>}
+        </Col>
+        <Col xs={4}>
           <div>
-            {props.band.about
-              ? <div>{props.band.about}
-                <form onSubmit={handleAboutSubmit}>
-                  <div>edit about<input type='text' name='about' /></div>
-                </form>
-              </div>
-              : <div>
-                <form onSubmit={handleAboutSubmit}>
-                  <div>add about<input type='text' name='about' /></div>
-                </form>
-              </div>}
+              Genre: {props.band.genre ? props.band.genre : ''}
+            <form onSubmit={handleUpdateSubmit}>
+                edit genre<input type='text' name='genre'/>
+            </form>
+          </div>
+          <div>
+            About: {props.band.about
+              ? props.band.about
+              : ''}
+            <form onSubmit={handleUpdateSubmit}>
+              <div>edit about<input type='text' name='about' /></div>
+            </form>
           </div>
         </Col>
-        <Col xsOffset={8}>
+        <Col xs={3}>
           {props.band.bcURL
             ? <div>
               <iframe title={props.band._id} style={BCstyle}

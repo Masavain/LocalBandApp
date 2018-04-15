@@ -20,7 +20,6 @@ const createNew = async (newObject) => {
 
 const update = async (id, newObject) => {
   const response = await axios.put(`${url}/${id}`, newObject)
-  console.log('tässä')
   return response.data
 }
 

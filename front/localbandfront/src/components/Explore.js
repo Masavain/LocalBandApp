@@ -5,14 +5,10 @@ import Filter from '../components/Filter'
 import { Link } from 'react-router-dom'
 
 const Explore = (props) => {
-  const ExploreStyle = {
-    marginTop: 10,
-    marginBottom: 10
-  }
   return(
-    <div style={ExploreStyle}>
+    <div style={{ marginTop: 10, marginBottom: 10 }}>
       <Filter />
-      <Table striped>
+      <Table fluid striped>
         <tbody>
           <tr>
             <td></td>
@@ -22,9 +18,9 @@ const Explore = (props) => {
           </tr>
           {props.visibleBands.map(band =>
             <tr key={band._id}>
-              {band.avatarUrl
+              {band.avatar
                 ? <td>
-                  <img src={band.avatarUrl} width="75" height="75" alt="thumbnail"/>
+                  <img src={band.avatar.url} width="75" height="75" alt="thumbnail"/>
                 </td>
                 : <td>
                   <img src='/default_band_icon.png' width="75" height="75" alt="default thumbnail"/>

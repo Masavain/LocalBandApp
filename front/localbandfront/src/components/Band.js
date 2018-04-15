@@ -9,7 +9,6 @@ import BandHeader from './BandHeader'
 
 const Band = (props) => {
   const componentByToggle = () => {
-    console.log('toggle:', props.toggleType)
     if (props.toggleType === 0) {
       return(<BandFeed band={props.band}/>)
     }
@@ -38,12 +37,15 @@ const Band = (props) => {
     borderBottom: '0px solid',
     position:'relative'
   }
-
+  const rowStyle = {
+    paddingLeft: 0,
+    paddingRight: 0
+  }
 
   return (
 
-    <Grid>
-      <Row>
+    <Grid fluid style={rowStyle}>
+      <Row style={rowStyle}>
         <BandHeader band={props.band}/>
       </Row>
       <Row >

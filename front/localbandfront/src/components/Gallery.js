@@ -33,16 +33,23 @@ const Gallery = (props) => {
       console.log('Error: ', error)
     }
   }
+
   const galleryStyle = {
     display: 'block',
     marginLeft: '35px',
     marginright: '35px',
   }
+  const imgStyle = {
+    backgroundColor: 'black',
+    objectFit: 'scale-down',
+    overflow: 'hidden',
+    margin: '1px'
+  }
   return(
     <Grid>
       <Row>
         {props.band.gallery.length === 0 ?
-          <div>
+          <div style={{ margin: 20 }}>
             <form onSubmit={handleGallerySubmit}>
               <input type="file" accept="image/*" id="galleryImage" name="image"/>
               <Button bsStyle="primary" bsSize='xsmall' type='submit'>add</Button>
@@ -50,7 +57,7 @@ const Gallery = (props) => {
           </div>
           : <div style={galleryStyle}>
             {props.band.gallery.map(image =>
-              <img key={image._id} src={image.url} onClick={() => props.openFromIndex(props.band.gallery.indexOf(image))} width="300" height="300" alt="galleryImage"/>
+              <img key={image._id} src={image.url} style={imgStyle} onClick={() => props.openFromIndex(props.band.gallery.indexOf(image))} width="300" height="300" alt="galleryImage"/>
             )}
             <form onSubmit={handleGallerySubmit}>
               <input type="file" accept="image/*" id="galleryImage" name="image"/>

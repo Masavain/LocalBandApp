@@ -17,7 +17,7 @@ const LoginForm = (props) => {
   }
 
   return (
-    <div>
+    <div style={{ marginLeft: 10, marginRight: 10 }}>
       <h2>Login</h2>
       <form onSubmit={submitLogin}>
         <FormGroup>

@@ -16,7 +16,7 @@ const JoinForm = (props) => {
   }
 
   return (
-    <div>
+    <div style={{ marginLeft: 10, marginRight: 10 }}>
       <h2>Sign</h2>
       <form onSubmit={submitSign}>
         <FormGroup>
