@@ -11,7 +11,7 @@
 }
 
 .input-label {
-    padding:5px;
+    padding:1px;
 }
 
 .button {
@@ -24,6 +24,8 @@
 }
 
 .wrapper {
+    margin-top: 5px;
+    margin-bottom: 10px;
     padding:10;
 }
 
@@ -35,14 +37,9 @@
     margin:10px;
 }
 
-.eka{
-    border-bottom:none;
-    position:absolute;
-    margin:10px;
-}
-
-.toka{
-    border-bottom:none;
-    position:absolute;
-    margin:10px;
+.bottom-border{
+    border-bottom: 1px solid lightgray;
+    position:relative;
+    width: 97.5%;
+    margin:15px;
 }

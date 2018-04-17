@@ -124,4 +124,17 @@ bandsRouter.post("/:id/youtube", async (req, res) => {
     }
   })
 
+  bandsRouter.delete('/:id', async (req, res) => {
+      try{
+        const result = await Band.findByIdAndRemove(request.params.id)
+        console.log(result)
+        res.status(204).end()
+        
+      } catch (exception) {
+        console.log(error)
+        res.status(400).send({ error: 'malformatted id' })
+      }
+    
+  })
+
 module.exports = bandsRouter

@@ -77,7 +77,7 @@ const BandFeed = (props) => {
   return(
     <Grid>
       <Row style={gridStyle}>
-        <Col xs={3}>
+        <Col md={4} xs={4}>
           {props.band.avatar
             ? <div className="wrapper">
               <img src={props.band.avatar.url} width="250" height="250" alt="avatar"/>
@@ -106,7 +106,7 @@ const BandFeed = (props) => {
                 : <div></div>}
             </div>}
         </Col>
-        <Col xs={4}>
+        <Col md={4} xs={4}>
           <div>
               Genre: {props.band.genre ? props.band.genre : ''}
             <form onSubmit={handleUpdateSubmit}>
@@ -122,7 +122,7 @@ const BandFeed = (props) => {
             </form>
           </div>
         </Col>
-        <Col xs={3}>
+        <Col md={4} xs={2}>
           {props.band.bcURL
             ? <div>
               <iframe title={props.band._id} style={BCstyle}

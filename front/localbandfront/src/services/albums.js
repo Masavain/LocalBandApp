@@ -32,5 +32,10 @@ const getById = async (id) => {
   return response.data
 }
 
+const remove = async (id) => {
+  const response = await axios.delete(`${url}/${id}`)
+  return response.data
+}
 
-export default { getAll , getById, createNew, setToken, update, postBC }
+
+export default { getAll , getById, createNew, setToken, update, postBC, remove }

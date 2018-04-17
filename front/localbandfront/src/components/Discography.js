@@ -1,16 +1,33 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid , Row, FormControl, FormGroup, Col , Button, ControlLabel, Form } from 'react-bootstrap'
+import { Grid , Row, FormControl, FormGroup, Col , Button, ControlLabel, Form, Table } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
 import albumService from './../services/albums'
 import bandService from './../services/bands'
 
 const Discography = (props) => {
-  const handleBandcampSubmit = async (event) => {
-    // event.preventDefault()
-    // const updatedAlbum = await bandService.postBC(props.band._id, { albumUrl: event.target.bcurl.value.toString() })
-    // props.updateBand(updatedBand)
-    // window.location.reload()
+  const handleBandcampSubmit = (album) => async (event) => {
+    event.preventDefault()
+    await albumService.postBC(album._id, { albumUrl: event.target.bcurl.value.toString() })
+    const updatedBand = await bandService.getById(props.band._id)
+    props.updateBand(updatedBand)
+    window.location.reload()
+  }
+  const handleUpdateSubmit = (album) => async event => {
+    event.preventDefault()
+    const newObject = { ...album, about: event.target.about.value }
+    console.log(newObject)
+    await albumService.update(newObject._id, newObject)
+    const updatedBand = await bandService.getById(props.band._id)
+    props.updateBand(updatedBand)
+    window.location.reload()
+  }
+  const deleteAlbum = (album) => async event => {
+    event.preventDefault()
+    await albumService.remove(album._id)
+    const updatedBand = await bandService.getById(props.band._id)
+    props.updateBand(updatedBand)
+    window.location.reload()
   }
 
   const albumFormSubmit = async (event) => {
@@ -29,59 +46,95 @@ const Discography = (props) => {
     }
     const updatedBand = await bandService.getById(props.band._id)
     props.updateBand(updatedBand)
-    // window.location.reload()
+    window.location.reload()
   }
   console.log(props.band.albums)
   return(
     <Grid>
-      <div>
-        {props.band.albums.map(album =>
-          <div key={album._id}><p>{album.name}</p>
-            {album.bcURL ?
-              <iframe  style={{ position: 'relative',border: 0,width: '100%',height: '120px' }}
-                src={`https://bandcamp.com/EmbeddedPlayer/album=${album.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/`}
-                seamless>
-                <a href={album.bcURL}>embedded album</a>
-              </iframe>
 
-              : <div>
+      <Table>
+        <tbody className="wrapper">
+          {props.band.albums.map(album =>
+            <tr key={album._id}><td style={{ width: '30%' }}>
+              {album.name}
+              <div>
+                <div>Released: {album.year}</div>
+                <div>About: {album.about}</div>
+                <div className="button" >
+                  <form  onSubmit={handleUpdateSubmit(album)}>
+                    <div ><input type='text' name='about' /> edit about </div>
+                  </form>
+                </div>
+
               </div>
+            </td>
+            {album.bcURL ?
+              <td style={{ position: 'relative', width: '400px' }}>
+                <iframe  style={{ position: 'relative',border: 0,width: '100%',height: '120px' }}
+                  src={`https://bandcamp.com/EmbeddedPlayer/album=${album.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/`}
+                  seamless>
+                  <a href={album.bcURL}>embedded album</a>
+                </iframe>
+                <form className="button" onSubmit={handleBandcampSubmit(album)}>
+                  <div ><input type='text' name='bcurl' /> change album url </div>
+                </form>
+              </td>
+              : <td>
+                <form className="button" onSubmit={handleBandcampSubmit(album)}>
+                  <div ><input type='text' name='bcurl' /> add bandcamp url </div>
+                </form>
+              </td>
             }
-          </div>)}
-      </div>
+            <td style={{ position: 'relative', width: '45px' }}>
+              <Button className="button" bsSize="sm" bsStyle="danger" onClick={deleteAlbum(album)}>x</Button>
+            </td>
+            </tr>)}
 
-      <Row>
-        <Form horizontal onSubmit={albumFormSubmit} className='form-inline'>
-          <FormGroup className='form-group' bsSize='sm'>
-            <Col className='input-label' componentClass={ControlLabel} xs={3}>Title: </Col>
-            <Col className='input-label' xs={9}><FormControl
-              type="text"
-              name="name"
-            /></Col>
+        </tbody>
+      </Table>
+      {props.user ?
+        <div>
+          {props.band.user.name === props.user.name ?
+            <Row>
+              <Form horizontal onSubmit={albumFormSubmit} className='form-inline'>
+                <FormGroup className='form-group' bsSize='sm'>
+                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Title: </Col>
+                  <Col xsOffset={2} className='input-label'><FormControl
+                    type="text"
+                    name="name"
+                  /></Col>
 
-            <Col className='input-label' componentClass={ControlLabel} xs={3}>Release year: </Col>
-            <Col className='input-label' xs={9}><FormControl
-              type="number"
-              name="year"
-            /></Col>
-            <Col className='input-label' componentClass={ControlLabel} xs={3}>About: </Col>
-            <Col className='input-label' xs={9}><FormControl
-              type="text"
-              name="about"
-            /></Col>
-            <Col className='input-label' componentClass={ControlLabel} xs={3}>Bandcamp url: </Col>
-            <Col className='input-label' xs={9}><FormControl
-              type="text"
-              name="bcurl"
-            /></Col>
-            <Col className='input-label' smOffset={5}><Button bsStyle="success" type="submit">Add</Button></Col>
-          </FormGroup>
-        </Form>
-      </Row>
+                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Release year: </Col>
+                  <Col xsOffset={2} className='input-label'><FormControl
+                    type="number"
+                    name="year"
+                  /></Col>
+                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
+                  <Col xsOffset={2} className='input-label'><FormControl
+                    type="text"
+                    name="about"
+                  /></Col>
+                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel} >Bandcamp url: </Col>
+                  <Col xsOffset={2} className='input-label'><FormControl
+                    type="text"
+                    name="bcurl"
+                  /></Col>
+                  <Col xsOffset={2} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
+                </FormGroup>
+              </Form>
+            </Row>
+            : <div></div>}
+        </div>
+        : <div></div>}
+
     </Grid>
   )
 }
-
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  }
+}
 export default connect(
-  null, { updateBand }
+  mapStateToProps, { updateBand }
 )(Discography)

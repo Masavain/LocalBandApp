@@ -89,7 +89,6 @@ albumsRouter.post('/:id/bandcamp', async (req, res) => {
                 })
             })
         }
-
         const bandcampInfo = await promisify(url)
         console.log(bandcampInfo)
         const uusi = {
@@ -105,5 +104,17 @@ albumsRouter.post('/:id/bandcamp', async (req, res) => {
         res.status(400).json({ error: 'malformatted id' })
     }
 })
+
+albumsRouter.delete('/:id', async (req, res) => {
+    try{
+        const result = await Album.findByIdAndRemove(req.params.id)
+        console.log(result)
+        res.status(204).end()
+        
+      } catch (exception) {
+        console.log(exception)
+        res.status(400).send({ error: 'malformatted id' })
+      }
+  })
 
 module.exports = albumsRouter

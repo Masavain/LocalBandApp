@@ -28,14 +28,16 @@ const Band = (props) => {
     borderLeft: '1px solid lightgrey',
     borderRight: '1px solid lightgrey',
     borderBottom: '1px solid white',
-    position:'relative'
+    position:'relative',
+    width: '100px'
 
   }
   const inactiveStyle = {
     left: '5px',
     padding: 5,
     borderBottom: '0px solid',
-    position:'relative'
+    position:'relative',
+    width: '100px'
   }
   const rowStyle = {
     paddingLeft: 0,
@@ -51,19 +53,19 @@ const Band = (props) => {
       <Row >
         <table className='multiborder'>
           <tr>
-            &nbsp;
+            <td style={{ width:'10px' }}></td>
+            {/* &nbsp; */}
             <td style={props.toggleType === 0 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(0)}>feed</td>
             <td style={props.toggleType === 1 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(1)}>gallery</td>
             <td style={props.toggleType === 2 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(2)}>discography</td>
             &nbsp;
           </tr>
         </table>
-        <div className='eka'></div>
-        <div className='toka'></div>
       </Row>
       <Row>
         {componentByToggle()}
       </Row>
+      <div className='bottom-border'></div>
     </Grid>
 
   )

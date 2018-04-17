@@ -34,7 +34,7 @@ class App extends React.Component {
     }
     const customStyle = {
       backgroundColor: 'white',
-      marginTop: 65,
+      marginTop: 58,
       height: '1000px',
       paddingLeft: 0,
       paddingRight: 0,
@@ -42,6 +42,8 @@ class App extends React.Component {
     const navbarStyle = {
       borderBottom: 'solid',
       borderWidth: 2,
+      height: '8%',
+      position: 'absolute'
     }
     if(this.props.bands.length === 0) {
       return null
