@@ -25,5 +25,6 @@
 |14.4.|1| galleriasivun toteutus, react-image-lightboxin käyttöönotto|
 |15.4.|3| kosmeettisia muutoksia ja tuskailua bandfeedin handleUpdateSubmit -funktion kanssa|
 |15.4.|3| Album mongo modelin luominen backiin, sille router. Fronttiin discografian luonti alkuun (albumille form jne.)|
+|17.4.|2| Discography-sivun asettelu ja tarvittavat tiedot näkyviin. käyttäjän matchays bändin omistajaan toteutettu järkevämmin|
 
-total: 53.5h
+total: 55.5h
