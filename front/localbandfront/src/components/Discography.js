@@ -48,7 +48,7 @@ const Discography = (props) => {
     props.updateBand(updatedBand)
     window.location.reload()
   }
-  console.log(props.band.albums)
+  const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
   return(
     <Grid>
 
@@ -75,14 +75,15 @@ const Discography = (props) => {
                   seamless>
                   <a href={album.bcURL}>embedded album</a>
                 </iframe>
-                <form className="button" onSubmit={handleBandcampSubmit(album)}>
+                {bandMatchesLoggedUser ? <form className="button" onSubmit={handleBandcampSubmit(album)}>
                   <div ><input type='text' name='bcurl' /> change album url </div>
-                </form>
+                </form> : <div></div>}
+
               </td>
               : <td>
-                <form className="button" onSubmit={handleBandcampSubmit(album)}>
+                {bandMatchesLoggedUser ? <form className="button" onSubmit={handleBandcampSubmit(album)}>
                   <div ><input type='text' name='bcurl' /> add bandcamp url </div>
-                </form>
+                </form> : <div></div>}
               </td>
             }
             <td style={{ position: 'relative', width: '45px' }}>
@@ -92,39 +93,35 @@ const Discography = (props) => {
 
         </tbody>
       </Table>
-      {props.user ?
-        <div>
-          {props.band.user.name === props.user.name ?
-            <Row>
-              <Form horizontal onSubmit={albumFormSubmit} className='form-inline'>
-                <FormGroup className='form-group' bsSize='sm'>
-                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Title: </Col>
-                  <Col xsOffset={2} className='input-label'><FormControl
-                    type="text"
-                    name="name"
-                  /></Col>
+      {bandMatchesLoggedUser ?
+        <Row>
+          <Form horizontal onSubmit={albumFormSubmit} className='form-inline'>
+            <FormGroup className='form-group' bsSize='sm'>
+              <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Title: </Col>
+              <Col xsOffset={2} className='input-label'><FormControl
+                type="text"
+                name="name"
+              /></Col>
 
-                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Release year: </Col>
-                  <Col xsOffset={2} className='input-label'><FormControl
-                    type="number"
-                    name="year"
-                  /></Col>
-                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
-                  <Col xsOffset={2} className='input-label'><FormControl
-                    type="text"
-                    name="about"
-                  /></Col>
-                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel} >Bandcamp url: </Col>
-                  <Col xsOffset={2} className='input-label'><FormControl
-                    type="text"
-                    name="bcurl"
-                  /></Col>
-                  <Col xsOffset={2} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
-                </FormGroup>
-              </Form>
-            </Row>
-            : <div></div>}
-        </div>
+              <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Release year: </Col>
+              <Col xsOffset={2} className='input-label'><FormControl
+                type="number"
+                name="year"
+              /></Col>
+              <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
+              <Col xsOffset={2} className='input-label'><FormControl
+                type="text"
+                name="about"
+              /></Col>
+              <Col xsOffset={2} className='input-label' componentClass={ControlLabel} >Bandcamp url: </Col>
+              <Col xsOffset={2} className='input-label'><FormControl
+                type="text"
+                name="bcurl"
+              /></Col>
+              <Col xsOffset={2} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
+            </FormGroup>
+          </Form>
+        </Row>
         : <div></div>}
 
     </Grid>

@@ -72,6 +72,7 @@ const BandFeed = (props) => {
 
   const ytId = props.band.youtubeID ? props.band.youtubeID : 'So6Qa_4QHYY'
   const ytUrli = `https://www.youtube.com/embed/${ytId}?autoplay=0`
+  const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
 
 
   return(
@@ -81,45 +82,36 @@ const BandFeed = (props) => {
           {props.band.avatar
             ? <div className="wrapper">
               <img src={props.band.avatar.url} width="250" height="250" alt="avatar"/>
-              {props.user ?
-                <div>
-                  {props.band.user.name === props.user.name ?
-                    <form className="button" onSubmit={handleAvatarSubmit}>
-                      <input type="file" accept="image/*" id="imageFile" name="image"/>
-                      <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
-                    </form>
-                    : <div></div>}
-                </div>
+              {bandMatchesLoggedUser ?
+                <form className="button" onSubmit={handleAvatarSubmit}>
+                  <input type="file" accept="image/*" id="imageFile" name="image"/>
+                  <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
+                </form>
                 : <div></div>}
             </div>
             : <div className="wrapper">
               <img src='/default_band_icon.png' width="250" height="250" alt="default avatar"/>
-              {props.user ?
-                <div>
-                  {props.band.user.name === props.user.name ?
-                    <form className="button" onSubmit={handleAvatarSubmit}>
-                      <input type="file" accept="image/*" id="imageFile" name="image"/>
-                      <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
-                    </form>
-                    : <div></div>}
-                </div>
+              {bandMatchesLoggedUser ?
+                <form className="button" onSubmit={handleAvatarSubmit}>
+                  <input type="file" accept="image/*" id="imageFile" name="image"/>
+                  <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
+                </form>
                 : <div></div>}
+
             </div>}
         </Col>
         <Col md={4} xs={4}>
           <div>
               Genre: {props.band.genre ? props.band.genre : ''}
-            <form onSubmit={handleUpdateSubmit}>
+            {bandMatchesLoggedUser ? <form onSubmit={handleUpdateSubmit}>
                 edit genre<input type='text' name='genre'/>
-            </form>
+            </form> : <div></div>}
           </div>
           <div>
-            About: {props.band.about
-              ? props.band.about
-              : ''}
-            <form onSubmit={handleUpdateSubmit}>
-              <div>edit about<input type='text' name='about' /></div>
-            </form>
+            About: {props.band.about ? props.band.about : ''}
+            {bandMatchesLoggedUser ? <form onSubmit={handleUpdateSubmit}>
+                edit about<input type='text' name='about'/>
+            </form> : <div></div>}
           </div>
         </Col>
         <Col md={4} xs={2}>
@@ -130,14 +122,18 @@ const BandFeed = (props) => {
                 seamless>
                 <a href={props.band.bcURL}>asd</a>
               </iframe>
-              <form onSubmit={handleBandcampSubmit}>
-                <div>edit bandcamp url<input type='text' name='bcurl' /></div>
-              </form>
+              {bandMatchesLoggedUser ?
+                <form onSubmit={handleBandcampSubmit}>
+                  <div>edit bandcamp url<input type='text' name='bcurl' /></div>
+                </form>
+                : <div></div>}
             </div>
             : <div>
-              <form onSubmit={handleBandcampSubmit}>
-                <div>add bandcamp url<input type='text' name='bcurl' /></div>
-              </form>
+              {bandMatchesLoggedUser ?
+                <form onSubmit={handleBandcampSubmit}>
+                  <div>add bandcamp url<input type='text' name='bcurl' /></div>
+                </form>
+                : <div></div>}
             </div>}
         </Col>
       </Row>

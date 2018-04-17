@@ -45,24 +45,27 @@ const Gallery = (props) => {
     overflow: 'hidden',
     margin: '1px'
   }
+  const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
+
   return(
     <Grid>
       <Row>
         {props.band.gallery.length === 0 ?
           <div style={{ margin: 20 }}>
-            <form onSubmit={handleGallerySubmit}>
+            {bandMatchesLoggedUser ? <form onSubmit={handleGallerySubmit}>
               <input type="file" accept="image/*" id="galleryImage" name="image"/>
               <Button bsStyle="primary" bsSize='xsmall' type='submit'>add</Button>
-            </form>
+            </form> : <div></div>}
           </div>
           : <div style={galleryStyle}>
             {props.band.gallery.map(image =>
               <img key={image._id} src={image.url} style={imgStyle} onClick={() => props.openFromIndex(props.band.gallery.indexOf(image))} width="300" height="300" alt="galleryImage"/>
             )}
-            <form onSubmit={handleGallerySubmit}>
+            {bandMatchesLoggedUser ? <form onSubmit={handleGallerySubmit}>
               <input type="file" accept="image/*" id="galleryImage" name="image"/>
               <Button bsStyle="primary" bsSize='xsmall' type='submit'>add</Button>
-            </form>
+            </form> : <div></div>}
+
             {props.isOpen && (
               <Lightbox
                 mainSrc={props.band.gallery[props.photoIndex].url}
@@ -84,7 +87,8 @@ const Gallery = (props) => {
 const mapStateToProps = (state) => {
   return {
     photoIndex: state.toggle.photoIndex,
-    isOpen: state.toggle.isOpen
+    isOpen: state.toggle.isOpen,
+    user: state.user
   }
 }
 
