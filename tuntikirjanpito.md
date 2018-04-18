@@ -26,5 +26,6 @@
 |15.4.|3| kosmeettisia muutoksia ja tuskailua bandfeedin handleUpdateSubmit -funktion kanssa|
 |15.4.|3| Album mongo modelin luominen backiin, sille router. Fronttiin discografian luonti alkuun (albumille form jne.)|
 |17.4.|2| Discography-sivun asettelu ja tarvittavat tiedot näkyviin. käyttäjän matchays bändin omistajaan toteutettu järkevämmin|
+|18.4.|2| Albumin kansitaiteen postaaminen backissä ja frontissa, muutamia kosmeettisia muutoksia|
 
-total: 55.5h
+total: 57.5h
