@@ -13,6 +13,13 @@ bandsRouter.get('/', async (req, res) => {
         .populate('avatar', { url:1 })
         .populate('gallery', { url: 1})
         .populate('albums')
+        .populate({ 
+            path: 'albums',
+            populate: {
+              path: 'albumArt',
+              model: 'Image'
+            }
+         })
     res.json(bands)
 })
 
@@ -67,7 +74,7 @@ bandsRouter.put('/:id', async (req, res) => {
 
 bandsRouter.get('/:id', async (req, res) => {
     try {
-        const band = await Band.findById(req.params.id).populate('backgroundImage').populate('user')
+        const band = await Band.findById(req.params.id).populate('backgroundImage').populate('user').populate('albums')
         res.json(Band.format(band))
 
     } catch (exception) {

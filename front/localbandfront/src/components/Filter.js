@@ -14,6 +14,7 @@ class Filter extends React.Component {
   }
   render() {
     const style = {
+      position: 'relative',
       marginBottom: 10,
       marginLeft: 10,
       marginRight: 100

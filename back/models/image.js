@@ -9,6 +9,7 @@ const imageSchema = new mongoose.Schema({
     deleteHash: String,
     size: Number,
     type: String,
+    album: {type: mongoose.Schema.Types.ObjectId, ref: 'Album'},
     band: { type: mongoose.Schema.Types.ObjectId, ref: 'Band' },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
   })
@@ -23,6 +24,7 @@ const imageSchema = new mongoose.Schema({
         deletehash: image.deletehash,
         size: image.size,   
         type: image.type,
+        album: image.album,
         band: image.band,
         user: image.user
     }

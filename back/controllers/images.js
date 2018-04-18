@@ -3,17 +3,19 @@ const jwt = require('jsonwebtoken')
 const Band = require('../models/band')
 const Image = require('../models/image')
 const User = require('../models/user')
+const Album = require('../models/album')
 
 imagesRouter.get('/', async (req, res) => {
     const images = await Image
         .find({})
-        .populate('Band')
+        .populate('band')
+        .populate('album')
     res.json(images)
 })
 
 imagesRouter.get('/:id', async (req, res) => {
     try {
-        const image = await Image.findById(req.params.id)
+        const image = await Image.findById(req.params.id).populate('band').populate('album')
         res.json(image)
     } catch (exception) {
         console.log(error)
@@ -62,7 +64,40 @@ imagesRouter.post('/', async (req, res) => {
             res.status(500).json({ error: 'something went wrong...' })
         }
     }
+})
 
+imagesRouter.post('/albumart', async (req, res) => {
+    const { url, imageType, height, width, animated, deleteHash, size, type, albumId } = req.body
+
+    try {
+        const token = req.token
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        console.log('decoded', decodedToken)
+
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'token missing or invalid' })
+        }
+        const user = await User.findById(decodedToken.id)
+        const album = await Album.findById(albumId)
+
+        const image = new Image({ url, imageType, height, width, animated, deleteHash, size, type, album:albumId , user: user._id })
+        const result = await image.save()
+        result.user = user
+        result.album = album
+        album.albumArt = image._id
+        user.images = user.images.concat(image._id)
+        await album.save()
+        await user.save()
+        res.status(201).json(result)
+
+    } catch (exception) {
+        if (exception.name === 'JsonWebTokenError') {
+            res.status(401).json({ error: exception.message })
+        } else {
+            console.log(exception)
+            res.status(500).json({ error: 'something went wrong...' })
+        }
+    }
 })
 
 module.exports = imagesRouter

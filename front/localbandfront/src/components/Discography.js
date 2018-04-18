@@ -4,6 +4,7 @@ import { Grid , Row, FormControl, FormGroup, Col , Button, ControlLabel, Form, T
 import { updateBand } from './../reducers/bandReducer'
 import albumService from './../services/albums'
 import bandService from './../services/bands'
+import imageService from './../services/images'
 
 const Discography = (props) => {
   const handleBandcampSubmit = (album) => async (event) => {
@@ -12,6 +13,32 @@ const Discography = (props) => {
     const updatedBand = await bandService.getById(props.band._id)
     props.updateBand(updatedBand)
     window.location.reload()
+  }
+  const handleAlbumArtSubmit = (album) => async (event) => {
+    event.preventDefault()
+
+    const file  = document.getElementById('imageFile').files[0]
+    var reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = async function () {
+
+      const result = reader.result.substr(reader.result.indexOf(',')+1, reader.result.length)
+      const imgurFile = await imageService.postImgur( result )
+
+      const image = { url: imgurFile.data.link, imageType: imgurFile.data.type, height: imgurFile.data.height,
+        width: imgurFile.data.width, animated: imgurFile.data.animated,
+        deleteHash: imgurFile.data.deletehash, size: imgurFile.data.size,
+        type: 'albumArt', albumId: album._id }
+
+      await imageService.postAlbumArt(image)
+      const updatedBand = await bandService.getById(props.band._id)
+      props.updateBand(updatedBand)
+      window.location.reload()
+
+    }
+    reader.onerror = function (error) {
+      console.log('Error: ', error)
+    }
   }
   const handleUpdateSubmit = (album) => async event => {
     event.preventDefault()
@@ -48,47 +75,64 @@ const Discography = (props) => {
     props.updateBand(updatedBand)
     window.location.reload()
   }
+
   const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
   return(
     <Grid>
 
       <Table>
-        <tbody className="wrapper">
+        <tbody>
           {props.band.albums.map(album =>
-            <tr key={album._id}><td style={{ width: '30%' }}>
-              {album.name}
-              <div>
-                <div>Released: {album.year}</div>
-                <div>About: {album.about}</div>
-                <div className="button" >
-                  <form  onSubmit={handleUpdateSubmit(album)}>
-                    <div ><input type='text' name='about' /> edit about </div>
-                  </form>
+            <tr key={album._id} className="wrapper">
+              {album.albumArt
+                ? <td>
+                  <img src={album.albumArt.url} width="125" height="125" alt="thumbnail"/>
+                  {bandMatchesLoggedUser ? <form className="button" onSubmit={handleAlbumArtSubmit(album)}>
+                    <input type="file" accept="image/*" id="imageFile" name="image"/>
+                    <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit album art</Button>
+                  </form> : <div></div>}
+                </td>
+                : <td>
+                  <img src='/default_album_icon.png' width="125" height="125" alt="default thumbnail"/>
+                  {bandMatchesLoggedUser ? <form className="button" onSubmit={handleAlbumArtSubmit(album)}>
+                    <input type="file" accept="image/*" id="imageFile" name="image"/>
+                    <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit album art</Button>
+                  </form> : <div></div>}
+                </td>}
+              <td style={{ width: '30%' }}>
+                {album.name}
+                <div>
+                  <div>Released: {album.year}</div>
+                  <div>About: {album.about}</div>
+                  <div className="button" >
+                    <form  onSubmit={handleUpdateSubmit(album)}>
+                      <div ><input type='text' name='about' /> edit about </div>
+                    </form>
+                  </div>
+
                 </div>
-
-              </div>
-            </td>
-            {album.bcURL ?
-              <td style={{ position: 'relative', width: '400px' }}>
-                <iframe  style={{ position: 'relative',border: 0,width: '100%',height: '120px' }}
-                  src={`https://bandcamp.com/EmbeddedPlayer/album=${album.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/`}
-                  seamless>
-                  <a href={album.bcURL}>embedded album</a>
-                </iframe>
-                {bandMatchesLoggedUser ? <form className="button" onSubmit={handleBandcampSubmit(album)}>
-                  <div ><input type='text' name='bcurl' /> change album url </div>
-                </form> : <div></div>}
-
               </td>
-              : <td>
-                {bandMatchesLoggedUser ? <form className="button" onSubmit={handleBandcampSubmit(album)}>
-                  <div ><input type='text' name='bcurl' /> add bandcamp url </div>
-                </form> : <div></div>}
+              {album.bcURL ?
+                <td style={{ position: 'relative', width: '400px' }}>
+                  <iframe  style={{ position: 'relative',border: 0,width: '100%',height: '120px' }}
+                    src={`https://bandcamp.com/EmbeddedPlayer/album=${album.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/`}
+                    seamless>
+                    <a href={album.bcURL}>embedded album</a>
+                  </iframe>
+                  {bandMatchesLoggedUser ? <form className="button" onSubmit={handleBandcampSubmit(album)}>
+                    <div ><input type='text' name='bcurl' /> change album url </div>
+                  </form> : <div></div>}
+
+                </td>
+                : <td>
+                  {bandMatchesLoggedUser ? <form className="button" onSubmit={handleBandcampSubmit(album)}>
+                    <div ><input type='text' name='bcurl' /> add bandcamp url </div>
+                  </form> : <div></div>}
+                </td>
+              }
+              <td style={{ position: 'relative', width: '45px' }}>
+                <Button className="button" bsSize="sm" bsStyle="danger" onClick={deleteAlbum(album)}>x</Button>
               </td>
-            }
-            <td style={{ position: 'relative', width: '45px' }}>
-              <Button className="button" bsSize="sm" bsStyle="danger" onClick={deleteAlbum(album)}>x</Button>
-            </td>
             </tr>)}
 
         </tbody>

@@ -78,7 +78,7 @@ const BandFeed = (props) => {
   return(
     <Grid>
       <Row style={gridStyle}>
-        <Col md={4} xs={4}>
+        <Col md={7} xs={4}>
           {props.band.avatar
             ? <div className="wrapper">
               <img src={props.band.avatar.url} width="250" height="250" alt="avatar"/>
@@ -97,10 +97,7 @@ const BandFeed = (props) => {
                   <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
                 </form>
                 : <div></div>}
-
             </div>}
-        </Col>
-        <Col md={4} xs={4}>
           <div>
               Genre: {props.band.genre ? props.band.genre : ''}
             {bandMatchesLoggedUser ? <form onSubmit={handleUpdateSubmit}>
@@ -114,7 +111,8 @@ const BandFeed = (props) => {
             </form> : <div></div>}
           </div>
         </Col>
-        <Col md={4} xs={2}>
+
+        <Col md={3} xs={3}>
           {props.band.bcURL
             ? <div>
               <iframe title={props.band._id} style={BCstyle}
@@ -138,7 +136,12 @@ const BandFeed = (props) => {
         </Col>
       </Row>
       <Row>
-        <Col className={gridStyle} xs={4}>
+        <Col md={3} xs={3}>
+
+        </Col>
+      </Row>
+      <Row>
+        <Col className={gridStyle} xs={3}>
           <iframe title="youtube" id="ytplayer" type="text/html" width="640" height="360"
             src={ytUrli}
             frameBorder="0"></iframe>
