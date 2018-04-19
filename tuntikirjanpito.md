@@ -27,5 +27,7 @@
 |15.4.|3| Album mongo modelin luominen backiin, sille router. Fronttiin discografian luonti alkuun (albumille form jne.)|
 |17.4.|2| Discography-sivun asettelu ja tarvittavat tiedot näkyviin. käyttäjän matchays bändin omistajaan toteutettu järkevämmin|
 |18.4.|2| Albumin kansitaiteen postaaminen backissä ja frontissa, muutamia kosmeettisia muutoksia|
+|19.4.|2| explore-sivulle sivujako max 10 bändiä, sekä nappi sivujen vaihtoa varten|
 
-total: 57.5h
+
+total: 59.5h
