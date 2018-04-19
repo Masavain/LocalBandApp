@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { creation } from './../reducers/bandReducer'
-import { Form, FormControl, Button, FormGroup, ControlLabel, Col } from 'react-bootstrap'
+import { Form, FormControl, Button, FormGroup, ControlLabel, Col, Row } from 'react-bootstrap'
 import bandService from './../services/bands'
 
 const BandForm = (props) => {
@@ -18,9 +18,9 @@ const BandForm = (props) => {
   }
 
   return (
-    <div>
-      <h2>Add new band</h2>
-      <Form horizontal onSubmit={handleSubmit} className='form-inline'>
+    <Row style={{ width: '95%', left: '20px', margin:'20px', borderTop: 'solid 1px lightgrey', borderBottom: 'solid 1px lightgrey' }}>
+      <h3>Add new band</h3>
+      <Form horizontal onSubmit={handleSubmit} className='form-inline' style={{ marginBottom: 10 }}>
         <FormGroup className='form-group' bsSize='sm'>
           <Col className='input-label' componentClass={ControlLabel} xs={3}>Name: </Col>
           <Col className='input-label' xs={9}><FormControl
@@ -46,7 +46,7 @@ const BandForm = (props) => {
           <Col className='input-label' smOffset={5}><Button bsStyle="success" type="submit">Add</Button></Col>
         </FormGroup>
       </Form>
-    </div>
+    </Row>
   )
 
 

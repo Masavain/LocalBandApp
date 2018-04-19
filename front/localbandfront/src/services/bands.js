@@ -47,6 +47,13 @@ const getById = async (id) => {
   const response = await axios.get(`${url}/${id}`)
   return response.data
 }
+const remove = async (id) => {
+  const config = {
+    headers: { 'Authorization': token }
+  }
+  const response = await axios.delete(`${url}/${id}`, config)
+  return response.data
+}
 
 
-export default { getAll , getById, createNew, setToken, update, postBC, postAvatar, postBackground, postYT }
+export default { getAll , getById, createNew, setToken, update, postBC, postAvatar, postBackground, postYT, remove }

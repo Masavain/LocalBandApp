@@ -2,23 +2,36 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BandForm from './BandForm'
 import { Link } from 'react-router-dom'
+import { Grid, Button, Table } from 'react-bootstrap'
+import bandService from './../services/bands'
 
 const ProfilePage = (props) => {
-  const style = {
-    padding: 10
+  const deleteBand = (band) => async event => {
+    if (window.confirm(`Are you sure you want to delete ${band.name}?`)) {
+      event.preventDefault()
+      await bandService.remove(band._id)
+
+      window.location.reload()
+    }
+
   }
   return(
-    <div style={style}>
-      <h3>{props.user && props.user.username}</h3>
-      <div>
-        {props.userbands.map(b =>
-          <div key={b._id}>
-            <Link to={`/bands/${b._id}`}>{b.name}</Link>
-          </div>
-        )}
-      </div>
+    <Grid >
+      <h3>Profile: {props.user && props.user.username}</h3>
+      <Table style={{ width: '20%' }}>
+        <tbody>
+          {props.userbands.map(b =>
+            <tr key={b._id} className="wrapper">
+              <td style={{ position: 'relative' }}><Link to={`/bands/${b._id}`} >{b.name}&nbsp;
+              </Link></td>
+              <td style={{ position: 'relative' }}><Button className="button" bsSize="xs" bsStyle="danger" onClick={deleteBand(b)}>&#9747;</Button></td>
+            </tr>
+
+          )}
+        </tbody>
+      </Table>
       <BandForm history={props.history}/>
-    </div>
+    </Grid>
   )
 }
 

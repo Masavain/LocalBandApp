@@ -11,12 +11,12 @@ const Explore = (props) => {
   }
   const pageButtons = () => {
     var i
-    var xml = []
+    var buttons = []
     for (i = 0; i < props.numberOfPages; i++) {
       const j = i
-      xml.push(<button onClick={() => pageChange(j)}>{`${j}-${j+10}`}</button>)
+      buttons.push(<button onClick={() => pageChange(j)}>{`${j}-${j+10}`}</button>)
     }
-    return xml
+    return buttons
   }
 
   return(

@@ -1,14 +1,19 @@
 import axios from 'axios'
-const baseUrl = '/api/users'
+const url = '/api/users'
 
-const getAll = () => {
-  const request = axios.get(baseUrl)
+const getAll = async () => {
+  const request = axios.get(url)
   return request.then(response => response.data)
 }
 
-const sign = async (newObject) => {
-  const response = await axios.post(baseUrl, newObject)
+const getById = async (id) => {
+  const response = await axios.get(`${url}/${id}`)
   return response.data
 }
 
-export default { getAll, sign }
+const sign = async (newObject) => {
+  const response = await axios.post(url, newObject)
+  return response.data
+}
+
+export default { getAll, sign, getById }

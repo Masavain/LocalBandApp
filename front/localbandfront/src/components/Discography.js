@@ -142,32 +142,38 @@ const Discography = (props) => {
       </Table>
       {bandMatchesLoggedUser ?
         <Row>
-          <Form horizontal onSubmit={albumFormSubmit} className='form-inline'>
-            <FormGroup className='form-group' bsSize='sm'>
-              <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Title: </Col>
-              <Col xsOffset={2} className='input-label'><FormControl
-                type="text"
-                name="name"
-              /></Col>
+          <Col xs={1} className="wrapper">
+            <div className="inputbutton" id="asd"></div>
+            <label htmlFor="asd">&#9660;</label>
+            <div className="button">
+              <Form horizontal onSubmit={albumFormSubmit} className='form-inline'>
+                <FormGroup className='form-group' bsSize='sm'>
+                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Title: </Col>
+                  <Col xsOffset={2} className='input-label'><FormControl
+                    type="text"
+                    name="name"
+                  /></Col>
 
-              <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Release year: </Col>
-              <Col xsOffset={2} className='input-label'><FormControl
-                type="number"
-                name="year"
-              /></Col>
-              <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
-              <Col xsOffset={2} className='input-label'><FormControl
-                type="text"
-                name="about"
-              /></Col>
-              <Col xsOffset={2} className='input-label' componentClass={ControlLabel} >Bandcamp url: </Col>
-              <Col xsOffset={2} className='input-label'><FormControl
-                type="text"
-                name="bcurl"
-              /></Col>
-              <Col xsOffset={2} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
-            </FormGroup>
-          </Form>
+                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Release year: </Col>
+                  <Col xsOffset={2} className='input-label'><FormControl
+                    type="number"
+                    name="year"
+                  /></Col>
+                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
+                  <Col xsOffset={2} className='input-label'><FormControl
+                    type="text"
+                    name="about"
+                  /></Col>
+                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel} >Bandcamp url: </Col>
+                  <Col xsOffset={2} className='input-label'><FormControl
+                    type="text"
+                    name="bcurl"
+                  /></Col>
+                  <Col xsOffset={2} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
+                </FormGroup>
+              </Form>
+            </div>
+          </Col>
         </Row>
         : <div></div>}
 

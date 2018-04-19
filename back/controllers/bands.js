@@ -133,7 +133,17 @@ bandsRouter.post("/:id/youtube", async (req, res) => {
 
   bandsRouter.delete('/:id', async (req, res) => {
       try{
-        const result = await Band.findByIdAndRemove(request.params.id)
+        const token = req.token
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        console.log('decoded', decodedToken)
+
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'token missing or invalid' })
+        }
+        const user = await User.findById(decodedToken.id)
+        const result = await Band.findByIdAndRemove(req.params.id)
+        user.bands = user.bands.filter(b => b._id !== result._id)
+        await user.save()
         console.log(result)
         res.status(204).end()
         
