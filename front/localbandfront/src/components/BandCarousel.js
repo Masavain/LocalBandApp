@@ -1,20 +1,22 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Row } from 'react-bootstrap'
+import { Row, Col } from 'react-bootstrap'
 import DefaultBackground from './../nakemys.jpg'
 import { Carousel } from 'react-responsive-carousel'
+import { Link } from 'react-router-dom'
 
 const BandCarousel = (props) => {
   return (
     <Row>
-      <Carousel style={{ position: 'relative' }} width="100%" autoplay showThumbs={false} infiniteLoop useKeyboardArrows>
-        {props.showcaseBands.map(b =>
-          <div key={b._id}>
-            <img src={b.backgroundImage ? b.backgroundImage.url : DefaultBackground} />
-            <p className="legend">{b.name}</p>
-          </div>)}
-
-      </Carousel>
+      <Col>
+        <Carousel centerMode centerSlidePercentage={50} emulateTouch autoPlay showThumbs={false} infiniteLoop useKeyboardArrows>
+          {props.showcaseBands.map(b =>
+            <div key={b._id}>
+              <img className="carousel-image" height="500" src={b.backgroundImage ? b.backgroundImage.url : DefaultBackground} alt="ShuffleImages"/>
+              <Link to={`/bands/${b._id}`} className="legend">{b.name}</Link>
+            </div>)}
+        </Carousel>
+      </Col>
     </Row>
   )
 }

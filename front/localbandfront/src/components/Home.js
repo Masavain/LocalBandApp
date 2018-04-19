@@ -20,7 +20,7 @@ const Home = (props) => {
             </div>
           )}
         </Col>
-        <Col xs={3} style={{ position:'relative', marginTop: 25 }}>
+        {/* <Col xs={3} style={{ position:'relative', marginTop: 25 }}>
           <p>Showcase:
           <Link to={`/bands/${props.randomBand._id}`}>{props.randomBand.name}</Link>
           {props.randomBand.avatarUrl
@@ -31,7 +31,7 @@ const Home = (props) => {
               <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
             </div>}
           </p>
-        </Col>
+        </Col> */}
       </Row>
       <BandCarousel/>
     </Grid>

@@ -75,3 +75,9 @@
 .inputbutton + label:hover {
     background-color: black;
 }
+
+.carousel-image{
+    background-color: black;
+    object-fit: scale-down;
+    object-position: 'center center'
+}
