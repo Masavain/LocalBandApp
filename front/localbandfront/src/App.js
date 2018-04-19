@@ -13,6 +13,7 @@ import JoinForm from './components/JoinForm'
 import Band from './components/Band'
 import Background from './nakemys.jpg'
 import './App.css'
+import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
 class App extends React.Component {
   componentWillMount = async () => {

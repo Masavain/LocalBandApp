@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Grid, Row, Col } from 'react-bootstrap'
+import BandCarousel from './BandCarousel'
 
 
 const Home = (props) => {
@@ -9,7 +10,7 @@ const Home = (props) => {
   return(
     <Grid >
       <Row>
-        <Col xs={7}>
+        <Col xs={7} >
           <h2>All Bands</h2>
           {props.bands.map(band =>
             <div key={`all-${band._id}`}>
@@ -19,7 +20,7 @@ const Home = (props) => {
             </div>
           )}
         </Col>
-        <Col xs={3} style={{ marginTop: 25 }}>
+        <Col xs={3} style={{ position:'relative', marginTop: 25 }}>
           <p>Showcase:
           <Link to={`/bands/${props.randomBand._id}`}>{props.randomBand.name}</Link>
           {props.randomBand.avatarUrl
@@ -32,6 +33,7 @@ const Home = (props) => {
           </p>
         </Col>
       </Row>
+      <BandCarousel/>
     </Grid>
   )
 }
