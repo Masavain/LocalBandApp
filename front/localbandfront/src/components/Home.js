@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Grid, Row, Col } from 'react-bootstrap'
 import BandCarousel from './BandCarousel'
-
+import AdminControl from './AdminControl'
 
 const Home = (props) => {
-
   return(
     <Grid >
+      {(props.user ? (props.user.role === 'admin') ? <AdminControl /> : <div></div> :  <div></div>)}
       <Row>
         <Col xs={7} >
           <h2>All Bands</h2>
@@ -20,18 +20,6 @@ const Home = (props) => {
             </div>
           )}
         </Col>
-        {/* <Col xs={3} style={{ position:'relative', marginTop: 25 }}>
-          <p>Showcase:
-          <Link to={`/bands/${props.randomBand._id}`}>{props.randomBand.name}</Link>
-          {props.randomBand.avatarUrl
-            ? <div>
-              <img src={props.randomBand.avatarUrl} width="300" height="300" alt="avatar"/>
-            </div>
-            : <div>
-              <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
-            </div>}
-          </p>
-        </Col> */}
       </Row>
       <BandCarousel/>
     </Grid>
@@ -44,7 +32,6 @@ const randomBand = (bands) => {
 
 const userBands = (bands, user) => {
   const bandsWithUsers = bands.filter(b => b.user !== undefined)
-  console.log('bandswithusers', bandsWithUsers)
   console.log('user', user)
   if (user === null) {
     return null
@@ -53,6 +40,7 @@ const userBands = (bands, user) => {
     band.user.username === user.username
   )
 }
+
 
 const mapStateToProps = (state) => {
   return {

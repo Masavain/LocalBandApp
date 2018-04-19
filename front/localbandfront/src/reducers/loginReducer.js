@@ -20,11 +20,14 @@ const loginReducer = (state = JSON.parse(window.localStorage.getItem('loggedUser
 export const sign = (username, password) => {
   return async (dispatch) => {
 
-    const newuser = await userService.sign({
+    await userService.sign({
       username: username,
       password: password
     })
-    const user = await loginService.login(newuser)
+    const user = await loginService.login({
+      username: username,
+      password: password
+    })
     albumService.setToken(user.token)
     imageService.setToken(user.token)
     bandService.setToken(user.token)
@@ -47,6 +50,7 @@ export const login = (username, password) => {
     imageService.setToken(user.token)
     bandService.setToken(user.token)
     window.localStorage.setItem('loggedUser', JSON.stringify(user))
+    console.log('useri loginservicestä reducerille: ', JSON.stringify(user))
 
     dispatch({
       type: 'LOGIN',

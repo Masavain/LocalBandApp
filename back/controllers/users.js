@@ -1,11 +1,13 @@
-const bcrypt = require('bcrypt')
 const usersRouter = require('express').Router()
+const jwt = require('jsonwebtoken')
 const User = require('../models/user')
+const bcrypt = require('bcrypt')
 
 usersRouter.get('/', async (req, res) => {
     const users = await User
         .find({})
         .populate('bands', { __v: 0, user: 0})
+        .populate('posts')
     res.json(users.map(User.format))
 })
 
@@ -21,9 +23,8 @@ usersRouter.get('/:id', async (req, res) => {
 })
 
 usersRouter.post('/', async (req, res) => {
+    const body = req.body
     try {
-        const body = req.body
-
         const existingUser = await User.find({ username: body.username })
         if (body.password.length < 3) {
             return res.status(400).json({ error: 'password too short (must be at least 3 characters long)'})

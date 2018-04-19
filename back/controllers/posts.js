@@ -68,6 +68,8 @@ postsRouter.post('/', async (req, res) => {
   })
 
   postsRouter.put('/:id', async (req, res) => {
+    const body = req.body
+
     try {
         const token = getTokenFrom(req)
         const decodedToken = jwt.verify(token, process.env.SECRET)
@@ -98,6 +100,8 @@ postsRouter.post('/', async (req, res) => {
   })
 
   postsRouter.delete('/:id', async (req, res) => {
+    const body = req.body
+
     try {
         const token = req.token
         const decodedToken = jwt.verify(token, process.env.SECRET)
