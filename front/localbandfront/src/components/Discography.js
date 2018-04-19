@@ -88,7 +88,8 @@ const Discography = (props) => {
                 ? <td>
                   <img src={album.albumArt.url} width="125" height="125" alt="thumbnail"/>
                   {bandMatchesLoggedUser ? <form className="button" onSubmit={handleAlbumArtSubmit(album)}>
-                    <input type="file" accept="image/*" id="imageFile" name="image"/>
+                    <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
+                    <label htmlFor="imageFile">choose an image</label>
                     <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit album art</Button>
                   </form> : <div></div>}
                 </td>
@@ -96,6 +97,7 @@ const Discography = (props) => {
                   <img src='/default_album_icon.png' width="125" height="125" alt="default thumbnail"/>
                   {bandMatchesLoggedUser ? <form className="button" onSubmit={handleAlbumArtSubmit(album)}>
                     <input type="file" accept="image/*" id="imageFile" name="image"/>
+                    <label htmlFor="imageFile">choose an image</label>
                     <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit album art</Button>
                   </form> : <div></div>}
                 </td>}
@@ -115,6 +117,7 @@ const Discography = (props) => {
               {album.bcURL ?
                 <td style={{ position: 'relative', width: '400px' }}>
                   <iframe  style={{ position: 'relative',border: 0,width: '100%',height: '120px' }}
+                    title={album.bcAlbumID}
                     src={`https://bandcamp.com/EmbeddedPlayer/album=${album.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/`}
                     seamless>
                     <a href={album.bcURL}>embedded album</a>

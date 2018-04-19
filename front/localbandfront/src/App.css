@@ -16,6 +16,7 @@
 
 .button {
     display: none;
+    padding-top: 4px;
 }
 
 .wrapper:hover .button {
@@ -44,4 +45,34 @@
     position:relative;
     width: 97.5%;
     margin:15px;
+}
+
+.inputbutton{
+    width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+    z-index: -1;
+}
+
+.inputbutton + label {
+    font-size: 1.075em;
+    font-weight: 700;
+    color: white;
+    background-color: grey;
+    display: inline-block;
+    border: hidden;
+    border-radius: 3px;
+    padding-left: 2px;
+    padding-right: 2px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+
+}
+
+.inputbutton:focus + label,
+.inputbutton + label:hover {
+    background-color: black;
 }

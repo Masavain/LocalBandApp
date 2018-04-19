@@ -39,12 +39,6 @@ class App extends React.Component {
       paddingLeft: 0,
       paddingRight: 0,
     }
-    const navbarStyle = {
-      borderBottom: 'solid',
-      borderWidth: 2,
-      height: '8%',
-      position: 'absolute'
-    }
     if(this.props.bands.length === 0) {
       return null
     }

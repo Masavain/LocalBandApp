@@ -56,7 +56,7 @@ const BandHeader = (props) => {
     marginLeft: 10,
     color: 'white',
   }
-
+  const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
   return(
     <Grid>
       <Row className='wrapper' style={headerStyle}>
@@ -65,21 +65,17 @@ const BandHeader = (props) => {
             <h3 style={hThreeStyle}>{props.band.name}</h3>
           </Col>
           <Col className='pull-right'>
-            {props.user ?
+            {bandMatchesLoggedUser ?
+              <form className="button" onSubmit={handleBgSubmit}>
+                <input className="inputbutton" type="file" accept="image/*" id="bgImage" name="bgimage"></input>
+                <label htmlFor="bgImage">Choose an image</label>
+                <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit background</Button>
+              </form>
+              :
               <div>
-                {props.band.user.name === props.user.name ?
-                  <form className="button" onSubmit={handleBgSubmit}>
-                    <input type="file" accept="image/*" id="bgImage" name="bgimage"></input>
-                    <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit background</Button>
-                  </form>
-                  :
-                  <div>
-                  </div>
-                }
-              </div>
-              : <div>
               </div>
             }
+
           </Col>
         </div>
       </Row>

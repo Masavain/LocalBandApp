@@ -53,8 +53,9 @@ const Gallery = (props) => {
         {props.band.gallery.length === 0 ?
           <div style={{ margin: 20 }}>
             {bandMatchesLoggedUser ? <form onSubmit={handleGallerySubmit}>
-              <input type="file" accept="image/*" id="galleryImage" name="image"/>
-              <Button bsStyle="primary" bsSize='xsmall' type='submit'>add</Button>
+              <input className="inputbutton" type="file" accept="image/*" id="galleryImage" name="image"/>
+              <label htmlFor="galleryImage">Choose an image</label>
+              <Button bsStyle="primary" bsSize='xsmall' type='submit'>add image</Button>
             </form> : <div></div>}
           </div>
           : <div style={galleryStyle}>
@@ -62,7 +63,8 @@ const Gallery = (props) => {
               <img key={image._id} src={image.url} style={imgStyle} onClick={() => props.openFromIndex(props.band.gallery.indexOf(image))} width="300" height="300" alt="galleryImage"/>
             )}
             {bandMatchesLoggedUser ? <form onSubmit={handleGallerySubmit}>
-              <input type="file" accept="image/*" id="galleryImage" name="image"/>
+              <input type="file" className="inputbutton" accept="image/*" id="galleryImage" name="image"/>
+              <label htmlFor="galleryImage">Choose an image</label>
               <Button bsStyle="primary" bsSize='xsmall' type='submit'>add</Button>
             </form> : <div></div>}
 

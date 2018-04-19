@@ -84,7 +84,8 @@ const BandFeed = (props) => {
               <img src={props.band.avatar.url} width="250" height="250" alt="avatar"/>
               {bandMatchesLoggedUser ?
                 <form className="button" onSubmit={handleAvatarSubmit}>
-                  <input type="file" accept="image/*" id="imageFile" name="image"/>
+                  <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
+                  <label htmlFor="imageFile">Choose an image</label>
                   <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
                 </form>
                 : <div></div>}
@@ -93,7 +94,8 @@ const BandFeed = (props) => {
               <img src='/default_band_icon.png' width="250" height="250" alt="default avatar"/>
               {bandMatchesLoggedUser ?
                 <form className="button" onSubmit={handleAvatarSubmit}>
-                  <input type="file" accept="image/*" id="imageFile" name="image"/>
+                  <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
+                  <label htmlFor="imageFile">Choose an image</label>
                   <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
                 </form>
                 : <div></div>}

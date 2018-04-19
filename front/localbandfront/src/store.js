@@ -4,13 +4,11 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import bandReducer from './reducers/bandReducer'
 import loginReducer from './reducers/loginReducer'
-import filterReducer from './reducers/filterReducer'
 import toggleReducer from './reducers/toggleReducer'
 
 const reducer = combineReducers({
   bands: bandReducer,
   user: loginReducer,
-  filter: filterReducer,
   toggle: toggleReducer
 })
 const store = createStore(reducer,

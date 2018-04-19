@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { filterChange, filtertypeChange } from './../reducers/filterReducer'
+import { filterChange, filtertypeChange } from './../reducers/toggleReducer'
 import { FormControl, FormGroup, ControlLabel } from 'react-bootstrap'
 
 class Filter extends React.Component {

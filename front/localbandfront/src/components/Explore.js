@@ -1,13 +1,37 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Table } from 'react-bootstrap'
+import { Table, Grid, Row, Col } from 'react-bootstrap'
 import Filter from '../components/Filter'
 import { Link } from 'react-router-dom'
+import { changePageIndex } from '../reducers/toggleReducer'
 
 const Explore = (props) => {
+  const pageChange = (pageNmbr) => {
+    props.changePageIndex(pageNmbr)
+  }
+  const pageButtons = () => {
+    var i
+    var xml = []
+    for (i = 0; i < props.numberOfPages; i++) {
+      const j = i
+      xml.push(<button onClick={() => pageChange(j)}>{`${j}-${j+10}`}</button>)
+    }
+    return xml
+  }
+
   return(
-    <div style={{ marginTop: 10, marginBottom: 10 }}>
-      <Filter />
+    <Grid style={{ marginTop: 10, marginBottom: 10 , paddingLeft: 0, paddingRight: 0  }}>
+      <Row style={{ paddingLeft: 10, paddingRight: 10  }}>
+        <Col sm={10}>
+          <Filter />
+        </Col>
+        <Col>
+          <div>{props.numberOfPages > 0 ? 'page: ' : ''}
+            {pageButtons()}
+          </div>
+        </Col>
+      </Row>
+
       <Table fluid striped>
         <tbody>
           <tr>
@@ -38,25 +62,41 @@ const Explore = (props) => {
           )}
         </tbody>
       </Table>
-    </div>
+    </Grid>
   )
 }
-const bandsToShow = (bands, filter) => {
+const bandsToShow = (bands, filter, filterType, pageIndex) => {
   const filteroity = bands.filter(function (band) {
-    if (filter.filterType === 'name') {
-      return band.name.toLowerCase().includes(filter.filter)
+    if (filterType === 'name') {
+      return band.name.toLowerCase().includes(filter.toLowerCase())
     }
-    if (filter.filterType === 'genre') {
-      return band.genre.toLowerCase().includes(filter.filter)
+    if (filterType === 'genre') {
+      return band.genre.toLowerCase().includes(filter.toLowerCase())
     }
-    if (filter.filterType === 'hometown') {
-
-      return band.hometown.toLowerCase().includes(filter.filter)
+    if (filterType === 'hometown') {
+      return band.hometown.toLowerCase().includes(filter.toLowerCase())
     } else {
       return band
     }
   })
-  return filteroity.sort((a, b) => b.votes - a.votes)
+  return filteroity.sort().slice((pageIndex*10),(pageIndex*10)+10)
+}
+
+const numOfPages = (bands, filter, filterType) => {
+  const filteroity = bands.filter(function (band) {
+    if (filterType === 'name') {
+      return band.name.toLowerCase().includes(filter.toLowerCase())
+    }
+    if (filterType === 'genre') {
+      return band.genre.toLowerCase().includes(filter.toLowerCase())
+    }
+    if (filterType === 'hometown') {
+      return band.hometown.toLowerCase().includes(filter.toLowerCase())
+    } else {
+      return band
+    }
+  })
+  return Math.round(filteroity.length/10)
 }
 
 
@@ -64,10 +104,12 @@ const mapStateToProps = (state) => {
   return {
     bands: state.bands,
     user: state.user,
-    visibleBands: bandsToShow(state.bands, state.filter)
+    visibleBands: bandsToShow(state.bands, state.toggle.filter, state.toggle.filterType, state.toggle.pageIndex),
+    pageIndex: state.toggle.pageIndex,
+    numberOfPages: numOfPages(state.bands, state.toggle.filter, state.toggle.filterType, state.toggle.pageIndex)
   }
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps, { changePageIndex }
 )(Explore)

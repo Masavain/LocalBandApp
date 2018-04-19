@@ -108,6 +108,9 @@ albumsRouter.post('/:id/bandcamp', async (req, res) => {
 albumsRouter.delete('/:id', async (req, res) => {
     try{
         const result = await Album.findByIdAndRemove(req.params.id)
+        const band = await Band.findById(result.band._id)
+        band.albums = band.albums.filter(a => a._id !== result._id)
+        await band.save()
         console.log(result)
         res.status(204).end()
         
