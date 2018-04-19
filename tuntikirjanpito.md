@@ -28,6 +28,7 @@
 |17.4.|2| Discography-sivun asettelu ja tarvittavat tiedot näkyviin. käyttäjän matchays bändin omistajaan toteutettu järkevämmin|
 |18.4.|2| Albumin kansitaiteen postaaminen backissä ja frontissa, muutamia kosmeettisia muutoksia|
 |19.4.|2| explore-sivulle sivujako max 10 bändiä, sekä nappi sivujen vaihtoa varten|
+|19.4.|1.5| bändin poisto backissa ja frontissa toimii|
 
 
-total: 59.5h
+total: 61h
