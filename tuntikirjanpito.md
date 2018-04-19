@@ -29,6 +29,7 @@
 |18.4.|2| Albumin kansitaiteen postaaminen backissä ja frontissa, muutamia kosmeettisia muutoksia|
 |19.4.|2| explore-sivulle sivujako max 10 bändiä, sekä nappi sivujen vaihtoa varten|
 |19.4.|1.5| bändin poisto backissa ja frontissa toimii|
+|19.4.|1| etusivun showcase-carousel|
 
 
-total: 61h
+total: 62h
