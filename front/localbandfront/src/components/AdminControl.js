@@ -1,16 +1,42 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Grid, FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap'
+import { postCreation, postUpdate } from './../reducers/postReducer'
+import postService from '.././services/posts'
 
 const AdminControl = (props) => {
-  const handleNewPost = () => {
-
+  const handleNewPost = async (event) => {
+    event.preventDefault()
+    const newObject = {
+      content: document.getElementById('content').value,
+      title: event.target.title.value,
+      author: event.target.author.value
+    }
+    const savedPost = await postService.createNew(newObject)
+    props.postCreation(savedPost)
+    window.location.reload()
   }
 
   return (
-    <form >
-      <textarea id="content" form="post-form"></textarea>
-      <button onClick={() => handleNewPost()}></button>
-    </form>
+    <Grid>
+      <form onSubmit={handleNewPost}>
+        <FormGroup>
+          <ControlLabel>title:</ControlLabel>
+          <FormControl
+            type="text"
+            name="title"
+          />
+          <ControlLabel>author:</ControlLabel>
+          <FormControl
+            type="text"
+            name="author"
+          />
+          <ControlLabel>content:</ControlLabel>
+          <FormControl id="content" componentClass="textarea" />
+          <Button bsStyle="success" type="submit">post</Button>
+        </FormGroup>
+      </form>
+    </Grid>
   )
 }
 
@@ -24,5 +50,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(
-  mapStateToProps
+  mapStateToProps, { postUpdate, postCreation }
 )(AdminControl)

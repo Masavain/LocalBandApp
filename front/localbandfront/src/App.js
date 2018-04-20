@@ -1,5 +1,6 @@
 import React from 'react'
 import { initialization } from './reducers/bandReducer'
+import { initializePosts } from './reducers/postReducer'
 import { connect } from 'react-redux'
 import Home from './components/Home'
 import LoginForm from './components/LoginForm'
@@ -19,6 +20,7 @@ class App extends React.Component {
   componentWillMount = async () => {
     this.props.initialization()
     this.props.initUser()
+    this.props.initializePosts()
   }
 
   logOut = async () => {
@@ -141,5 +143,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
   mapStateToProps,
-  { initialization, initUser, logout }
+  { initialization, initUser, initializePosts, logout }
 )(App)

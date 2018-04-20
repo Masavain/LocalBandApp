@@ -4,6 +4,7 @@ const Band = require('../models/band')
 const Image = require('../models/image')
 const User = require('../models/user')
 const Album = require('../models/album')
+const Post = require('../models/post')
 
 postsRouter.get('/', async (req, res) => {
     const posts = await Post
@@ -27,7 +28,7 @@ postsRouter.post('/', async (req, res) => {
     const body = req.body
   
     try {
-      const token = getTokenFrom(req)
+      const token = req.token
       const decodedToken = jwt.verify(token, process.env.SECRET)
   
       if (!token || !decodedToken.id) {
@@ -71,7 +72,7 @@ postsRouter.post('/', async (req, res) => {
     const body = req.body
 
     try {
-        const token = getTokenFrom(req)
+        const token = req.token
         const decodedToken = jwt.verify(token, process.env.SECRET)
   
         if (!token || !decodedToken.id) {
