@@ -13,7 +13,7 @@ import About from './components/About'
 import JoinForm from './components/JoinForm'
 import Band from './components/Band'
 import Post from './components/Post'
-import Background from './nakemys.jpg'
+// import Background from '
 import './App.css'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 
@@ -29,40 +29,61 @@ class App extends React.Component {
   }
 
   render() {
+
     const style = {
-      backgroundImage: `url(${Background})`,
+      backgroundImage: 'url(/tausta7.png)',
+      backgroundSize: 'contain',
       backgroundRepeat: 'repeat-x',
-      backgroundColor: 'lightgray',
-      height: '1000px'
+      backgroundColor: '#0d080a',
+      // backgroundColor: '#ff99cc',
+      height: 'auto'
 
     }
     const customStyle = {
       backgroundColor: 'white',
       marginTop: 58,
-      height: '1000px',
+      height: '1200px',
       paddingLeft: 0,
       paddingRight: 0,
     }
     if(this.props.bands.length === 0) {
       return null
     }
-    console.log('user:',this.props.user)
     const blogById = (id) => this.props.bands.find(b => b._id === id)
     const postById = (id) => this.props.posts.find(p => p._id === id)
+
+    window.onscroll = function() {
+      var mynav = document.getElementsByClassName('nav')
+      mynav[2].classList.add('scroll')
+      var mynavbuttons = document.getElementsByClassName('nav-button')
+      if (document.body.scrollTop >= 70 || document.documentElement.scrollTop >= 70) {
+        mynav[0].classList.add('scroll')
+        let i
+        for (i = 0; i < mynavbuttons.length; i++) {
+          mynavbuttons[i].classList.add('scroll-button')
+        }
+      } else {
+        mynav[0].classList.remove('scroll')
+        let i
+        for (i = 0; i < mynavbuttons.length; i++) {
+          mynavbuttons[i].classList.remove('scroll-button')
+        }
+      }
+    }
     return (
-      <div style={style}>
+      <div className="app" style={style}>
         <Grid>
           <Router>
             <div>
-              <Navbar fixedTop inverse collapseOnSelect >
+              <Navbar className="nav" fixedTop width="auto" collapseOnSelect >
                 <Navbar.Header>
                   <Navbar.Brand>
-                    <Link to="/">Localbands App</Link>
+                    <Link to="/"><div style={{ padding: 2 }}>Localbands App</div></Link>
                   </Navbar.Brand>
                   <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
-                  <Nav pullLeft>
+                  <Nav pullLeft className="nav-empty">
                     <NavItem href="#">
                       <div>
                         <Link to="/">Home</Link>
@@ -78,7 +99,6 @@ class App extends React.Component {
                         <Link to="/about">About</Link>
                       </div>
                     </NavItem>
-
                   </Nav>
                   <Nav pullRight>
                     <NavItem>
@@ -97,7 +117,7 @@ class App extends React.Component {
                           <Link to="/profile">Profile</Link>
                         </div>
                         : <div>
-                          <Link to="/login"><Button bsSize="sm" bsStyle="success">Login</Button></Link>  &nbsp;
+                          <Link to="/login"><Button className="nav-button" bsSize="sm" bsStyle="success">Login</Button></Link>  &nbsp;
                         </div>
                       }
                     </NavItem>
@@ -105,10 +125,10 @@ class App extends React.Component {
                       {this.props.user
                         ?
                         <div>
-                          <Button bsSize="sm" bsStyle="danger" onClick={this.logOut}> log out</Button>
+                          <Button className="nav-button" bsSize="sm" bsStyle="danger" onClick={this.logOut}> log out</Button>
                         </div>
                         :<div>
-                          <Link to="/join"><Button bsSize="sm" bsStyle="primary">Sign</Button></Link>
+                          <Link to="/join"><Button className="nav-button" bsSize="sm" bsStyle="primary">Sign</Button></Link>
                         </div>
                       }
                     </NavItem>

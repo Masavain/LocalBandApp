@@ -30,6 +30,10 @@ const Home = (props) => {
               <img className="carousel-image" height="500" src={props.posts[1].images[0].url} alt="PostPic"/>
               <Link to={`/post/${props.posts[1]._id}`} className="legend"><div style={{ fontSize: '200%' }}>{props.posts[1].title}</div></Link>
             </div>
+            <div>
+              <img className="carousel-image" height="500" src={props.posts[2].images[0].url} alt="PostPic"/>
+              <Link to={`/post/${props.posts[2]._id}`} className="legend"><div style={{ fontSize: '200%' }}>{props.posts[2].title}</div></Link>
+            </div>
           </Carousel>
         </Col>
       </Row>
