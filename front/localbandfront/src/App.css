@@ -30,8 +30,6 @@
     padding:10;
 }
 
-
-
 .multiborder{
     border-bottom: 1px solid lightgray;
     position:relative;
@@ -80,4 +78,22 @@
     background-color: black;
     object-fit: scale-down;
     object-position: 'center center'
+}
+
+.header-image{
+    object-fit: cover;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    margin-bottom: 40px;
+    margin-top: 50px;
+}
+
+.ekap{
+    padding: 100px;
+}
+
+.ekap{
+    padding: 100px;
 }

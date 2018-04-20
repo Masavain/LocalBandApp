@@ -12,6 +12,7 @@ const postSchema = new mongoose.Schema({
 
 postSchema.statics.format = (post) => {
   return {
+    id: post._id,
     title: post.title,
     content: post.content,
     date: post.date,

@@ -11,11 +11,13 @@ const imageSchema = new mongoose.Schema({
     type: String,
     album: {type: mongoose.Schema.Types.ObjectId, ref: 'Album'},
     band: { type: mongoose.Schema.Types.ObjectId, ref: 'Band' },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'}
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    post: { type: mongoose.Schema.Types.ObjectId, ref: 'Post'}
   })
   
   imageSchema.statics.format = (image) => {
     return {
+        id: image._id,
         url: image.url,
         type: image.type,
         height: image.height,
@@ -26,7 +28,8 @@ const imageSchema = new mongoose.Schema({
         type: image.type,
         album: image.album,
         band: image.band,
-        user: image.user
+        user: image.user,
+        post: image.post
     }
   }
   

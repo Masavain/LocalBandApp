@@ -12,6 +12,7 @@ import ProfilePage from './components/ProfilePage'
 import About from './components/About'
 import JoinForm from './components/JoinForm'
 import Band from './components/Band'
+import Post from './components/Post'
 import Background from './nakemys.jpg'
 import './App.css'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
@@ -47,7 +48,7 @@ class App extends React.Component {
     }
     console.log('user:',this.props.user)
     const blogById = (id) => this.props.bands.find(b => b._id === id)
-
+    const postById = (id) => this.props.posts.find(p => p._id === id)
     return (
       <div style={style}>
         <Grid>
@@ -118,6 +119,9 @@ class App extends React.Component {
                 <Route exact path="/bands/:id" render={({ match }) => {
                   return <Band band={blogById(match.params.id)} />}}
                 />
+                <Route exact path="/post/:id" render={({ match }) => {
+                  return <Post post={postById(match.params.id)} />}}
+                />
                 <Route exact path="/login" render={({ history }) => <LoginForm history={history}/>} />
                 <Route exact path="/search" render={() => <Explore/>} />
                 <Route exact path="/join" render={({ history }) => <JoinForm history={history}/>} />
@@ -138,6 +142,7 @@ const mapStateToProps = (state) => {
   return {
     bands: state.bands,
     user: state.user,
+    posts: state.posts
   }
 }
 

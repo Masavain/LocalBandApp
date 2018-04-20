@@ -11,7 +11,7 @@ const reducer = combineReducers({
   bands: bandReducer,
   user: loginReducer,
   toggle: toggleReducer,
-  post: postReducer
+  posts: postReducer
 })
 const store = createStore(reducer,
   composeWithDevTools(applyMiddleware(thunk))

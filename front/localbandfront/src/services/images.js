@@ -33,6 +33,14 @@ const postAlbumArt = async (newObject) => {
   return response.data
 }
 
+const postHeadArt = async (newObject) => {
+  const config = {
+    headers: { 'Authorization': token }
+  }
+  const response = await axios.post(`${url}/postimage`, newObject, config)
+  return response.data
+}
+
 const postImage = async (newObject) => {
   const config = {
     headers: { 'Authorization': token }
@@ -41,4 +49,4 @@ const postImage = async (newObject) => {
   return response.data
 }
 
-export default { setToken, getAll, getById, postImgur, postImage, postAlbumArt }
+export default { setToken, getAll, getById, postImgur, postImage, postAlbumArt, postHeadArt }

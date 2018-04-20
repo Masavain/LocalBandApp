@@ -13,6 +13,7 @@ const albumSchema = new mongoose.Schema({
 
 albumSchema.statics.format = (album) => {
   return {
+    id: album._id,
     name: album.name,
     year: album.year,
     about: album.about,
