@@ -33,6 +33,7 @@
 |19.4.|1.5| frontissa showcase-karuselli toimii nyt järkevämmin ja backissa post-model ja userien roolit|
 |19.4.|2| adminControl -komponentin aloitus sekä adminin oikeuksien säätöä|
 |20.4.|1| reducer postauksia varten, form postausten tekoon|
-|20.4.|2.5| Post-komponentti, renderöi adminin luomat/hallinnoimat postaukset|
+|20.4.|2| Post-komponentti, renderöi adminin luomat/hallinnoimat postaukset|
+|20.4.|2| Etusivulle main post ja muista postauksista karuselli, postauksen luomisen html parseaminen|
 
-total: 69h
+total: 70.5h
