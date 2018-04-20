@@ -31,6 +31,7 @@
 |19.4.|1.5| bändin poisto backissa ja frontissa toimii|
 |19.4.|1| etusivun showcase-carousel|
 |19.4.|1.5| frontissa showcase-karuselli toimii nyt järkevämmin ja backissa post-model ja userien roolit|
-|19.4.|2| adminin kontrol -komponentin aloitus sekä adminin oikeuksien säätöä|
+|19.4.|2| adminControl -komponentin aloitus sekä adminin oikeuksien säätöä|
+|20.4.|1| reducer postauksia varten, form postausten tekoon|
 
-total: 65.5h
+total: 66.5h
