@@ -4,30 +4,39 @@ import { Link } from 'react-router-dom'
 import { Grid, Row, Col } from 'react-bootstrap'
 import BandCarousel from './BandCarousel'
 import AdminControl from './AdminControl'
+import { Carousel } from 'react-responsive-carousel'
 
 const Home = (props) => {
+  console.log(props.posts)
   return(
     <Grid >
       {(props.user ? (props.user.role === 'admin') ? <AdminControl /> : <div></div> :  <div></div>)}
       <Row>
-        <Col xs={7} >
-          <h2>All Bands</h2>
-          {props.bands.map(band =>
-            <div key={`all-${band._id}`}>
-              <div>
-                <Link to={`/bands/${band._id}`}>{band.name}</Link>
-              </div>
+        <Col>
+          <Carousel centerMode centerSlidePercentage={50} showThumbs={false}>
+            <div>
+              <img className="carousel-image" height="500" src={props.mainPost.images[0].url} alt="MainPost"/>
+              <Link to={`/post/${props.mainPost._id}`} className="legend"><div style={{ fontSize: '200%' }}>{props.mainPost.title}</div></Link>
             </div>
-          )}
+          </Carousel>
+        </Col>
+        <Col>
+          <Carousel centerMode centerSlidePercentage={50} emulateTouch autoPlay showThumbs={false} infiniteLoop useKeyboardArrows>
+            <div>
+              <img className="carousel-image" height="500" src={props.posts[0].images[0].url} alt="PostPic"/>
+              <Link to={`/post/${props.posts[0]._id}`} className="legend"><div style={{ fontSize: '200%' }}>{props.posts[0].title}</div></Link>
+            </div>
+            <div>
+              <img className="carousel-image" height="500" src={props.posts[1].images[0].url} alt="PostPic"/>
+              <Link to={`/post/${props.posts[1]._id}`} className="legend"><div style={{ fontSize: '200%' }}>{props.posts[1].title}</div></Link>
+            </div>
+          </Carousel>
         </Col>
       </Row>
+      <div style={{ fontSize: '200%', textAlign: 'center', padding: 5, marginTop: 50,   }}>discover</div>
       <BandCarousel/>
     </Grid>
   )
-}
-
-const randomBand = (bands) => {
-  return bands[Math.floor(Math.random() * bands.length)]
 }
 
 const userBands = (bands, user) => {
@@ -40,14 +49,31 @@ const userBands = (bands, user) => {
     band.user.username === user.username
   )
 }
-
+const getPosts = (posts) => {
+  posts.sort(function(a, b) {
+    var c = new Date(a.date)
+    var d = new Date(b.date)
+    return d-c
+  })
+  const found = posts.find(function(post) {
+    return (post.importance === 1)
+  })
+  return posts.filter(p => p._id !== found._id)
+}
+const mainPost = (posts) => {
+  const found = posts.find(function(post) {
+    return (post.importance === 1)
+  })
+  return found
+}
 
 const mapStateToProps = (state) => {
   return {
     bands: state.bands,
     user: state.user,
     userbands: userBands(state.bands, state.user),
-    randomBand: randomBand(state.bands)
+    posts: getPosts(state.posts),
+    mainPost: mainPost(state.posts)
   }
 }
 

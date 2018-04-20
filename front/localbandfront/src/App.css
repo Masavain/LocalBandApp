@@ -90,10 +90,31 @@
     margin-top: 50px;
 }
 
-.ekap{
-    padding: 100px;
+.paragraph-first{
+    padding: 20px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
 }
 
-.ekap{
-    padding: 100px;
+.paragraph-basic{
+    padding: 20px;
+    text-align: left;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.image-footer{
+    color: slategrey;
+    font-size: 90%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+}
+
+.footer-note{
+    text-align: center;
 }
