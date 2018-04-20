@@ -35,5 +35,6 @@
 |20.4.|1| reducer postauksia varten, form postausten tekoon|
 |20.4.|2| Post-komponentti, renderöi adminin luomat/hallinnoimat postaukset|
 |20.4.|2| Etusivulle main post ja muista postauksista karuselli, postauksen luomisen html parseaminen|
+|20.4.|2| kosmeettisia muutoksia ja skrollattaessa transparentiksi muuttuva navbar sekä nappulat|
 
-total: 70.5h
+total: 72.5h
