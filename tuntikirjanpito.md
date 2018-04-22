@@ -36,5 +36,6 @@
 |20.4.|2| Post-komponentti, renderöi adminin luomat/hallinnoimat postaukset|
 |20.4.|2| Etusivulle main post ja muista postauksista karuselli, postauksen luomisen html parseaminen|
 |20.4.|2| kosmeettisia muutoksia ja skrollattaessa transparentiksi muuttuva navbar sekä nappulat|
+|22.4.|1| kosmeettisia muutoksia ja Footer-komponentti ja Gridin asettelua|
 
-total: 72.5h
+total: 73.5h
