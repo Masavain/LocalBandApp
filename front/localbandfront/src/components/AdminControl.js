@@ -4,6 +4,7 @@ import { Grid, FormControl, FormGroup, ControlLabel, Button } from 'react-bootst
 import { postCreation, postUpdate } from './../reducers/postReducer'
 import postService from '.././services/posts'
 import imageService from '.././services/images'
+import { toggleIsOpen }from '../reducers/toggleReducer'
 
 const AdminControl = (props) => {
   const handleNewPost = async (event) => {
@@ -34,10 +35,13 @@ const AdminControl = (props) => {
     }
 
   }
-
+  const toggleFormToggle = (event) => {
+    event.preventDefault()
+    props.toggleIsOpen()
+  }
   return (
     <Grid>
-      <form onSubmit={handleNewPost}>
+      {props.toggle.isOpen ? <form onSubmit={handleNewPost}>
         <FormGroup>
           <ControlLabel>title:</ControlLabel>
           <FormControl
@@ -59,7 +63,10 @@ const AdminControl = (props) => {
           />
           <Button bsStyle="success" type="submit">post</Button>
         </FormGroup>
+
       </form>
+        : <div></div>}
+      <button onClick={toggleFormToggle}>toggle admin control</button>
     </Grid>
   )
 }
@@ -74,5 +81,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(
-  mapStateToProps, { postUpdate, postCreation }
+  mapStateToProps, { postUpdate, postCreation, toggleIsOpen }
 )(AdminControl)

@@ -37,7 +37,7 @@ const Home = (props) => {
           </Carousel>
         </Col>
       </Row>
-      <div style={{ fontSize: '200%', textAlign: 'center', padding: 5, marginTop: 50,   }}>discover</div>
+      <div style={{ fontSize: '200%', textAlign: 'center', padding: 5, marginTop: 50,   }}>DISCOVER</div>
       <BandCarousel/>
     </Grid>
   )

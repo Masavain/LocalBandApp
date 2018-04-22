@@ -142,7 +142,7 @@ const Discography = (props) => {
       </Table>
       {bandMatchesLoggedUser ?
         <Row>
-          <Col xs={1} className="wrapper">
+          <Col xs={2} className="wrapper">
             <div className="inputbutton" id="asd"></div>
             <label htmlFor="asd">&#9660;</label>
             <div className="button">
@@ -176,7 +176,6 @@ const Discography = (props) => {
           </Col>
         </Row>
         : <div></div>}
-
     </Grid>
   )
 }

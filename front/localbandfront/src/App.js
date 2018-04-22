@@ -13,9 +13,9 @@ import About from './components/About'
 import JoinForm from './components/JoinForm'
 import Band from './components/Band'
 import Post from './components/Post'
-// import Background from '
 import './App.css'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
+import Footer from './components/Footer'
 
 class App extends React.Component {
   componentWillMount = async () => {
@@ -29,20 +29,10 @@ class App extends React.Component {
   }
 
   render() {
-
-    const style = {
-      backgroundImage: 'url(/tausta7.png)',
-      backgroundSize: 'contain',
-      backgroundRepeat: 'repeat-x',
-      backgroundColor: '#0d080a',
-      // backgroundColor: '#ff99cc',
-      height: 'auto'
-
-    }
     const customStyle = {
       backgroundColor: 'white',
       marginTop: 58,
-      height: '1200px',
+      height: 'auto',
       paddingLeft: 0,
       paddingRight: 0,
     }
@@ -62,19 +52,21 @@ class App extends React.Component {
         for (i = 0; i < mynavbuttons.length; i++) {
           mynavbuttons[i].classList.add('scroll-button')
         }
+
       } else {
         mynav[0].classList.remove('scroll')
         let i
         for (i = 0; i < mynavbuttons.length; i++) {
           mynavbuttons[i].classList.remove('scroll-button')
         }
+
       }
     }
     return (
-      <div className="app" style={style}>
-        <Grid>
+      <div className="app">
+        <Grid style={{ padding:0, backgroundColor: '#c1c1c1', height: 'inherit' }}>
           <Router>
-            <div>
+            <div style={{ padding:0, backgroundColor: '#c1c1c1', height: 'inherit'  }}>
               <Navbar className="nav" fixedTop width="auto" collapseOnSelect >
                 <Navbar.Header>
                   <Navbar.Brand>
@@ -86,17 +78,17 @@ class App extends React.Component {
                   <Nav pullLeft className="nav-empty">
                     <NavItem href="#">
                       <div>
-                        <Link to="/">Home</Link>
+                        <Link className="link" to="/">HOME</Link>
                       </div>
                     </NavItem>
                     <NavItem href="#">
                       <div>
-                        <Link to="/search">Explore</Link>
+                        <Link className="link" to="/search">EXPLORE</Link>
                       </div>
                     </NavItem>
                     <NavItem href="#">
                       <div>
-                        <Link to="/about">About</Link>
+                        <Link className="link" to="/about">ABOUT</Link>
                       </div>
                     </NavItem>
                   </Nav>
@@ -152,8 +144,8 @@ class App extends React.Component {
             </div>
           </Router>
         </Grid>
+        <Footer />
       </div>
-
     )
   }
 }

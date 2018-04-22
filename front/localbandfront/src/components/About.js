@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 
 const About = () => {
   const style = {
-    padding: 10
+    padding: 10,
+    height: '1000px'
   }
   return(
     <div style={style}>

@@ -12,7 +12,7 @@ const BandCarousel = (props) => {
         <Carousel centerMode centerSlidePercentage={50} emulateTouch autoPlay showThumbs={false} infiniteLoop useKeyboardArrows>
           {props.showcaseBands.map(b =>
             <div key={b._id}>
-              <img className="carousel-image" height="500" src={b.backgroundImage ? b.backgroundImage.url : DefaultBackground} alt="ShuffleImages"/>
+              <img className="carousel-image" height="400" src={b.backgroundImage ? b.backgroundImage.url : DefaultBackground} alt="ShuffleImages"/>
               <Link to={`/bands/${b._id}`} className="legend"><div style={{ fontSize:'140%' }}>{b.name}</div></Link>
             </div>)}
         </Carousel>
