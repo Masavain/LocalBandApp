@@ -54,7 +54,6 @@ const Band = (props) => {
         <table className='multiborder'>
           <tr>
             <td style={{ width:'10px' }}></td>
-            {/* &nbsp; */}
             <td style={props.toggleType === 0 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(0)}>FEED</td>
             <td style={props.toggleType === 1 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(1)}>GALLERY</td>
             <td style={props.toggleType === 2 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(2)}>DISCOGRAPHY</td>

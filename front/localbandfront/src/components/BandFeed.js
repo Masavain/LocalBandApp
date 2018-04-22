@@ -8,10 +8,24 @@ import imageService from './../services/images'
 const BandFeed = (props) => {
   const src = `https://bandcamp.com/EmbeddedPlayer/album=${props.band.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=${props.band.bcTrackID}/transparent=true/`
 
-  const handleUpdateSubmit = async (event) => {
+  const handleGenreSubmit = async (event) => {
     event.preventDefault()
-    let newObject
-    (event.target.about ? newObject = { ...props.band, about: event.target.about.value } : newObject = { ...props.band, genre: event.target.genre.value } )
+    const newObject = { ...props.band, genre: event.target.genre.value }
+    const updatedBand = await bandService.update(newObject._id, newObject)
+    props.updateBand(updatedBand)
+    window.location.reload()
+  }
+  const handleStartedSubmit = async (event) => {
+    event.preventDefault()
+    const newObject = { ...props.band, started: event.target.started.value }
+    const updatedBand = await bandService.update(newObject._id, newObject)
+    props.updateBand(updatedBand)
+    window.location.reload()
+  }
+  const handleAboutSubmit = async (event) => {
+    event.preventDefault()
+    const about = document.getElementById('about').value
+    const newObject = { ...props.band, about  }
     const updatedBand = await bandService.update(newObject._id, newObject)
     props.updateBand(updatedBand)
     window.location.reload()
@@ -78,42 +92,60 @@ const BandFeed = (props) => {
   return(
     <Grid>
       <Row style={gridStyle}>
-        <Col md={7} xs={4}>
+        <Col sm={3} xs={3} style={{ marginRight: 100 }}>
           {props.band.avatar
             ? <div className="wrapper">
-              <img src={props.band.avatar.url} width="250" height="250" alt="avatar"/>
+              <img src={props.band.avatar.url} width="300" height="300" alt="avatar"/>
               {bandMatchesLoggedUser ?
-                <form className="button" onSubmit={handleAvatarSubmit}>
+                <div style={{ position: 'absolute', padding: 5, top: '250px' }}><form className="button" onSubmit={handleAvatarSubmit}>
                   <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
                   <label htmlFor="imageFile">Choose an image</label>
                   <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
-                </form>
+                </form></div>
                 : <div></div>}
             </div>
-            : <div className="wrapper">
-              <img src='/default_band_icon.png' width="250" height="250" alt="default avatar"/>
+            : <div className="wrapper" style={{ position: 'relative' }}>
+              <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
               {bandMatchesLoggedUser ?
-                <form className="button" onSubmit={handleAvatarSubmit}>
-                  <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
-                  <label htmlFor="imageFile">Choose an image</label>
-                  <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
-                </form>
+                <div style={{ position: 'absolute', padding: 5, top: '250px' }}>
+                  <form className="button" onSubmit={handleAvatarSubmit}>
+                    <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
+                    <label htmlFor="imageFile">Choose an image</label>
+                    <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
+                  </form>
+                </div>
                 : <div></div>}
             </div>}
-          <div>
-              Genre: {props.band.genre ? props.band.genre : ''}
-            {bandMatchesLoggedUser ? <form onSubmit={handleUpdateSubmit}>
-                edit genre<input type='text' name='genre'/>
-            </form> : <div></div>}
+        </Col>
+        <Col md={4} sm={3} style={{ marginRight: 100, padding: 10 }}>
+          <div className="wrapper">
+            <div>Genre: {props.band.genre ? props.band.genre : ''}</div>
+            {bandMatchesLoggedUser ?
+              <form className="button" onSubmit={handleGenreSubmit}>
+                <div>edit genre</div><input type='text' name='genre'/>
+              </form> : <div></div>}
           </div>
-          <div>
-            About: {props.band.about ? props.band.about : ''}
-            {bandMatchesLoggedUser ? <form onSubmit={handleUpdateSubmit}>
-                edit about<input type='text' name='about'/>
-            </form> : <div></div>}
+          <div className="wrapper">
+            <div>Started: {props.band.started ? props.band.started : ''}</div>
+            {bandMatchesLoggedUser ?
+              <form className="button" onSubmit={handleStartedSubmit}>
+                <div>edit starting year</div><input type='number' name='started'/>
+              </form> : <div></div>}
+          </div>
+          <div className="wrapper">
+            <div>About: {props.band.about ? props.band.about : ''}</div>
+            {bandMatchesLoggedUser ?
+              <form className="button" onSubmit={handleAboutSubmit}>
+                <div>edit about</div>
+                <textarea id='about'></textarea>
+                <input type="submit"/>
+              </form> : <div></div>}
           </div>
         </Col>
 
+
+      </Row>
+      <Row>
         <Col md={3} xs={3}>
           {props.band.bcURL
             ? <div>
@@ -135,11 +167,6 @@ const BandFeed = (props) => {
                 </form>
                 : <div></div>}
             </div>}
-        </Col>
-      </Row>
-      <Row>
-        <Col md={3} xs={3}>
-
         </Col>
       </Row>
       <Row>

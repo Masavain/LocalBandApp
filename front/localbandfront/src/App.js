@@ -106,7 +106,7 @@ class App extends React.Component {
                     <NavItem>
                       {this.props.user
                         ? <div>
-                          <Link to="/profile">Profile</Link>
+                          <Link className="link" to="/profile">Profile</Link>
                         </div>
                         : <div>
                           <Link to="/login"><Button className="nav-button" bsSize="sm" bsStyle="success">Login</Button></Link>  &nbsp;

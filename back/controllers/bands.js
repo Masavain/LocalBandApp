@@ -57,11 +57,12 @@ bandsRouter.post('/', async (req, res) => {
 
 bandsRouter.put('/:id', async (req, res) => {
     try {
-        const { about, genre } = req.body
+        const { about, genre, started } = req.body
         console.log('about ', about,' genre ', genre)
         const vanha = await Band.findById(req.params.id)
         const uusi = { about: about ? about : vanha.about,
-            genre: genre ? genre : vanha.genre }
+            genre: genre ? genre : vanha.genre,
+            started: started ? started : vanha.started }
         console.log('uusi: ', uusi)
         const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
         res.json(Band.format(updated))
