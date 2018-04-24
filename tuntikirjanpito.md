@@ -38,5 +38,7 @@
 |20.4.|2| kosmeettisia muutoksia ja skrollattaessa transparentiksi muuttuva navbar sekä nappulat|
 |22.4.|1| kosmeettisia muutoksia ja Footer-komponentti ja Gridin asettelua|
 |22.4.|2| Bandfeed-komponentin muokkausta. Gridin asettelua ja handlefunktion eriyttäminen selkeyden vuoksi. Muutoksia myös backiin, bändin aloitusvuoden muokkaus nyt mahdollista|
+|24.4.|1.5| Bandfeed-komponentin muokkausta ja asettelua, Explore-komponentin sivuswitchien CSS:ää|
 
-total: 75.5h
+
+total: 77h
