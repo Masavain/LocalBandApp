@@ -68,7 +68,7 @@ const BandHeader = (props) => {
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleBgSubmit}>
                 <input className="inputbutton" type="file" accept="image/*" id="bgImage" name="bgimage"></input>
-                <label htmlFor="bgImage">Choose an image</label>
+                <label htmlFor="bgImage">Choose image</label>	&nbsp;
                 <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit background</Button>
               </form>
               :

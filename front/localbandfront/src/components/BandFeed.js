@@ -6,7 +6,6 @@ import bandService from './../services/bands'
 import imageService from './../services/images'
 
 const BandFeed = (props) => {
-  const src = `https://bandcamp.com/EmbeddedPlayer/album=${props.band.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=${props.band.bcTrackID}/transparent=true/`
 
   const handleGenreSubmit = async (event) => {
     event.preventDefault()
@@ -26,6 +25,13 @@ const BandFeed = (props) => {
     event.preventDefault()
     const about = document.getElementById('about').value
     const newObject = { ...props.band, about  }
+    const updatedBand = await bandService.update(newObject._id, newObject)
+    props.updateBand(updatedBand)
+    window.location.reload()
+  }
+  const handleHometownSubmit = async (event) => {
+    event.preventDefault()
+    const newObject = { ...props.band, hometown: event.target.hometown.value }
     const updatedBand = await bandService.update(newObject._id, newObject)
     props.updateBand(updatedBand)
     window.location.reload()
@@ -80,42 +86,33 @@ const BandFeed = (props) => {
     width: 350,
     height: 470
   }
-  const gridStyle = {
-    padding: 10
-  }
-
+  const src = `https://bandcamp.com/EmbeddedPlayer/album=${props.band.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/track=${props.band.bcTrackID}/transparent=true/`
   const ytId = props.band.youtubeID ? props.band.youtubeID : 'So6Qa_4QHYY'
   const ytUrli = `https://www.youtube.com/embed/${ytId}?autoplay=0`
   const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
 
-
   return(
-    <Grid>
-      <Row style={gridStyle}>
-        <Col sm={3} xs={3} style={{ marginRight: 100 }}>
+    <Grid >
+      <Row>
+        <Col sm={4} xs={3} className="wrapper" style={{ paddingTop: 0, paddingRight:350, paddingBottom:50,
+          marginLeft: 15, paddingLeft: 45, overflof: 'auto', position:'center',
+          marginRight: 50 }}>
           {props.band.avatar
-            ? <div className="wrapper">
+            ? <div className="wrapper" style={{ position: 'relative' }}>
               <img src={props.band.avatar.url} width="300" height="300" alt="avatar"/>
-              {bandMatchesLoggedUser ?
-                <div style={{ position: 'absolute', padding: 5, top: '250px' }}><form className="button" onSubmit={handleAvatarSubmit}>
-                  <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
-                  <label htmlFor="imageFile">Choose an image</label>
-                  <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
-                </form></div>
-                : <div></div>}
             </div>
             : <div className="wrapper" style={{ position: 'relative' }}>
               <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
-              {bandMatchesLoggedUser ?
-                <div style={{ position: 'absolute', padding: 5, top: '250px' }}>
-                  <form className="button" onSubmit={handleAvatarSubmit}>
-                    <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
-                    <label htmlFor="imageFile">Choose an image</label>
-                    <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
-                  </form>
-                </div>
-                : <div></div>}
             </div>}
+          {bandMatchesLoggedUser ?
+            <div style={{ position: 'absolute', width:'100%', padding: 50, top: '260px'  }}>
+              <form style={{ width: 200 }} className="button" onSubmit={handleAvatarSubmit}>
+                <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
+                <label htmlFor="imageFile">Choose image</label>&nbsp;
+                <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit avatar</Button>
+              </form>
+            </div>
+            : <div></div>}
         </Col>
         <Col md={4} sm={3} style={{ marginRight: 100, padding: 10 }}>
           <div className="wrapper">
@@ -133,29 +130,35 @@ const BandFeed = (props) => {
               </form> : <div></div>}
           </div>
           <div className="wrapper">
+            <div>Hometown: {props.band.hometown ? props.band.hometown : ''}</div>
+            {bandMatchesLoggedUser ?
+              <form className="button" onSubmit={handleHometownSubmit}>
+                <div>edit genre</div><input type='text' name='hometown'/>
+              </form> : <div></div>}
+          </div>
+          <div className="wrapper">
             <div>About: {props.band.about ? props.band.about : ''}</div>
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleAboutSubmit}>
                 <div>edit about</div>
-                <textarea id='about'></textarea>
-                <input type="submit"/>
+                <textarea style={{ padding: 10 }} id='about'></textarea>
+                <button className="page-button" style={{ position: 'absolute', bottom:-5, left:15 }} type="submit">edit</button>
               </form> : <div></div>}
           </div>
         </Col>
-
-
       </Row>
-      <Row>
-        <Col md={3} xs={3}>
+
+      <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98.5%', marginBottom: 20, padding: 5 }}>
+        <Col sm={4} xs={3}>
           {props.band.bcURL
-            ? <div>
+            ? <div className="wrapper">
               <iframe title={props.band._id} style={BCstyle}
                 src={src}
                 seamless>
                 <a href={props.band.bcURL}>asd</a>
               </iframe>
               {bandMatchesLoggedUser ?
-                <form onSubmit={handleBandcampSubmit}>
+                <form className="button" onSubmit={handleBandcampSubmit}>
                   <div>edit bandcamp url<input type='text' name='bcurl' /></div>
                 </form>
                 : <div></div>}
@@ -163,22 +166,28 @@ const BandFeed = (props) => {
             : <div>
               {bandMatchesLoggedUser ?
                 <form onSubmit={handleBandcampSubmit}>
-                  <div>add bandcamp url<input type='text' name='bcurl' /></div>
+                  <div>Paste a Bandcamp album url you want others to see and hear
+                  <input type='text' name='bcurl' /></div>
                 </form>
                 : <div></div>}
             </div>}
         </Col>
-      </Row>
-      <Row>
-        <Col className={gridStyle} xs={3}>
-          <iframe title="youtube" id="ytplayer" type="text/html" width="640" height="360"
-            src={ytUrli}
-            frameBorder="0"></iframe>
-          <div>
-            <form onSubmit={handleYoutubeSubmit}>
-              <div>add youtube url<input type='text' name='yturl' /></div>
-            </form>
-          </div>
+        <Col xs={3}>
+          {props.band.youtubeID
+            ? <div className="wrapper">
+              <iframe title="youtube" id="ytplayer" type="text/html" width="640" height="360"
+                src={ytUrli}
+                frameBorder="0"></iframe>
+              {bandMatchesLoggedUser ? <form className="button" onSubmit={handleYoutubeSubmit}>
+                <div>edit YouTube url<input type='text' name='yturl' /></div>
+              </form>: <div></div> }
+            </div>
+
+            : <div>
+              {bandMatchesLoggedUser ? <form onSubmit={handleYoutubeSubmit}>
+                <div>Paste a YouTube url you want others to see and hear<input type='text' name='yturl' /></div>
+              </form>: <div></div> } </div>}
+
         </Col>
       </Row>
     </Grid>
