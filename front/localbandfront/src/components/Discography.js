@@ -51,10 +51,13 @@ const Discography = (props) => {
   }
   const deleteAlbum = (album) => async event => {
     event.preventDefault()
-    await albumService.remove(album._id)
-    const updatedBand = await bandService.getById(props.band._id)
-    props.updateBand(updatedBand)
-    window.location.reload()
+    if (window.confirm(`Delete ${album.name}?`)) {
+      await albumService.remove(album._id)
+      const updatedBand = await bandService.getById(props.band._id)
+      props.updateBand(updatedBand)
+      window.location.reload()
+    }
+
   }
 
   const albumFormSubmit = async (event) => {
@@ -79,99 +82,99 @@ const Discography = (props) => {
   const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
   return(
     <Grid>
+      <Row>
+        <Table>
+          <tbody>
+            {props.band.albums.map(album =>
+              <tr key={album._id}>
+                {album.albumArt
+                  ? <td style={{ width: 150 }} className="wrapper">
+                    <div style={{ marginLeft: 15, position:'relative' }}><img src={album.albumArt.url} width="125" height="125" alt="thumbnail"/></div>
+                    {bandMatchesLoggedUser ? <form style={{ position:'absolute' }} className="button" onSubmit={handleAlbumArtSubmit(album)}>
+                      <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
+                      <label htmlFor="imageFile">Choose image</label>
+                      <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit album art</Button>
+                    </form> : <div></div>}
+                  </td>
+                  : <td className="wrapper">
+                    <div style={{ position:'relative' }}><img src='/default_album_icon.png' width="125" height="125" alt="default thumbnail"/></div>
+                    {bandMatchesLoggedUser ? <form style={{ position:'absolute' }} className="button" onSubmit={handleAlbumArtSubmit(album)}>
+                      <input type="file" accept="image/*" id="imageFile" name="image"/>
+                      <label htmlFor="imageFile">Choose image</label>
+                      <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit album art</Button>
+                    </form> : <div></div>}
+                  </td>}
+                <td className="wrapper" style={{ width: '30%' }}>
+                  Title: {album.name}
+                  <div>
+                    <div>Released: {album.year}</div>
+                    <div>About: {album.about}</div>
+                    <div className="button" >
+                      <form onSubmit={handleUpdateSubmit(album)}>
+                        <div><input type='text' name='about' /> edit about </div>
+                      </form>
+                    </div>
 
-      <Table>
-        <tbody>
-          {props.band.albums.map(album =>
-            <tr key={album._id} className="wrapper">
-              {album.albumArt
-                ? <td>
-                  <img src={album.albumArt.url} width="125" height="125" alt="thumbnail"/>
-                  {bandMatchesLoggedUser ? <form className="button" onSubmit={handleAlbumArtSubmit(album)}>
-                    <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
-                    <label htmlFor="imageFile">choose an image</label>
-                    <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit album art</Button>
-                  </form> : <div></div>}
-                </td>
-                : <td>
-                  <img src='/default_album_icon.png' width="125" height="125" alt="default thumbnail"/>
-                  {bandMatchesLoggedUser ? <form className="button" onSubmit={handleAlbumArtSubmit(album)}>
-                    <input type="file" accept="image/*" id="imageFile" name="image"/>
-                    <label htmlFor="imageFile">choose an image</label>
-                    <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit album art</Button>
-                  </form> : <div></div>}
-                </td>}
-              <td style={{ width: '30%' }}>
-                {album.name}
-                <div>
-                  <div>Released: {album.year}</div>
-                  <div>About: {album.about}</div>
-                  <div className="button" >
-                    <form  onSubmit={handleUpdateSubmit(album)}>
-                      <div ><input type='text' name='about' /> edit about </div>
-                    </form>
                   </div>
-
-                </div>
-              </td>
-              {album.bcURL ?
-                <td style={{ position: 'relative', width: '400px' }}>
-                  <iframe  style={{ position: 'relative',border: 0,width: '100%',height: '120px' }}
-                    title={album.bcAlbumID}
-                    src={`https://bandcamp.com/EmbeddedPlayer/album=${album.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/`}
-                    seamless>
-                    <a href={album.bcURL}>embedded album</a>
-                  </iframe>
-                  {bandMatchesLoggedUser ? <form className="button" onSubmit={handleBandcampSubmit(album)}>
-                    <div ><input type='text' name='bcurl' /> change album url </div>
-                  </form> : <div></div>}
-
                 </td>
-                : <td>
-                  {bandMatchesLoggedUser ? <form className="button" onSubmit={handleBandcampSubmit(album)}>
-                    <div ><input type='text' name='bcurl' /> add bandcamp url </div>
-                  </form> : <div></div>}
-                </td>
-              }
-              <td style={{ position: 'relative', width: '45px' }}>
-                <Button className="button" bsSize="sm" bsStyle="danger" onClick={deleteAlbum(album)}>x</Button>
-              </td>
-            </tr>)}
+                {album.bcURL ?
+                  <td className="wrapper" style={{ position: 'relative', width: '400px' }}>
+                    <iframe  style={{ position: 'relative',border: 0,width: '100%',height: '120px' }}
+                      title={album.bcAlbumID}
+                      src={`https://bandcamp.com/EmbeddedPlayer/album=${album.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/`}
+                      seamless>
+                      <a href={album.bcURL}>embedded album</a>
+                    </iframe>
+                    {bandMatchesLoggedUser ? <div><form className="button" onSubmit={handleBandcampSubmit(album)}>
+                      <div><input type='text' name='bcurl' /> change album url </div>
+                    </form>&nbsp;<Button className="button" bsSize="sm" bsStyle="danger" onClick={deleteAlbum(album)}>x</Button></div> : <div></div>}
 
-        </tbody>
-      </Table>
+                  </td>
+                  : <td className="wrapper">
+                    {bandMatchesLoggedUser ? <form className="button" onSubmit={handleBandcampSubmit(album)}>
+                      <div ><input type='text' name='bcurl'/> add bandcamp url </div>
+                    </form> : <div></div>}
+                  </td>
+                }
+              </tr>)}
+
+          </tbody>
+        </Table>
+      </Row>
       {bandMatchesLoggedUser ?
-        <Row>
-          <Col xs={2} className="wrapper">
-            <div className="inputbutton" id="asd"></div>
-            <label htmlFor="asd">&#9660;</label>
-            <div className="button">
-              <Form horizontal onSubmit={albumFormSubmit} className='form-inline'>
-                <FormGroup className='form-group' bsSize='sm'>
-                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Title: </Col>
-                  <Col xsOffset={2} className='input-label'><FormControl
-                    type="text"
-                    name="name"
-                  /></Col>
+        <Row style={{ height: 40 }}>
+          <Col sm={2} >
+            <div className="wrapper">
+              <div className="inputbutton" id="asd"></div>
+              <label htmlFor="asd" style={{ position:'absolute' }}>&#9660;</label>
+              <div className="button">
+                <Form horizontal style={{ padding: 30 }}onSubmit={albumFormSubmit} className='form-inline'>
+                  <FormGroup className='form-group' bsSize='sm'>
+                    <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Title: </Col>
+                    <Col xsOffset={2} className='input-label'><FormControl
+                      type="text"
+                      name="name"
+                    /></Col>
 
-                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Release year: </Col>
-                  <Col xsOffset={2} className='input-label'><FormControl
-                    type="number"
-                    name="year"
-                  /></Col>
-                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
-                  <Col xsOffset={2} className='input-label'><FormControl
-                    type="text"
-                    name="about"
-                  /></Col>
-                  <Col xsOffset={2} className='input-label' componentClass={ControlLabel} >Bandcamp url: </Col>
-                  <Col xsOffset={2} className='input-label'><FormControl
-                    type="text"
-                    name="bcurl"
-                  /></Col>
-                  <Col xsOffset={2} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
-                </FormGroup>
-              </Form>
+                    <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Release year: </Col>
+                    <Col xsOffset={2} className='input-label'><FormControl
+                      type="number"
+                      name="year"
+                    /></Col>
+                    <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
+                    <Col xsOffset={2} className='input-label'><FormControl
+                      type="text"
+                      name="about"
+                    /></Col>
+                    <Col xsOffset={2} className='input-label' componentClass={ControlLabel} >Bandcamp url: </Col>
+                    <Col xsOffset={2} className='input-label'><FormControl
+                      type="text"
+                      name="bcurl"
+                    /></Col>
+                    <Col xsOffset={2} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
+                  </FormGroup>
+                </Form>
+              </div>
             </div>
           </Col>
         </Row>
