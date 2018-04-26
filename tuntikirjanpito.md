@@ -42,6 +42,7 @@
 |25.4.|1| Discographyn ja Gallerian muotoilua|
 |26.4.|3| Backin api-testausta alkuun|
 |26.4.|1.5| api/bands -testaus valmiiksi|
+|26.4.|1.5| api/albums -testit|
 
 
-total: 82.5h
+total: 84h
