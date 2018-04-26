@@ -12,18 +12,18 @@
   "author": "Matti Vainionpää",
   "license": "MIT",
   "dependencies": {
-    "bandcamp-scraper": "^1.2.2",
+    "bandcamp-scraper": "^1.2.3",
     "bcrypt": "^1.0.3",
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
-    "jsonwebtoken": "^8.2.0",
-    "mongoose": "^5.0.10",
+    "jsonwebtoken": "^8.2.1",
+    "mongoose": "^5.0.16",
     "multer": "^1.3.0"
   },
   "devDependencies": {
     "jest": "^22.4.3",
-    "nodemon": "^1.17.2",
+    "nodemon": "^1.17.3",
     "supertest": "^3.0.0"
   }
 }
