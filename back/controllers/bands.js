@@ -27,6 +27,9 @@ bandsRouter.post('/', async (req, res) => {
     const { name, genre, started, hometown, about, active } = req.body
 
     try {
+        if (!name || !genre || !hometown) {
+            return res.status(400).json({ error: 'content missing' })
+        }
         const token = req.token
         const decodedToken = jwt.verify(token, process.env.SECRET)
         console.log('decoded', decodedToken)
@@ -76,10 +79,13 @@ bandsRouter.put('/:id', async (req, res) => {
 bandsRouter.get('/:id', async (req, res) => {
     try {
         const band = await Band.findById(req.params.id).populate('backgroundImage').populate('user').populate('albums')
-        res.json(Band.format(band))
+        if (band) {
+            res.json(Band.format(band))
+          } else {
+            res.status(404).end()
+          }
 
     } catch (exception) {
-        console.log(error)
         res.status(400).send({ error: 'malformatted id' })
     }
 })
@@ -145,7 +151,6 @@ bandsRouter.post("/:id/youtube", async (req, res) => {
         const result = await Band.findByIdAndRemove(req.params.id)
         user.bands = user.bands.filter(b => b._id !== result._id)
         await user.save()
-        console.log(result)
         res.status(204).end()
         
       } catch (exception) {
