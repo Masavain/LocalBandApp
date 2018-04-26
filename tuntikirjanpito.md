@@ -40,6 +40,7 @@
 |22.4.|2| Bandfeed-komponentin muokkausta. Gridin asettelua ja handlefunktion eriyttäminen selkeyden vuoksi. Muutoksia myös backiin, bändin aloitusvuoden muokkaus nyt mahdollista|
 |24.4.|1.5| Bandfeed-komponentin muokkausta ja asettelua, Explore-komponentin sivuswitchien CSS:ää|
 |25.4.|1| Discographyn ja Gallerian muotoilua|
+|26.4.|3| Backin api-testausta alkuun|
 
 
-total: 78h
+total: 81h
