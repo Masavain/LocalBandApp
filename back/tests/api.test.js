@@ -2,18 +2,22 @@ const supertest = require('supertest')
 const { app, server } = require('../index')
 const api = supertest(app)
 const Band = require('../models/band')
+const Album = require('../models/album')
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
-const { format, initialBands, initialAlbums, nonExistingId, bandsInDb, usersInDb, albumsInDb } = require('./test_helper')
+const { formatBand, formatAlbum, initialBands, initialAlbums, nonExistingAlbumId, nonExistingBandId, bandsInDb, usersInDb, albumsInDb } = require('./test_helper')
 let token
 
-describe('when there is initially some bands saved', async () => {
+describe('when there is initially some bands and albums saved', async () => {
     beforeAll(async () => {
         await Band.remove({})
+        await Album.remove({})
         const bandObjects = initialBands.map(band => new Band(band))
         const promiseArray = bandObjects.map(band => band.save())
-
         await Promise.all(promiseArray)
+        const albumObjects = initialAlbums.map(album => new Album(album))
+        const promiseArrayTwo = albumObjects.map(a => a.save())
+        await Promise.all(promiseArrayTwo)
         const res = await api.post('/api/login').send({
             username: 'kayttaja',
             password: 'secreed',
@@ -73,13 +77,13 @@ describe('when there is initially some bands saved', async () => {
     })
 
     test('404 returned by GET /api/bands/:id with nonexisting valid id', async () => {
-        const validNonexistingId = await nonExistingId()
+        const validNonexistingId = await nonExistingBandId()
 
         const response = await api
             .get(`/api/bands/${validNonexistingId}`)
             .expect(404)
     })
-    test('400 is returned by GET /api/notes/:id with invalid id', async () => {
+    test('400 is returned by GET /api/bands/:id with invalid id', async () => {
         const invalidId = "5a3d5da59070081a82a3445"
 
         const response = await api
@@ -117,7 +121,7 @@ describe('when there is initially some bands saved', async () => {
         })
 
 
-        test('POST /api/notes fails with proper statuscode if name is missing', async () => {
+        test('POST /api/bands fails with proper statuscode if name is missing', async () => {
             const bandsInBeginning = await bandsInDb()
 
             const newBand = {
@@ -166,7 +170,7 @@ describe('when there is initially some bands saved', async () => {
                 .set({ Authorization: token })
                 .expect(400)
         })
-        
+
         test('DELETE /api/bands/:id succeeds with proper statuscode', async () => {
             const bandsInBeginning = await bandsInDb()
             const testband = bandsInBeginning[0]
@@ -225,10 +229,156 @@ describe('when there is initially some bands saved', async () => {
                 .expect(400)
         })
     })
+    describe('albums', async () => {
+        test('albums are returned as json by GET /api/albums', async () => {
+            const albumsInDatabase = await albumsInDb()
 
+            const res = await api
+                .get('/api/albums')
+                .expect(200)
+                .expect('Content-Type', /application\/json/)
+
+            expect(res.body.length).toBe(albumsInDatabase.length)
+            const returnedNames = res.body.map(n => n.name)
+            albumsInDatabase.forEach(album => {
+                expect(returnedNames).toContain(album.name)
+            })
+        })
+        test('testalbum is returned', async () => {
+            const albumsInDatabase = await albumsInDb()
+            const testalbum = albumsInDatabase[0]
+
+            const response = await api
+                .get(`/api/albums/${testalbum.id}`)
+                .expect(200)
+                .expect('Content-Type', /application\/json/)
+
+            expect(response.body.name).toBe(testalbum.name)
+        })
+
+        test('404 returned by GET /api/albums/:id with nonexisting valid id', async () => {
+            const validNonexistingId = await nonExistingAlbumId()
+            const response = await api
+                .get(`/api/albums/${validNonexistingId}`)
+                .expect(404)
+        })
+        test('POST /api/albums succeeds with valid data', async () => {
+            const albumsInBeginning = await albumsInDb()
+            const bandsInBeginning = await bandsInDb()
+            const bandId = bandsInBeginning[0].id
+
+            const newAlbum = {
+                name: 'albumtobeadded',
+                year: 2000,
+                about: 'not much',
+                bandId
+            }
+
+            await api
+                .post('/api/albums')
+                .send(newAlbum)
+                .set({ Authorization: token })
+                .expect(201)
+                .expect('Content-Type', /application\/json/)
+
+            const albumsAfterOperation = await albumsInDb()
+
+            expect(albumsAfterOperation.length).toBe(albumsInBeginning.length + 1)
+
+            const names = albumsAfterOperation.map(r => r.name)
+            expect(names).toContain('albumtobeadded')
+        })
+
+        test('POST /api/albums fails with malformatted id', async () => {
+            const invalidId = await nonExistingAlbumId()
+            const response = await api
+                .get(`/api/albums/${invalidId}`)
+                .expect(404)
+        })
+
+        test('400 is returned by GET /api/albums/:id with invalid id', async () => {
+            const invalidId = "5a3d5da59070081a82a3445"
+
+            const response = await api
+                .get(`/api/albums/${invalidId}`)
+                .expect(400)
+        })
+
+        test('POST /api/albums/:id/bandcamp works with valid data', async () => {
+            const albumsInBeginning = await albumsInDb()
+            const testalbum = albumsInBeginning[0]
+            const res = await api
+                .post(`/api/albums/${testalbum.id}/bandcamp`)
+                .send({ albumUrl: 'https://memobandfin.bandcamp.com/album/mustavalkofilmi' })
+                .set({ Authorization: token })
+            expect(res.body.bcURL).toBe('https://memobandfin.bandcamp.com/album/mustavalkofilmi')
+        })
+
+        test('POST /api/albums/:id/bandcamp with malformatted id', async () => {
+            const invalidId = "5a3d5da59070081a82a3445"
+            await api
+                .post(`/api/albums/${invalidId}/bandcamp`)
+                .send({ albumUrl: 'https://memobandfin.bandcamp.com/album/mustavalkofilmi' })
+                .set({ Authorization: token })
+                .expect(400)
+        })
+
+        test('PUT /api/albums/:id succeeds with proper statuscode', async () => {
+            const albumsInBeginning = await albumsInDb()
+            const testalbum = albumsInBeginning[0]
+            const res = await api
+                .put(`/api/albums/${testalbum.id}`)
+                .send({ about: 'new about', name: 'new name', year: 0 })
+                .set({ Authorization: token })
+                .expect(200)
+
+            const albumsAfterOperation = await albumsInDb()
+            const names = albumsAfterOperation.map(b => b.name)
+            const abouts = albumsAfterOperation.map(b => b.about)
+            const years = albumsAfterOperation.map(b => b.year)
+            expect(res.body.about).toBe('new about')
+            expect(res.body.year).toBe(0)
+            expect(res.body.name).toBe('new name')
+            expect(names).toContain('new name')
+            expect(abouts).toContain('new about')
+            expect(years).toContain(0)
+            expect(albumsAfterOperation.length).toBe(albumsInBeginning.length)
+
+        })
+
+        test('PUT /api/albums/:id fails with malformatted id', async () => {
+            const invalidId = "5a3d5da59070081a82a3445"
+            await api
+                .put(`/api/albums/${invalidId}`)
+                .send({ about: 'nothing really..' })
+                .set({ Authorization: token })
+                .expect(400)
+        })
+
+        test('DELETE /api/albums/:id succeeds with proper statuscode', async () => {
+            const albumsInBeginning = await albumsInDb()
+            const testalbum = albumsInBeginning[2]
+            await api
+                .delete(`/api/albums/${testalbum.id}`)
+                .set({ Authorization: token })
+                .expect(204)
+            
+            const albumsAfterOperation = await albumsInDb()
+
+            const names = albumsAfterOperation.map(r => r.name)
+            expect(names).not.toContain(testalbum.name)
+            expect(albumsAfterOperation.length).toBe(albumsInBeginning.length - 1)
+        })
+        test('DELETE /api/albums/:id fails with malformatted id', async () => {
+            const invalidId = "5a3d5da59070081a82a3445"
+            await api
+                .delete(`/api/albums/${invalidId.id}`)
+                .set({ Authorization: token })
+                .expect(400)
+            })
+    })
 
     afterAll(() => {
         server.close()
     })
-
 })

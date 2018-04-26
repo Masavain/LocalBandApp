@@ -51,7 +51,6 @@ bandsRouter.post('/', async (req, res) => {
         if (exception.name === 'JsonWebTokenError') {
             res.status(401).json({ error: exception.message })
         } else {
-            console.log(exception)
             res.status(500).json({ error: 'something went wrong...' })
         }
     }
@@ -116,7 +115,6 @@ bandsRouter.post('/:id/bandcamp', async (req, res) => {
         console.log('updated', updatedBand)
         res.status(200).json(Band.format(updatedBand))
     } catch (exception) {
-        console.log(exception)
         res.status(400).json({ error: 'malformatted id' })
     }
 })

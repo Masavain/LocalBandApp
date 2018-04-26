@@ -25,7 +25,7 @@ albumsRouter.post('/', async (req, res) => {
             return res.status(401).json({ error: 'token missing or invalid' })
         }
 
-        const album = new Album({ name, year, about, bcURL: '', bcAlbumID: '',bcTrackID: '',  band: bandId })
+        const album = new Album({ name, year, about, bcURL: '', bcAlbumID: '', bcTrackID: '', band: bandId })
         console.log('album', album)
         const result = await album.save()
         const band = await Band.findById(bandId)
@@ -39,7 +39,6 @@ albumsRouter.post('/', async (req, res) => {
         if (exception.name === 'JsonWebTokenError') {
             res.status(401).json({ error: exception.message })
         } else {
-            console.log(exception)
             res.status(500).json({ error: 'something went wrong...' })
         }
     }
@@ -50,15 +49,16 @@ albumsRouter.put('/:id', async (req, res) => {
     try {
         const { about, year, name } = req.body
         const vanha = await Album.findById(req.params.id)
-        const uusi = { about: about ? about : vanha.about,
-                        year: year ? year : vanha.year,
-                        name: name ? name : vanha.name }
+        const uusi = {
+            about: about ? about : vanha.about,
+            year: year ? year : vanha.year,
+            name: name ? name : vanha.name
+        }
         const updated = await Album.findByIdAndUpdate(req.params.id, uusi, { new: true })
-                                    .populate('band').populate('albumArt')
+            .populate('band').populate('albumArt')
         res.json(Album.format(updated))
 
     } catch (exception) {
-        console.log(error)
         res.status(400).send({ error: 'malformatted id' })
     }
 })
@@ -66,10 +66,12 @@ albumsRouter.put('/:id', async (req, res) => {
 albumsRouter.get('/:id', async (req, res) => {
     try {
         const album = await Album.findById(req.params.id).populate('albumArt').populate('band')
-        res.json(Album.format(album))
-
+        if (album) {
+            res.json(Album.format(album))
+        } else {
+            res.status(404).end()
+        }
     } catch (exception) {
-        console.log(error)
         res.status(400).send({ error: 'malformatted id' })
     }
 })
@@ -100,24 +102,26 @@ albumsRouter.post('/:id/bandcamp', async (req, res) => {
         console.log('updated', updatedAlbum)
         res.status(200).json(Album.format(updatedAlbum))
     } catch (exception) {
-        console.log(exception)
         res.status(400).json({ error: 'malformatted id' })
     }
 })
 
 albumsRouter.delete('/:id', async (req, res) => {
-    try{
-        const result = await Album.findByIdAndRemove(req.params.id)
-        const band = await Band.findById(result.band._id)
-        band.albums = band.albums.filter(a => a._id !== result._id)
-        await band.save()
+    try {
+        const result = await Album.findByIdAndRemove(req.params.id).populate('band')
+        await console.log(result)
+        if (result.band) {
+            const band = await Band.findById(result.band._id)
+            band.albums = band.albums.filter(a => a._id !== result._id)
+            await band.save()
+        }
+        
         console.log(result)
         res.status(204).end()
-        
-      } catch (exception) {
-        console.log(exception)
+
+    } catch (exception) {
         res.status(400).send({ error: 'malformatted id' })
-      }
-  })
+    }
+})
 
 module.exports = albumsRouter

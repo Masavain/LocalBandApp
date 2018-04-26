@@ -39,7 +39,7 @@ const initialAlbums = [
     },
 ]
 
-const format = (band) => {
+const formatBand = (band) => {
     return {
         name: band.name,
         genre: band.genre,
@@ -50,17 +50,32 @@ const format = (band) => {
     }
 }
 
-const nonExistingId = async () => {
+const formatAlbum = (album) => {
+    return {
+        name: album.name,
+        year: album.year,
+        about: album.about,
+        id: album._id
+    }
+}
+
+const nonExistingBandId = async () => {
     const band = new Band()
     await band.save()
     await band.remove()
-
     return band._id.toString()
+}
+
+const nonExistingAlbumId = async () => {
+    const album = new Album()
+    await album.save()
+    await album.remove()
+    return album._id.toString()
 }
 
 const bandsInDb = async () => {
     const bands = await Band.find({})
-    return bands.map(format)
+    return bands.map(formatBand)
 }
 const usersInDb = async () => {
     const users = await User.find({})
@@ -71,5 +86,8 @@ const albumsInDb = async () => {
     return albums
 }
 module.exports = {
-    initialBands, format, nonExistingId, bandsInDb, usersInDb, albumsInDb, initialAlbums
+    initialBands, initialAlbums, 
+    formatBand, formatAlbum, 
+    nonExistingBandId, nonExistingAlbumId, 
+    bandsInDb, usersInDb, albumsInDb, 
 }
