@@ -41,6 +41,7 @@
 |24.4.|1.5| Bandfeed-komponentin muokkausta ja asettelua, Explore-komponentin sivuswitchien CSS:ää|
 |25.4.|1| Discographyn ja Gallerian muotoilua|
 |26.4.|3| Backin api-testausta alkuun|
+|26.4.|1.5| api/bands -testaus valmiiksi|
 
 
-total: 81h
+total: 82.5h
