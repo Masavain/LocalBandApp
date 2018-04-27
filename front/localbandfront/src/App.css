@@ -209,3 +209,11 @@
     border-radius: 4px;
     background-color: #fffc50;
 }
+
+.fav-button{
+    font-weight: 20;
+    padding:0;
+    height: 30px;
+    width: 30px;
+    border-radius: 100%;
+}

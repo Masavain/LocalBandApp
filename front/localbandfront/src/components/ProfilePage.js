@@ -30,7 +30,11 @@ const ProfilePage = (props) => {
         </tbody>
       </Table>
       <h2>Favourites:</h2>
-      <div>{props.favBands.map(b => <Link key={b._id} to={`/bands/${b._id}`} >{b.name}&nbsp;</Link>)}</div>
+      <table>{props.favBands.map(b =>
+        <tr key={b._id}>
+          <td><Link to={`/bands/${b._id}`} >{b.name}&nbsp;</Link></td>
+        </tr>)}
+      </table>
       <BandForm history={props.history} />
     </Grid>
   )
@@ -40,10 +44,7 @@ const userBands = (bands, user) => {
   const bandsWithUsers = bands.filter(b => b.user !== undefined)
   return bandsWithUsers.filter(band => band.user.username === user.username)
 }
-const favs = (bands, ids) => {
-  const favBands = bands.filter(b => ids.includes(b._id))
-  return favBands
-}
+
 
 
 const mapStateToProps = (state) => {
@@ -51,7 +52,7 @@ const mapStateToProps = (state) => {
     bands: state.bands,
     user: state.user,
     userbands: userBands(state.bands, state.user),
-    favBands: favs(state.bands, state.user.favBands)
+    favBands: state.user.favBands
   }
 }
 

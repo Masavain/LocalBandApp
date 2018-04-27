@@ -18,7 +18,12 @@ const Explore = (props) => {
     }
     for (i = 0; i < props.numberOfPages; i++) {
       const j = i
-      buttons.push(<button className="page-button" onClick={() => pageChange(j)}>{`${j*10}-${(j*10)+10}`}</button>)
+      if (j === props.pageIndex) {
+        buttons.push(<button className="page-button-active" onClick={() => pageChange(j)}>{`${j*10}-${(j*10)+10}`}</button>)
+      } else {
+        buttons.push(<button className="page-button" onClick={() => pageChange(j)}>{`${j*10}-${(j*10)+10}`}</button>)
+      }
+
     }
     return buttons
   }
