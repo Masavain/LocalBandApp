@@ -5,6 +5,7 @@ import BandFeed from './BandFeed'
 import Gallery from './Gallery'
 import Discography from './Discography'
 import { toggle } from './../reducers/toggleReducer'
+import { updateUser } from './../reducers/loginReducer'
 import BandHeader from './BandHeader'
 import userService from './../services/users'
 
@@ -26,7 +27,15 @@ const Band = (props) => {
     const favBands = findUser.favBands.concat(props.band._id)
     const newObject = { ...findUser, favBands  }
     await userService.update(newObject.id, newObject)
-    window.location.reload()
+    props.updateUser(favBands)
+  }
+  const handleUnFavorite = async (event) => {
+    event.preventDefault()
+    const findUser = await userService.getById(props.user.id)
+    const favBands = findUser.favBands.filter(b => b._id !== props.band._id)
+    const newObject = { ...findUser, favBands  }
+    await userService.update(newObject.id, newObject)
+    props.updateUser(favBands)
   }
 
   const toggleComponent = (toggle) => {
@@ -54,6 +63,7 @@ const Band = (props) => {
     paddingRight: 0
   }
   const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
+  const bandIsFavourited = (props.user ? (props.user.favBands.includes(props.band._id)) ? true : false : false)
   return (
 
     <Grid fluid style={rowStyle}>
@@ -68,7 +78,7 @@ const Band = (props) => {
             <td style={props.toggleType === 1 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(1)}>GALLERY</td>
             <td style={props.toggleType === 2 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(2)}>DISCOGRAPHY</td>
             <td style={{ width:'500px' }}></td>
-            {bandMatchesLoggedUser ? <tr></tr> : <td ><Button onClick={handleFavorite}>fav</Button></td> }
+            {bandMatchesLoggedUser ? <tr></tr> : (bandIsFavourited) ? <td><Button onClick={handleUnFavorite}>un-fav</Button></td>: <td><Button onClick={handleFavorite}>fav</Button></td> }
           </tr>
         </table>
 
@@ -90,5 +100,5 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(
-  mapStateToProps, { toggle }
+  mapStateToProps, { toggle, updateUser }
 )(Band)

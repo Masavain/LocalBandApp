@@ -8,6 +8,8 @@ console.log('loggedUser:', JSON.parse(window.localStorage.getItem('loggedUser'))
 const loginReducer = (state = JSON.parse(window.localStorage.getItem('loggedUser')), action) => {
   console.log('ACTION: ', action)
   switch (action.type) {
+  case 'UPDATEUSER':
+    return { ...state, favBands: action.favBands }
   case 'LOGIN':
     return action.user
   case 'LOGOUT':
@@ -61,6 +63,21 @@ export const login = (username, password) => {
   }
 }
 
+export const updateUser = (favBands) => {
+  return async (dispatch) => {
+    const loggedUser = window.localStorage.getItem('loggedUser')
+    if (loggedUser) {
+      const jsonUser = JSON.parse(loggedUser)
+      const updatedStorageUser = { ...jsonUser, favBands }
+      window.localStorage.setItem('loggedUser', JSON.stringify(updatedStorageUser))
+      dispatch({
+        type: 'UPDATEUSER',
+        favBands
+      })
+    }
+  }
+}
+
 export const logout = () => {
   return async (dispatch) => {
     window.localStorage.removeItem('loggedUser')
@@ -75,6 +92,7 @@ export const initUser = () => {
     const loggedUser = window.localStorage.getItem('loggedUser')
     if (loggedUser) {
       const user = JSON.parse(loggedUser)
+      console.log('logged user : ', user)
       albumService.setToken(user.token)
       imageService.setToken(user.token)
       bandService.setToken(user.token)

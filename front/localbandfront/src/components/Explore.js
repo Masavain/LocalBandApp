@@ -12,13 +12,13 @@ const Explore = (props) => {
   const pageButtons = () => {
     var i
     var buttons = []
-    for (i = 0; i <= props.numberOfPages; i++) {
+    if (props.numberOfPages === 1) {
+      buttons.push(<div></div>)
+      return buttons
+    }
+    for (i = 0; i < props.numberOfPages; i++) {
       const j = i
-      if (j === props.pageIndex) {
-        buttons.push(<button className="page-button-active" onClick={() => pageChange(j)}>{`${j}-${j+10}`}</button>)
-      } else {
-        buttons.push(<button className="page-button" onClick={() => pageChange(j)}>{`${j}-${j+10}`}</button>)
-      }
+      buttons.push(<button className="page-button" onClick={() => pageChange(j)}>{`${j*10}-${(j*10)+10}`}</button>)
     }
     return buttons
   }
@@ -100,7 +100,7 @@ const numOfPages = (bands, filter, filterType) => {
       return band
     }
   })
-  return Math.round(filteroity.length/10)
+  return Math.ceil(filteroity.length/10)
 }
 
 
