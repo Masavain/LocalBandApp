@@ -8,12 +8,13 @@ usersRouter.get('/', async (req, res) => {
         .find({})
         .populate('bands', { __v: 0, user: 0})
         .populate('posts')
+        .populate('favBands')
     res.json(users.map(User.format))
 })
 
 usersRouter.get('/:id', async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).populate('bands').populate('images')
+        const user = await User.findById(req.params.id).populate('bands').populate('images').populate('favBands')
         res.json(User.format(user))
 
     } catch (exception) {
@@ -48,6 +49,24 @@ usersRouter.post('/', async (req, res) => {
     } catch (exception) {
         console.log(exception)
         res.status(500).json({ error: 'something went wrong...' })
+    }
+})
+
+usersRouter.put('/:id', async (req, res) => {
+    try {
+        const { favBands } = req.body
+        const vanha = await User.findById(req.params.id)
+        const uusi = {
+            favBands
+        }
+        const updated = await User.findByIdAndUpdate(req.params.id, uusi, { new: true })
+            .populate('bands', { __v: 0, user: 0})
+            .populate('posts')
+            .populate('favBands')
+        res.json(User.format(updated))
+
+    } catch (exception) {
+        res.status(400).send({ error: 'malformatted id' })
     }
 })
 

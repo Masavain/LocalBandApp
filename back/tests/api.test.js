@@ -721,29 +721,6 @@ describe('when there is initially some bands and albums saved', async () => {
                 .get(`/api/images/${invalidId}`)
                 .expect(400)
         })
-
-
-        // test('DELETE /api/images/:id succeeds with proper statuscode', async () => {
-        //     const imagesInBeginning = await imagesInDb()
-        //     const testimage = imagesInBeginning[0]
-        //     await api
-        //         .delete(`/api/images/${testimage.id}`)
-        //         .set({ Authorization: token })
-        //         .expect(204)
-
-        //     const imagesAfterOperation = await imagesInDb()
-
-        //     const titles = imagesAfterOperation.map(r => r.title)
-        //     expect(titles).not.toContain(testimage.name)
-        //     expect(imagesAfterOperation.length).toBe(imagesInBeginning.length - 1)
-        // })
-        // test('DELETE /api/images/:id fails with malformatted id', async () => {
-        //     const invalidId = "5a3d5da59070081a82a3445"
-        //     await api
-        //         .delete(`/api/images/${invalidId.id}`)
-        //         .set({ Authorization: token })
-        //         .expect(400)
-        // })
     })
 
 

@@ -16,4 +16,9 @@ const sign = async (newObject) => {
   return response.data
 }
 
-export default { getAll, sign, getById }
+const update = async (id, newObject) => {
+  const response = await axios.put(`${url}/${id}`, newObject)
+  return response.data
+}
+
+export default { getAll, sign, getById, update }

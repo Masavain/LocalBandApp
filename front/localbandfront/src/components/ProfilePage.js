@@ -16,7 +16,7 @@ const ProfilePage = (props) => {
 
   }
   return(
-    <Grid >
+    <Grid>
       <h3>Profile: {props.user && props.user.username}</h3>
       <Table style={{ width: '20%' }}>
         <tbody>

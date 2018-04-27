@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema({
   passwordHash: String,
   role: String,
   bands: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Band' }],
+  favBands: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Band' }],
   images: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Image' }],
   posts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post' }]
 })
@@ -18,6 +19,7 @@ userSchema.statics.format = (user) => {
     bands: user.bands,
     images: user.images,
     role: user.role,
+    favBands: user.favBands
   }
 }
 
