@@ -43,6 +43,6 @@
 |26.4.|3| Backin api-testausta alkuun|
 |26.4.|1.5| api/bands -testaus valmiiksi|
 |26.4.|1.5| api/albums -testit|
+|27.4.|2| api/posts, api/users, api/images -testit|
 
-
-total: 84h
+total: 86h
