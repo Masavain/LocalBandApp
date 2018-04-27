@@ -17,9 +17,13 @@ postsRouter.get('/', async (req, res) => {
 postsRouter.get('/:id', async (req, res) => {
     try {
         const post = await Post.findById(req.params.id).populate('images').populate('user')
-        res.json(Post.format(post))
+        if (post) {
+            res.json(Post.format(post))
+        } else {
+            res.status(404).end()
+        }
+        
     } catch (exception) {
-        console.log(error)
         res.status(400).send({ error: 'malformatted id' })
     }
 })
@@ -57,7 +61,7 @@ postsRouter.post('/', async (req, res) => {
       user.posts = user.posts.concat(saved._id)
       await user.save()
   
-      res.json(Post.format(saved))
+      res.status(201).json(Post.format(saved))
     } catch(exception) {
       if (exception.name === 'JsonWebTokenError' ) {
         res.status(401).json({ error: exception.message })
@@ -95,7 +99,6 @@ postsRouter.post('/', async (req, res) => {
         res.json(Post.format(updated))
 
     } catch (exception) {
-        console.log(error)
         res.status(400).send({ error: 'malformatted id' })
     }
   })
@@ -119,7 +122,6 @@ postsRouter.post('/', async (req, res) => {
         console.log(result)
         res.status(204).end()
     } catch (exception) {
-        console.log(error)
         res.status(400).send({ error: 'malformatted id' })
     }
 })

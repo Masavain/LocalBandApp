@@ -17,9 +17,12 @@ imagesRouter.get('/', async (req, res) => {
 imagesRouter.get('/:id', async (req, res) => {
     try {
         const image = await Image.findById(req.params.id).populate('band').populate('album')
-        res.json(image)
+        if(image) {
+            res.json(image)
+        } else {
+            res.status(404).end()
+        }
     } catch (exception) {
-        console.log(error)
         res.status(400).send({ error: 'malformatted id' })
     }
 })

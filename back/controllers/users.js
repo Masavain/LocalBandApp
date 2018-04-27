@@ -38,13 +38,13 @@ usersRouter.post('/', async (req, res) => {
         const user = new User({
             username: body.username,
             name: body.name,
-            role: 'user',
+            role: body.role ? body.role : 'user',
             passwordHash
         })
 
         const savedUser = await user.save()
 
-        res.json(savedUser)
+        res.status(201).json(savedUser)
     } catch (exception) {
         console.log(exception)
         res.status(500).json({ error: 'something went wrong...' })
