@@ -46,5 +46,6 @@
 |27.4.|2| api/posts, api/users, api/images -testit|
 |27.4.|1| favourite-nappula bändin sivulle. backissa toiminto Useria päivittämällä|
 |27.4.|2| favourite-toiminnon jatkoa|
+|27.4.|1| favourite-nappulan muotoilua ja exploren nappulan korjaus|
 
-total: 89h
+total: 90h
