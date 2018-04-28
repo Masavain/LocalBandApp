@@ -48,5 +48,6 @@
 |27.4.|2| favourite-toiminnon jatkoa|
 |27.4.|1| favourite-nappulan muotoilua ja exploren nappulan korjaus|
 |28.4.|1| instagram ja facebook tilien postaus frontissa ja backissa|
+|28.4.|1| Instagram embed, ProfilePagen ja BandFeedin sommittelua|
 
-total: 91h
+total: 92h
