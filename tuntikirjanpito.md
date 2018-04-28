@@ -47,5 +47,6 @@
 |27.4.|1| favourite-nappula bändin sivulle. backissa toiminto Useria päivittämällä|
 |27.4.|2| favourite-toiminnon jatkoa|
 |27.4.|1| favourite-nappulan muotoilua ja exploren nappulan korjaus|
+|28.4.|1| instagram ja facebook tilien postaus frontissa ja backissa|
 
-total: 90h
+total: 91h
