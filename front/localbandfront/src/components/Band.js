@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Button } from 'react-bootstrap'
+import { Grid, Row, Button, Alert } from 'react-bootstrap'
 import BandFeed from './BandFeed'
 import Gallery from './Gallery'
 import Discography from './Discography'
@@ -8,6 +8,7 @@ import { toggle } from './../reducers/toggleReducer'
 import { updateUser } from './../reducers/loginReducer'
 import BandHeader from './BandHeader'
 import userService from './../services/users'
+import { notify } from './../reducers/notificationReducer'
 
 const Band = (props) => {
   const componentByToggle = () => {
@@ -27,6 +28,7 @@ const Band = (props) => {
     const favBands = findUser.favBands.concat(props.band)
     const newObject = { ...findUser, favBands  }
     await userService.update(newObject.id, newObject)
+    props.notify('Added to favorites', 4)
     props.updateUser(favBands)
   }
   const handleUnFavorite = async (event) => {
@@ -35,6 +37,7 @@ const Band = (props) => {
     const favBands = findUser.favBands.filter(b => b._id !== props.band._id)
     const newObject = { ...findUser, favBands  }
     await userService.update(newObject.id, newObject)
+    props.notify('Removed from favorites', 4)
     props.updateUser(favBands)
   }
 
@@ -69,8 +72,12 @@ const Band = (props) => {
     <Grid fluid style={rowStyle}>
       <Row style={rowStyle}>
         <BandHeader band={props.band}/>
+        <Alert className={`${props.notif.visible ? 'fav-alert' : 'fav-alert-hidden'}`} style={{ position:'absolute', left: 500, padding: 4, width: '25%', fontSize:20 }} bsStyle="success">
+          {props.notif.message}
+        </Alert>
       </Row>
       <Row >
+
         <table className='multiborder'>
           <tr>
             <td style={{ width:'10px' }}></td>
@@ -82,7 +89,8 @@ const Band = (props) => {
               (bandMatchesLoggedUser)
                 ? <td></td>
                 : (bandIsFavourited)
-                  ? <td><Button className="fav-button" style={{ backgroundColor: '#ff99fa' }} onClick={handleUnFavorite}>&#9825;</Button></td>: <td><Button className="fav-button" onClick={handleFavorite}>&#9825;</Button></td>
+                  ? <td><Button className="fav-button" style={{ backgroundColor: '#ff99fa' }} onClick={handleUnFavorite}>&#9825;</Button></td>
+                  : <td><Button className="fav-button" onClick={handleFavorite}>&#9825;</Button></td>
               : <td></td>
             }
           </tr>
@@ -110,10 +118,11 @@ const mapStateToProps = (state) => {
   return {
     toggleType: state.toggle.type,
     user: state.user,
-    favBandIds: favbandids(state.user)
+    favBandIds: favbandids(state.user),
+    notif: state.notification
   }
 }
 
 export default connect(
-  mapStateToProps, { toggle, updateUser }
+  mapStateToProps, { toggle, updateUser, notify }
 )(Band)

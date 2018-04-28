@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { login } from './../reducers/loginReducer'
 import { FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap'
+import { notify } from './../reducers/notificationReducer'
 
 const LoginForm = (props) => {
 
@@ -13,6 +14,7 @@ const LoginForm = (props) => {
     event.target.username.value = ''
     event.target.password.value = ''
     props.login(username, password)
+    props.notify('Logged in', 5)
     props.history.push('/')
   }
 
@@ -55,5 +57,5 @@ LoginForm.defaultProps = {
 }
 
 export default connect(
-  mapStateToProps, { login }
+  mapStateToProps, { login, notify }
 )(LoginForm)

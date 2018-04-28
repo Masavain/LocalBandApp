@@ -77,7 +77,8 @@ const mapStateToProps = (state) => {
     user: state.user,
     userbands: userBands(state.bands, state.user),
     posts: getPosts(state.posts),
-    mainPost: mainPost(state.posts)
+    mainPost: mainPost(state.posts),
+    notif: state.notification
   }
 }
 

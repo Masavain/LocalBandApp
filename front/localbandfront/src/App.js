@@ -7,12 +7,13 @@ import LoginForm from './components/LoginForm'
 import Explore from './components/Explore'
 import { initUser, logout } from './reducers/loginReducer'
 import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom'
-import { Navbar, Nav, NavItem, Grid, Button } from 'react-bootstrap'
+import { Navbar, Nav, NavItem, Grid, Button, Alert } from 'react-bootstrap'
 import ProfilePage from './components/ProfilePage'
 import About from './components/About'
 import JoinForm from './components/JoinForm'
 import Band from './components/Band'
 import Post from './components/Post'
+import { notify } from './reducers/notificationReducer'
 import './App.css'
 import 'react-responsive-carousel/lib/styles/carousel.min.css'
 import Footer from './components/Footer'
@@ -26,6 +27,7 @@ class App extends React.Component {
 
   logOut = async () => {
     this.props.logout()
+    this.props.notify('Logged out', 4)
   }
 
   render() {
@@ -36,13 +38,13 @@ class App extends React.Component {
       paddingLeft: 0,
       paddingRight: 0,
     }
-    if(this.props.bands.length === 0) {
+    if (this.props.bands.length === 0) {
       return null
     }
     const blogById = (id) => this.props.bands.find(b => b._id === id)
     const postById = (id) => this.props.posts.find(p => p._id === id)
 
-    window.onscroll = function() {
+    window.onscroll = function () {
       var mynav = document.getElementsByClassName('nav')
       mynav[2].classList.add('scroll')
       var mynavbuttons = document.getElementsByClassName('nav-button')
@@ -64,9 +66,9 @@ class App extends React.Component {
     }
     return (
       <div className="app">
-        <Grid style={{ padding:0, backgroundColor: '#c1c1c1', height: 'inherit' }}>
+        <Grid style={{ padding: 0, backgroundColor: '#c1c1c1', height: 'inherit' }}>
           <Router>
-            <div style={{ padding:0, backgroundColor: '#c1c1c1', height: 'inherit'  }}>
+            <div style={{ padding: 0, backgroundColor: '#c1c1c1', height: 'inherit' }}>
               <Navbar className="nav" fixedTop width="auto" collapseOnSelect >
                 <Navbar.Header>
                   <Navbar.Brand>
@@ -99,7 +101,7 @@ class App extends React.Component {
                         <div>
                           <em>{this.props.user.username} logged in </em>
                         </div>
-                        :<div>
+                        : <div>
                         </div>
                       }
                     </NavItem>
@@ -119,7 +121,7 @@ class App extends React.Component {
                         <div>
                           <Button className="nav-button" bsSize="sm" bsStyle="danger" onClick={this.logOut}> log out</Button>
                         </div>
-                        :<div>
+                        : <div>
                           <Link to="/join"><Button className="nav-button" bsSize="sm" bsStyle="primary">Sign</Button></Link>
                         </div>
                       }
@@ -127,18 +129,23 @@ class App extends React.Component {
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>
+              <Alert className={`${this.props.notif.visible ? 'fav-alert' : 'fav-alert-hidden'}`} style={{ fontSize: 20, position:'absolute', left: 500, padding: 4, marginTop:10, width: '25%' }} bsStyle="info">
+                {this.props.notif.message}
+              </Alert>
               <Grid style={customStyle}>
                 <Route exact path="/bands/:id" render={({ match }) => {
-                  return <Band band={blogById(match.params.id)} />}}
+                  return <Band band={blogById(match.params.id)} />
+                }}
                 />
                 <Route exact path="/post/:id" render={({ match }) => {
-                  return <Post post={postById(match.params.id)} />}}
+                  return <Post post={postById(match.params.id)} />
+                }}
                 />
-                <Route exact path="/login" render={({ history }) => <LoginForm history={history}/>} />
-                <Route exact path="/search" render={() => <Explore/>} />
-                <Route exact path="/join" render={({ history }) => <JoinForm history={history}/>} />
+                <Route exact path="/login" render={({ history }) => <LoginForm history={history} />} />
+                <Route exact path="/search" render={() => <Explore />} />
+                <Route exact path="/join" render={({ history }) => <JoinForm history={history} />} />
                 <Route exact path="/" render={() => <Home />} />
-                <Route path="/profile" render={({ history }) => this.props.user ? <ProfilePage history={history} />: <Redirect to="/login" />} />
+                <Route path="/profile" render={({ history }) => this.props.user ? <ProfilePage history={history} /> : <Redirect to="/login" />} />
                 <Route path="/about" render={() => <About />} />
               </Grid>
             </div>
@@ -154,11 +161,12 @@ const mapStateToProps = (state) => {
   return {
     bands: state.bands,
     user: state.user,
-    posts: state.posts
+    posts: state.posts,
+    notif: state.notification
   }
 }
 
 export default connect(
   mapStateToProps,
-  { initialization, initUser, initializePosts, logout }
+  { initialization, initUser, initializePosts, logout, notify }
 )(App)
