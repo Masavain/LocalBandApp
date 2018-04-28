@@ -50,5 +50,7 @@
 |28.4.|1| instagram ja facebook tilien postaus frontissa ja backissa|
 |28.4.|1| Instagram embed, ProfilePagen ja BandFeedin sommittelua|
 |28.4.|1.5| notificationReducer ja Alert logatessa sisään/ulos sekä favoritessa/unfavoritessa|
+|28.4.|3| Band -komponenttien muotoilua, notificationin muotoilua ja discographyn muotoilua|
 
-total: 93.5h
+
+total: 96.5h
