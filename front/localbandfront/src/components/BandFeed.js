@@ -4,6 +4,7 @@ import { Grid, Row, Col, Button } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
 import bandService from './../services/bands'
 import imageService from './../services/images'
+import InstagramEmbed from 'react-instagram-embed'
 
 const BandFeed = (props) => {
 
@@ -39,6 +40,13 @@ const BandFeed = (props) => {
   const handleIGSubmit = async (event) => {
     event.preventDefault()
     const newObject = { ...props.band, instagramUsername: event.target.instagramUsername.value }
+    const updatedBand = await bandService.update(newObject._id, newObject)
+    props.updateBand(updatedBand)
+    window.location.reload()
+  }
+  const handleIGPostSubmit = async (event) => {
+    event.preventDefault()
+    const newObject = { ...props.band, instagramPostURL: event.target.instagramPostURL.value }
     const updatedBand = await bandService.update(newObject._id, newObject)
     props.updateBand(updatedBand)
     window.location.reload()
@@ -108,7 +116,7 @@ const BandFeed = (props) => {
   return(
     <Grid >
       <Row>
-        <Col sm={4} xs={3} className="wrapper" style={{ paddingTop: 0, paddingRight:350, paddingBottom:50,
+        <Col sm={4} xs={3} className="wrapper" style={{ paddingTop: 0, paddingRight:350,
           marginLeft: 15, paddingLeft: 45, overflof: 'auto', position:'center',
           marginRight: 50 }}>
           {props.band.avatar
@@ -128,14 +136,15 @@ const BandFeed = (props) => {
             </div>
             : <div></div>}
           <div style={{ paddingTop: 15, paddingLeft: 100 }} className="wrapper">
-            {props.band.instagramUsername ? <a href={`https://www.instagram.com/${props.band.instagramUsername}`}>@{props.band.instagramUsername}</a> : <div>Add your Instagram username</div>}
+            {props.band.instagramUsername ? <a href={`https://www.instagram.com/${props.band.instagramUsername}`}>@{props.band.instagramUsername}</a> : (props.band.instagramPostURL ? <div>Add your Instagram username</div> : <div></div>)}
             {bandMatchesLoggedUser ?
-              <form className="button" onSubmit={handleIGSubmit}>
-                <div>edit Instagram username</div><input type='text' name='instagramUsername'/>
+              <form className="button" style={{ paddingBottom: 0 }} onSubmit={handleIGSubmit}>
+                <div style={{ paddingBottom: 0 }}>edit Instagram username</div>
+                <input style={{ paddingBottom: 0 }} type='text' name='instagramUsername'/>
               </form> : <div></div>}
           </div>
         </Col>
-        <Col md={4} sm={3} style={{ marginRight: 100, padding: 10 }}>
+        <Col md={3} sm={3} style={{ marginRight: 80, padding: 30 }}>
           <div className="wrapper">
             <div>Genre: {props.band.genre ? props.band.genre : ''}</div>
             {bandMatchesLoggedUser ?
@@ -167,10 +176,29 @@ const BandFeed = (props) => {
               </form> : <div></div>}
           </div>
           <div className="wrapper">
-            <div>{props.band.facebookURL ? <a href={props.band.facebookURL}>Facebook</a> : <div>Add a link to your bands Facebook</div>}</div>
+            <div>{props.band.facebookURL ? <a href={props.band.facebookURL}>Facebook</a> : (props.band.facebookURL ? <div>Add a link to your bands Facebook</div> : <div></div>)}</div>
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleFBSubmit}>
                 <div>edit Facebook url</div><input type='text' name='facebookURL'/>
+              </form> : <div></div>}
+          </div>
+        </Col>
+        <Col sm={3}>
+          <div className="wrapper">
+            <div>{props.band.instagramPostURL ? <InstagramEmbed
+              url={props.band.instagramPostURL}
+              maxWidth={320}
+              hideCaption={true}
+              containerTagName='div'
+              protocol=''
+              onLoading={() => {}}
+              onSuccess={() => {}}
+              onAfterRender={() => {}}
+              onFailure={() => {}}
+            /> : (props.band.instagramPostURL ? <div>Add a link to an Instagram photo you would like others to see</div> : <div></div>)}</div>
+            {bandMatchesLoggedUser ?
+              <form className="button" onSubmit={handleIGPostSubmit}>
+                <div>edit Instagram post url</div><input type='text' name='instagramPostURL'/>
               </form> : <div></div>}
           </div>
         </Col>
@@ -194,7 +222,7 @@ const BandFeed = (props) => {
             : <div>
               {bandMatchesLoggedUser ?
                 <form onSubmit={handleBandcampSubmit}>
-                  <div>Paste a Bandcamp album url you want others to see and hear
+                  <div>Add a Bandcamp album url you want others to see and hear
                   <input type='text' name='bcurl' /></div>
                 </form>
                 : <div></div>}
@@ -213,9 +241,8 @@ const BandFeed = (props) => {
 
             : <div>
               {bandMatchesLoggedUser ? <form onSubmit={handleYoutubeSubmit}>
-                <div>Paste a YouTube url you want others to see and hear<input type='text' name='yturl' /></div>
+                <div>Add a YouTube url you want others to see and hear<input type='text' name='yturl' /></div>
               </form>: <div></div> } </div>}
-
         </Col>
       </Row>
     </Grid>

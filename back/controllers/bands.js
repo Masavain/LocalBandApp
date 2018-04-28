@@ -59,14 +59,15 @@ bandsRouter.post('/', async (req, res) => {
 
 bandsRouter.put('/:id', async (req, res) => {
     try {
-        const { about, genre, started, facebookURL, instagramUsername } = req.body
+        const { about, genre, started, facebookURL, instagramUsername, instagramPostURL } = req.body
         const vanha = await Band.findById(req.params.id)
         const uusi = { about: about ? about : vanha.about,
             genre: genre ? genre : vanha.genre,
             started: started ? started : vanha.started ,
             facebookURL: facebookURL ? facebookURL : vanha.facebookURL,
             instagramUsername: instagramUsername 
-            ? instagramUsername : vanha.instagramUsername}
+            ? instagramUsername : vanha.instagramUsername,
+            instagramPostURL: instagramPostURL ? instagramPostURL : vanha.instagramPostURL}
 
         const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
         res.status(200).json(Band.format(updated))
