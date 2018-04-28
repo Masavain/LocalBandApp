@@ -29,6 +29,20 @@ const BandFeed = (props) => {
     props.updateBand(updatedBand)
     window.location.reload()
   }
+  const handleFBSubmit = async (event) => {
+    event.preventDefault()
+    const newObject = { ...props.band, facebookURL: event.target.facebookURL.value }
+    const updatedBand = await bandService.update(newObject._id, newObject)
+    props.updateBand(updatedBand)
+    window.location.reload()
+  }
+  const handleIGSubmit = async (event) => {
+    event.preventDefault()
+    const newObject = { ...props.band, instagramUsername: event.target.instagramUsername.value }
+    const updatedBand = await bandService.update(newObject._id, newObject)
+    props.updateBand(updatedBand)
+    window.location.reload()
+  }
   const handleHometownSubmit = async (event) => {
     event.preventDefault()
     const newObject = { ...props.band, hometown: event.target.hometown.value }
@@ -105,7 +119,7 @@ const BandFeed = (props) => {
               <img src='/default_band_icon.png' width="300" height="300" alt="default avatar"/>
             </div>}
           {bandMatchesLoggedUser ?
-            <div style={{ position: 'absolute', width:'100%', padding: 50, top: '260px'  }}>
+            <div style={{ position: 'absolute', width:'100%', padding: 50, paddingBottom: 0, top: '210px'  }}>
               <form style={{ width: 200 }} className="button" onSubmit={handleAvatarSubmit}>
                 <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
                 <label htmlFor="imageFile">Choose image</label>&nbsp;
@@ -113,6 +127,13 @@ const BandFeed = (props) => {
               </form>
             </div>
             : <div></div>}
+          <div style={{ paddingTop: 15, paddingLeft: 100 }} className="wrapper">
+            {props.band.instagramUsername ? <a href={`https://www.instagram.com/${props.band.instagramUsername}`}>@{props.band.instagramUsername}</a> : <div>Add your Instagram username</div>}
+            {bandMatchesLoggedUser ?
+              <form className="button" onSubmit={handleIGSubmit}>
+                <div>edit Instagram username</div><input type='text' name='instagramUsername'/>
+              </form> : <div></div>}
+          </div>
         </Col>
         <Col md={4} sm={3} style={{ marginRight: 100, padding: 10 }}>
           <div className="wrapper">
@@ -143,6 +164,13 @@ const BandFeed = (props) => {
                 <div>edit about</div>
                 <textarea style={{ padding: 10 }} id='about'></textarea>
                 <button className="page-button" style={{ position: 'absolute', bottom:-5, left:15 }} type="submit">edit</button>
+              </form> : <div></div>}
+          </div>
+          <div className="wrapper">
+            <div>{props.band.facebookURL ? <a href={props.band.facebookURL}>Facebook</a> : <div>Add a link to your bands Facebook</div>}</div>
+            {bandMatchesLoggedUser ?
+              <form className="button" onSubmit={handleFBSubmit}>
+                <div>edit Facebook url</div><input type='text' name='facebookURL'/>
               </form> : <div></div>}
           </div>
         </Col>
