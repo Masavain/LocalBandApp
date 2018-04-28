@@ -42,7 +42,7 @@ const Discography = (props) => {
   }
   const handleUpdateSubmit = (album) => async event => {
     event.preventDefault()
-    const newObject = { ...album, about: event.target.about.value }
+    const newObject = { ...album, about: document.getElementById('newAbout').value }
     console.log(newObject)
     await albumService.update(newObject._id, newObject)
     const updatedBand = await bandService.getById(props.band._id)
@@ -63,10 +63,10 @@ const Discography = (props) => {
   const albumFormSubmit = async (event) => {
     event.preventDefault()
     console.log('name', event.target.name.value)
-
+    const about = document.getElementById('about').value
     const newAlbum = { name:event.target.name.value,
       year: event.target.year.value,
-      about: event.target.about.value,
+      about: about,
       bandId: props.band._id,
       bcURL: event.target.bcurl.value
     }
@@ -86,39 +86,45 @@ const Discography = (props) => {
         <Table>
           <tbody>
             {props.band.albums.map(album =>
-              <tr key={album._id}>
+              <tr style={{ height: 200, borderBottom: '1px solid lightgray' }} key={album._id}>
                 {album.albumArt
-                  ? <td style={{ width: 150 }} className="wrapper">
+                  ? <Col className="wrapper" sm={2}>
                     <div style={{ marginLeft: 15, position:'relative' }}><img src={album.albumArt.url} width="125" height="125" alt="thumbnail"/></div>
                     {bandMatchesLoggedUser ? <form style={{ position:'absolute' }} className="button" onSubmit={handleAlbumArtSubmit(album)}>
                       <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
                       <label htmlFor="imageFile">Choose image</label>
                       <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit album art</Button>
                     </form> : <div></div>}
-                  </td>
-                  : <td className="wrapper">
-                    <div style={{ position:'relative' }}><img src='/default_album_icon.png' width="125" height="125" alt="default thumbnail"/></div>
+                  </Col>
+                  :
+                  <Col className="wrapper" sm={2} xs={12}>
+                    <div style={{ marginLeft: 15, position:'relative' }}><img src='/default_album_icon.png' width="125" height="125" alt="default thumbnail"/></div>
                     {bandMatchesLoggedUser ? <form style={{ position:'absolute' }} className="button" onSubmit={handleAlbumArtSubmit(album)}>
-                      <input type="file" accept="image/*" id="imageFile" name="image"/>
+                      <input className="inputbutton" type="file" accept="image/*" id="imageFile" name="image"/>
                       <label htmlFor="imageFile">Choose image</label>
                       <Button bsStyle="primary" bsSize='xsmall' type='submit'>edit album art</Button>
                     </form> : <div></div>}
-                  </td>}
-                <td className="wrapper" style={{ width: '30%' }}>
-                  Title: {album.name}
+                  </Col>
+                }
+                <Col style={{ paddingLeft: 40 }} className="wrapper" sm={3} xs={6}>
+                  <div style={{ color: 'gray' }}>Title:</div>
+                  <div>{album.name}</div>
                   <div>
-                    <div>Released: {album.year}</div>
-                    <div>About: {album.about}</div>
+                    <div style={{ color: 'gray' }}>Released:</div>
+                    <div>{album.year}</div>
+                    <div style={{ color: 'gray' }}>About:</div>
+                    <div>{album.about}</div>
                     <div className="button" >
                       <form onSubmit={handleUpdateSubmit(album)}>
-                        <div><input type='text' name='about' /> edit about </div>
+                        <textarea style={{ padding: 0, border: '1px solid lightgray', borderRadius: '3px' }} id='newAbout'></textarea>
+                        <button className="page-button" style={{ position: 'relative' }} type="submit">edit about</button>
                       </form>
                     </div>
 
                   </div>
-                </td>
+                </Col>
                 {album.bcURL ?
-                  <td className="wrapper" style={{ position: 'relative', width: '400px' }}>
+                  <Col style={{ paddingLeft: 40 }} className="wrapper" sm={6} xs={11}>
                     <iframe  style={{ position: 'relative',border: 0,width: '100%',height: '120px' }}
                       title={album.bcAlbumID}
                       src={`https://bandcamp.com/EmbeddedPlayer/album=${album.bcAlbumID}/size=large/bgcol=ffffff/linkcol=0687f5/tracklist=false/artwork=small/transparent=true/`}
@@ -128,13 +134,12 @@ const Discography = (props) => {
                     {bandMatchesLoggedUser ? <div><form className="button" onSubmit={handleBandcampSubmit(album)}>
                       <div><input type='text' name='bcurl' /> change album url </div>
                     </form>&nbsp;<Button className="button" bsSize="sm" bsStyle="danger" onClick={deleteAlbum(album)}>x</Button></div> : <div></div>}
-
-                  </td>
-                  : <td className="wrapper">
+                  </Col>
+                  : <Col  className="wrapper" >
                     {bandMatchesLoggedUser ? <form className="button" onSubmit={handleBandcampSubmit(album)}>
                       <div ><input type='text' name='bcurl'/> add bandcamp url </div>
                     </form> : <div></div>}
-                  </td>
+                  </Col>
                 }
               </tr>)}
 
@@ -143,35 +148,33 @@ const Discography = (props) => {
       </Row>
       {bandMatchesLoggedUser ?
         <Row style={{ height: 40 }}>
-          <Col sm={2} >
+          <Col sm={6} >
             <div className="wrapper">
               <div className="inputbutton" id="asd"></div>
               <label htmlFor="asd" style={{ position:'absolute' }}>&#9660;</label>
               <div className="button">
                 <Form horizontal style={{ padding: 30 }}onSubmit={albumFormSubmit} className='form-inline'>
                   <FormGroup className='form-group' bsSize='sm'>
-                    <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Title: </Col>
-                    <Col xsOffset={2} className='input-label'><FormControl
+                    <Col xs={4} xsOffset={2} className='input-label' componentClass={ControlLabel}>Title: </Col>
+                    <Col xs={4} xsOffset={1} className='input-label'><FormControl
                       type="text"
                       name="name"
                     /></Col>
 
-                    <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>Release year: </Col>
-                    <Col xsOffset={2} className='input-label'><FormControl
+                    <Col xs={4} xsOffset={2} className='input-label' componentClass={ControlLabel}>Release year: </Col>
+                    <Col xs={4} xsOffset={1} className='input-label'><FormControl
                       type="number"
                       name="year"
                     /></Col>
-                    <Col xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
-                    <Col xsOffset={2} className='input-label'><FormControl
-                      type="text"
-                      name="about"
-                    /></Col>
-                    <Col xsOffset={2} className='input-label' componentClass={ControlLabel} >Bandcamp url: </Col>
-                    <Col xsOffset={2} className='input-label'><FormControl
+                    <Col xs={4} xsOffset={2} className='input-label' componentClass={ControlLabel} >Bandcamp url: </Col>
+                    <Col xs={4} xsOffset={1} className='input-label'><FormControl
                       type="text"
                       name="bcurl"
                     /></Col>
-                    <Col xsOffset={2} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
+                    <Col xs={4} xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
+                    <Col xs={4} xsOffset={1} className='input-label'>
+                      <textarea style={{ padding: 0, border: '1px solid lightgray', borderRadius: '3px' }} id='about'></textarea></Col>
+                    <Col xs={4} xsOffset={2} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
                   </FormGroup>
                 </Form>
               </div>

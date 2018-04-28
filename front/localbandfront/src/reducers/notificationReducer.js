@@ -3,8 +3,10 @@ const notificationReducer = (state = { message: '', visible: false }, action) =>
   switch (action.type) {
   case 'NEW_NOTIF':
     return { message: action.notif, visible: true }
-  case 'DELETE_NOTIF':
-    return { message: '', visible: false }
+  case 'DELETE_MESSAGE':
+    return { message: '', visible: state.visible }
+  case 'HIDE_VISIBLE':
+    return { message: state.message, visible: false }
   default:
     return state
   }
@@ -18,9 +20,14 @@ export const notify = (notif, seconds) => {
     })
     setTimeout(() => {
       dispatch({
-        type: 'DELETE_NOTIF',
+        type: 'HIDE_VISIBLE',
       })
     }, 1000*seconds)
+    setTimeout(() => {
+      dispatch({
+        type: 'DELETE_MESSAGE',
+      })
+    }, 2000*seconds)
   }
 }
 

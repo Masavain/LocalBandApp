@@ -62,7 +62,7 @@ const BandHeader = (props) => {
       <Row className='wrapper' style={headerStyle}>
         <div style={emptydivStyle}>
           <Col>
-            <h3 style={hThreeStyle}>{props.band.name}</h3>
+            <h3 style={hThreeStyle}>{props.band.name.toUpperCase()}</h3>
           </Col>
           <Col className='pull-right'>
             {bandMatchesLoggedUser ?

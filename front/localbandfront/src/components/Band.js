@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Button, Alert } from 'react-bootstrap'
+import { Grid, Row, Button, Alert, Col } from 'react-bootstrap'
 import BandFeed from './BandFeed'
 import Gallery from './Gallery'
 import Discography from './Discography'
@@ -72,9 +72,6 @@ const Band = (props) => {
     <Grid fluid style={rowStyle}>
       <Row style={rowStyle}>
         <BandHeader band={props.band}/>
-        <Alert className={`${props.notif.visible ? 'fav-alert' : 'fav-alert-hidden'}`} style={{ position:'absolute', left: 500, padding: 4, width: '25%', fontSize:20 }} bsStyle="success">
-          {props.notif.message}
-        </Alert>
       </Row>
       <Row >
 
@@ -89,13 +86,14 @@ const Band = (props) => {
               (bandMatchesLoggedUser)
                 ? <td></td>
                 : (bandIsFavourited)
-                  ? <td><Button className="fav-button" style={{ backgroundColor: '#ff99fa' }} onClick={handleUnFavorite}>&#9825;</Button></td>
-                  : <td><Button className="fav-button" onClick={handleFavorite}>&#9825;</Button></td>
+                  ? <td><Col xs={1} xsOffset={9}><Button className="fav-button" style={{
+                    backgroundColor: '#ff5c5c',
+                  }} onClick={handleUnFavorite}>&#9825;</Button></Col></td>
+                  : <td><Col xs={1} xsOffset={9}><Button className="fav-button" onClick={handleFavorite}>&#9825;</Button></Col></td>
               : <td></td>
             }
           </tr>
         </table>
-
       </Row>
       <Row>
         {componentByToggle()}

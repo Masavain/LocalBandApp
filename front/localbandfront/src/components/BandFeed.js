@@ -116,9 +116,8 @@ const BandFeed = (props) => {
   return(
     <Grid >
       <Row>
-        <Col sm={4} xs={3} className="wrapper" style={{ paddingTop: 0, paddingRight:350,
-          marginLeft: 15, paddingLeft: 45, overflof: 'auto', position:'center',
-          marginRight: 50 }}>
+        <Col lg={4} md={4} sm={5} xs={12} className="wrapper"
+          style={{ paddingTop: 0, paddingRight:0, paddingLeft: 35, position:'center' }}>
           {props.band.avatar
             ? <div className="wrapper" style={{ position: 'relative' }}>
               <img src={props.band.avatar.url} width="300" height="300" alt="avatar"/>
@@ -136,7 +135,7 @@ const BandFeed = (props) => {
             </div>
             : <div></div>}
           <div style={{ paddingTop: 15, paddingLeft: 100 }} className="wrapper">
-            {props.band.instagramUsername ? <a href={`https://www.instagram.com/${props.band.instagramUsername}`}>@{props.band.instagramUsername}</a> : (props.band.instagramPostURL ? <div>Add your Instagram username</div> : <div></div>)}
+            {props.band.instagramUsername ? <a href={`https://www.instagram.com/${props.band.instagramUsername}`}>@{props.band.instagramUsername}</a> : (props.band.instagramPostURL ? <div>Add your Instagram username</div> : <div></div>)}&nbsp;
             {bandMatchesLoggedUser ?
               <form className="button" style={{ paddingBottom: 0 }} onSubmit={handleIGSubmit}>
                 <div style={{ paddingBottom: 0 }}>edit Instagram username</div>
@@ -144,35 +143,39 @@ const BandFeed = (props) => {
               </form> : <div></div>}
           </div>
         </Col>
-        <Col md={3} sm={3} style={{ marginRight: 80, padding: 30 }}>
+        <Col lg={3} md={3} sm={3} xs={8} style={{ paddingLeft: 35 }}>
           <div className="wrapper">
-            <div>Genre: {props.band.genre ? props.band.genre : ''}</div>
+            <div style={{ color: 'gray' }}>Genre:</div>
+            <div>{props.band.genre ? props.band.genre : ''}</div>
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleGenreSubmit}>
                 <div>edit genre</div><input type='text' name='genre'/>
               </form> : <div></div>}
           </div>
           <div className="wrapper">
-            <div>Started: {props.band.started ? props.band.started : ''}</div>
+            <div style={{ color: 'gray' }}>Started:</div>
+            <div>{props.band.started ? props.band.started : ''}</div>
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleStartedSubmit}>
                 <div>edit starting year</div><input type='number' name='started'/>
               </form> : <div></div>}
           </div>
           <div className="wrapper">
-            <div>Hometown: {props.band.hometown ? props.band.hometown : ''}</div>
+            <div style={{ color: 'gray' }}>Location:</div>
+            <div>{props.band.hometown ? props.band.hometown : ''}</div>
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleHometownSubmit}>
                 <div>edit genre</div><input type='text' name='hometown'/>
               </form> : <div></div>}
           </div>
           <div className="wrapper">
-            <div>About: {props.band.about ? props.band.about : ''}</div>
+            <div style={{ color: 'gray' }}>About:</div>
+            <div>{props.band.about ? props.band.about : ''}</div>
             {bandMatchesLoggedUser ?
-              <form className="button" onSubmit={handleAboutSubmit}>
-                <div>edit about</div>
-                <textarea style={{ padding: 10 }} id='about'></textarea>
-                <button className="page-button" style={{ position: 'absolute', bottom:-5, left:15 }} type="submit">edit</button>
+              <form style={{ width: '100px' }} className="button" onSubmit={handleAboutSubmit}>
+                <div >edit about</div>
+                <textarea style={{ padding: 0 }} id='about'></textarea>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">edit</button>
               </form> : <div></div>}
           </div>
           <div className="wrapper">
@@ -183,19 +186,20 @@ const BandFeed = (props) => {
               </form> : <div></div>}
           </div>
         </Col>
-        <Col sm={3}>
+        <Col lg={4} md={4} sm={12} xs={12} style={{ paddingLeft: 35 }}>
           <div className="wrapper">
-            <div>{props.band.instagramPostURL ? <InstagramEmbed
-              url={props.band.instagramPostURL}
-              maxWidth={320}
-              hideCaption={true}
-              containerTagName='div'
-              protocol=''
-              onLoading={() => {}}
-              onSuccess={() => {}}
-              onAfterRender={() => {}}
-              onFailure={() => {}}
-            /> : (props.band.instagramPostURL ? <div>Add a link to an Instagram photo you would like others to see</div> : <div></div>)}</div>
+            <div>{props.band.instagramPostURL ?
+              <InstagramEmbed
+                url={props.band.instagramPostURL}
+                maxWidth={320}
+                hideCaption={true}
+                containerTagName='div'
+                protocol=''
+                onLoading={() => {}}
+                onSuccess={() => {}}
+                onAfterRender={() => {}}
+                onFailure={() => {}}
+              /> : (props.band.instagramPostURL ? <div>Add a link to an Instagram photo you would like others to see</div> : <div></div>)}</div>
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleIGPostSubmit}>
                 <div>edit Instagram post url</div><input type='text' name='instagramPostURL'/>
@@ -205,7 +209,8 @@ const BandFeed = (props) => {
       </Row>
 
       <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98.5%', marginBottom: 20, padding: 5 }}>
-        <Col sm={4} xs={3}>
+        <h2>LISTEN  /  WATCH</h2>
+        <Col xs={12} sm={8} md={5} lg={4} style={{ paddingTop: 20, paddingLeft:0 }}>
           {props.band.bcURL
             ? <div className="wrapper">
               <iframe title={props.band._id} style={BCstyle}
@@ -228,7 +233,7 @@ const BandFeed = (props) => {
                 : <div></div>}
             </div>}
         </Col>
-        <Col xs={3}>
+        <Col xs={12} sm={8} md={8} lg={5} style={{ paddingTop: 20, paddingLeft:0 }}>
           {props.band.youtubeID
             ? <div className="wrapper">
               <iframe title="youtube" id="ytplayer" type="text/html" width="640" height="360"

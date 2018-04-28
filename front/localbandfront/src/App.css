@@ -211,11 +211,11 @@
 }
 
 .fav-button{
-    font-weight: 20;
     padding:0;
-    height: 30px;
-    width: 30px;
+    height: 40px;
+    width: 40px;
     border-radius: 100%;
+    overflow: visible;
 }
 
 .fav-alert{
