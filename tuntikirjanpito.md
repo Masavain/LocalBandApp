@@ -49,5 +49,6 @@
 |27.4.|1| favourite-nappulan muotoilua ja exploren nappulan korjaus|
 |28.4.|1| instagram ja facebook tilien postaus frontissa ja backissa|
 |28.4.|1| Instagram embed, ProfilePagen ja BandFeedin sommittelua|
+|28.4.|1.5| notificationReducer ja Alert logatessa sisään/ulos sekä favoritessa/unfavoritessa|
 
-total: 92h
+total: 93.5h
