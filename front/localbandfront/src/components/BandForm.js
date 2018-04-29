@@ -23,27 +23,29 @@ const BandForm = (props) => {
       <Form horizontal onSubmit={handleSubmit} className='form-inline' style={{ marginBottom: 10 }}>
         <FormGroup className='form-group' bsSize='sm'>
           <Col className='input-label' componentClass={ControlLabel} xs={3}>Name: </Col>
-          <Col className='input-label' xs={9}><FormControl
+          <Col className='input-label' xsOffset={1} smOffset={0} xs={8}><FormControl
             type="text"
             name="name"
           /></Col>
 
-          <Col className='input-label' componentClass={ControlLabel} xs={3}>Genre: </Col>
-          <Col className='input-label' xs={9}><FormControl
+          <Col className='input-label' componentClass={ControlLabel} xs={3}>Genre:</Col>
+
+          <Col className='input-label' xsOffset={1} smOffset={0} xs={8}><FormControl
             type="text"
             name="genre"
           /></Col>
+          <Col xsOffset={1} xs={11}>(separate multiple genres by comma)</Col>
           <Col className='input-label' componentClass={ControlLabel} xs={3}>Hometown: </Col>
-          <Col className='input-label' xs={9}><FormControl
+          <Col className='input-label' xsOffset={2} smOffset={0} xs={7}><FormControl
             type="text"
             name="hometown"
           /></Col>
           <Col className='input-label' componentClass={ControlLabel} xs={3}>Starting Year: </Col>
-          <Col className='input-label' xs={9}><FormControl
+          <Col className='input-label' xsOffset={2} smOffset={0} xs={7}><FormControl
             type="number"
             name="started"
           /></Col>
-          <Col className='input-label' smOffset={5}><Button bsStyle="success" type="submit">Add</Button></Col>
+          <Col className='input-label' xsOffset={5} xs={5}><Button bsStyle="success" type="submit">Add</Button></Col>
         </FormGroup>
       </Form>
     </Row>

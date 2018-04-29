@@ -5,7 +5,7 @@ const bandSchema = new mongoose.Schema({
   about: String,
   started: Number,
   active: Boolean,
-  genre: String,
+  genre: [String],
   hometown: String,
   bcURL: String,
   bcAlbumID: String,

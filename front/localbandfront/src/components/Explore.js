@@ -62,7 +62,7 @@ const Explore = (props) => {
                 <Link to={`/bands/${band._id}`}>{band.name}</Link>
               </td>
               <td>
-                {band.genre}
+                {band.genre.join(', ')}
               </td>
               <td>
                 {band.hometown}
@@ -80,7 +80,9 @@ const bandsToShow = (bands, filter, filterType, pageIndex) => {
       return band.name.toLowerCase().includes(filter.toLowerCase())
     }
     if (filterType === 'genre') {
-      return band.genre.toLowerCase().includes(filter.toLowerCase())
+      return band.genre.some(function(element) {
+        return element.toLowerCase().includes(filter.toLowerCase())
+      })
     }
     if (filterType === 'hometown') {
       return band.hometown.toLowerCase().includes(filter.toLowerCase())
@@ -97,7 +99,9 @@ const numOfPages = (bands, filter, filterType) => {
       return band.name.toLowerCase().includes(filter.toLowerCase())
     }
     if (filterType === 'genre') {
-      return band.genre.toLowerCase().includes(filter.toLowerCase())
+      return band.genre.some(function(element) {
+        return element.toLowerCase().includes(filter.toLowerCase())
+      })
     }
     if (filterType === 'hometown') {
       return band.hometown.toLowerCase().includes(filter.toLowerCase())

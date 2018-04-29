@@ -38,8 +38,12 @@ bandsRouter.post('/', async (req, res) => {
             return res.status(401).json({ error: 'token missing or invalid' })
         }
         const user = await User.findById(decodedToken.id)
-
-        const band = new Band({ name, genre, started, hometown, about: (about || ''), bcURL: '', bcAlbumID: '',bcTrackID: '', active: true, user: user._id })
+        var genres = []
+        if(genre.trim() != ''){
+            genres = genre.split(',');
+        }
+        console.log(genres)
+        const band = new Band({ name, genre: genres, started, hometown, about: (about || ''), bcURL: '', bcAlbumID: '',bcTrackID: '', active: true, user: user._id })
         const result = await band.save()
         result.user = user
 
@@ -61,8 +65,12 @@ bandsRouter.put('/:id', async (req, res) => {
     try {
         const { about, genre, started, facebookURL, instagramUsername, instagramPostURL } = req.body
         const vanha = await Band.findById(req.params.id)
+        var genres = []
+        if(genre.trim() != ''){
+            genres = genre.split(',');
+        }
         const uusi = { about: about ? about : vanha.about,
-            genre: genre ? genre : vanha.genre,
+            genre: genres ? genres : vanha.genre,
             started: started ? started : vanha.started ,
             facebookURL: facebookURL ? facebookURL : vanha.facebookURL,
             instagramUsername: instagramUsername 

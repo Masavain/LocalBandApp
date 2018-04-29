@@ -146,10 +146,10 @@ const BandFeed = (props) => {
         <Col lg={3} md={3} sm={3} xs={8} style={{ paddingLeft: 35 }}>
           <div className="wrapper">
             <div style={{ color: 'gray' }}>Genre:</div>
-            <div>{props.band.genre ? props.band.genre : ''}</div>
+            <div>{props.band.genre ? (props.band.genre.map(g => `${g}, `)) : ''}</div>
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleGenreSubmit}>
-                <div>edit genre</div><input type='text' name='genre'/>
+                <div>edit genre, separate by comma</div><input type='text' name='genre'/>
               </form> : <div></div>}
           </div>
           <div className="wrapper">
