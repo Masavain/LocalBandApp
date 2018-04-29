@@ -51,6 +51,7 @@
 |28.4.|1| Instagram embed, ProfilePagen ja BandFeedin sommittelua|
 |28.4.|1.5| notificationReducer ja Alert logatessa sisään/ulos sekä favoritessa/unfavoritessa|
 |28.4.|3| Band -komponenttien muotoilua, notificationin muotoilua ja discographyn muotoilua|
+|29.4.|1.5| Band- ja ProfilePage -komponenttien muotoilu 'valmiiksi', Discographyn formin muotoilu ja Postauksen julkaisuaika näkyviin|
 
 
-total: 96.5h
+total: 98h
