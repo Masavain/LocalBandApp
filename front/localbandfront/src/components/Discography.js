@@ -148,7 +148,7 @@ const Discography = (props) => {
       </Row>
       {bandMatchesLoggedUser ?
         <Row style={{ height: 40 }}>
-          <Col sm={6} >
+          <Col xs={6} >
             <div className="wrapper">
               <div className="inputbutton" id="asd"></div>
               <label htmlFor="asd" style={{ position:'absolute' }}>&#9660;</label>
@@ -156,25 +156,26 @@ const Discography = (props) => {
                 <Form horizontal style={{ padding: 30 }}onSubmit={albumFormSubmit} className='form-inline'>
                   <FormGroup className='form-group' bsSize='sm'>
                     <Col xs={4} xsOffset={2} className='input-label' componentClass={ControlLabel}>Title: </Col>
-                    <Col xs={4} xsOffset={1} className='input-label'><FormControl
+                    <Col xs={5} xsOffset={1} className='input-label'><FormControl style={{ marginBottom: 10 }}
                       type="text"
                       name="name"
                     /></Col>
 
                     <Col xs={4} xsOffset={2} className='input-label' componentClass={ControlLabel}>Release year: </Col>
-                    <Col xs={4} xsOffset={1} className='input-label'><FormControl
+                    <Col xs={5} xsOffset={1} className='input-label'><FormControl style={{ marginBottom: 10 }}
                       type="number"
                       name="year"
                     /></Col>
-                    <Col xs={4} xsOffset={2} className='input-label' componentClass={ControlLabel} >Bandcamp url: </Col>
-                    <Col xs={4} xsOffset={1} className='input-label'><FormControl
+                    <Col xs={4} xsOffset={2} className='input-label' componentClass={ControlLabel}>Bandcamp album url: </Col>
+                    <Col xs={3} xsOffset={1} className='input-label'><FormControl
                       type="text"
                       name="bcurl"
                     /></Col>
-                    <Col xs={4} xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
-                    <Col xs={4} xsOffset={1} className='input-label'>
-                      <textarea style={{ padding: 0, border: '1px solid lightgray', borderRadius: '3px' }} id='about'></textarea></Col>
-                    <Col xs={4} xsOffset={2} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
+                    <Col xs={6} style={{ padding: 0, margin:0 }}>&nbsp;</Col>
+                    <Col style={{ marginTop:10 }} xs={4} xsOffset={2} className='input-label' componentClass={ControlLabel}>About: </Col>
+                    <Col xs={5} xsOffset={1} className='input-label'>
+                      <textarea style={{ width: 142,padding: 0, border: '1px solid lightgray', borderRadius: '3px' }} id='about'></textarea></Col>
+                    <Col xs={4} xsOffset={8} className='input-label' ><Button bsStyle="success" type="submit">Add new album</Button></Col>
                   </FormGroup>
                 </Form>
               </div>

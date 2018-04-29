@@ -5,9 +5,12 @@ import { Grid, Row } from 'react-bootstrap'
 const Post = (props) => {
   let doc = new DOMParser().parseFromString(props.post.content, 'text/html')
   console.log(doc.body.innerHTML)
+  const date = props.post.date.substring(0, 10)
+  const time = props.post.date.substring(11, 16)
   return (
     <Grid>
       <h1 style={{ textAlign: 'center', padding: '50px', fontFamily: 'Courier' }}>{props.post.title}</h1>
+      <p style={{ color: 'gray', textAlign: 'center' }}>{`posted: ${date}, ${time}`}</p>
       <img className="header-image" src={props.post.images[0].url} height="450" alt=" "/>
       <Row>
         <div style={{ padding:30, textAlign: 'center' }} dangerouslySetInnerHTML={{ __html:doc.body.innerHTML }}></div>

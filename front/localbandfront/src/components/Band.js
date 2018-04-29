@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Button, Alert, Col } from 'react-bootstrap'
+import { Grid, Row, Button, Col } from 'react-bootstrap'
 import BandFeed from './BandFeed'
 import Gallery from './Gallery'
 import Discography from './Discography'
@@ -77,19 +77,19 @@ const Band = (props) => {
 
         <table className='multiborder'>
           <tr>
+
             <td style={{ width:'10px' }}></td>
             <td style={props.toggleType === 0 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(0)}>FEED</td>
             <td style={props.toggleType === 1 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(1)}>GALLERY</td>
             <td style={props.toggleType === 2 ? activeStyle : inactiveStyle} onClick={() => toggleComponent(2)}>DISCOGRAPHY</td>
-            <td style={{ width:'500px' }}></td>
+            {/* <td style={{ width:'10%' }}></td> */}
             {(props.user) ?
               (bandMatchesLoggedUser)
                 ? <td></td>
                 : (bandIsFavourited)
-                  ? <td><Col xs={1} xsOffset={9}><Button className="fav-button" style={{
-                    backgroundColor: '#ff5c5c',
-                  }} onClick={handleUnFavorite}>&#9825;</Button></Col></td>
-                  : <td><Col xs={1} xsOffset={9}><Button className="fav-button" onClick={handleFavorite}>&#9825;</Button></Col></td>
+                  ? <td ><Col xs={1} xsOffset={2} sm={1} smOffset={10}><Button className="fav-button" style={{
+                    backgroundColor: '#ff5c5c' }} onClick={handleUnFavorite}>&#9825;</Button></Col></td>
+                  : <td ><Col xs={1} xsOffset={2} sm={1} smOffset={10}><Button className="fav-button" onClick={handleFavorite}>&#9825;</Button></Col></td>
               : <td></td>
             }
           </tr>
