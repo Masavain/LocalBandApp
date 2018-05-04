@@ -58,5 +58,6 @@
 |4.5.|1| fb event mukaan konserttiin, oma table konserteista|
 |4.5.|2| herokuun deployaaminen, toimii muuten paitsi login/sign|
 |4.5.|0.5| Herokusivun login toimii, About-komponentin selitys sivuston toiminnasta|
+|4.5.|1.5| turhaa muotoilua mobiililaitteiden viewin kuntoonsaamiseksi. ei onnistunut|
 
-total: 105h
+total: 106.5h
