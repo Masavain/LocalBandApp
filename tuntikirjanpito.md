@@ -55,6 +55,6 @@
 |29.4.|1.5| Bändillä voi olla useampi genre => korjauksia backiin, formeihin ja Explore-komponenttiin|
 |4.5.|1.5| Concert -model sekä form konsertin luomiseksi|
 |4.5.|0.5| concert formin muotoilu ja hiominen|
+|4.5.|1| fb event mukaan konserttiin, oma table konserteista|
 
-
-total: 101.5h
+total: 102.5h
