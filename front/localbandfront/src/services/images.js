@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = 'http://localhost:3001/api/images'
+const url = '/api/images'
 let token = null
 
 const setToken = (newToken) => {

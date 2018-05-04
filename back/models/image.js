@@ -23,7 +23,6 @@ const imageSchema = new mongoose.Schema({
         height: image.height,
         width: image.width,
         animated: image.animated,
-        deletehash: image.deletehash,
         size: image.size,   
         type: image.type,
         album: image.album,

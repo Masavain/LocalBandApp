@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = 'http://localhost:3001/api/albums'
+const url = '/api/albums'
 let token = null
 
 const getAll = async () => {

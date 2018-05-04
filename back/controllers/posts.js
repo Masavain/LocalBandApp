@@ -9,15 +9,16 @@ const Post = require('../models/post')
 postsRouter.get('/', async (req, res) => {
     const posts = await Post
         .find({})
-        .populate('images')
-        .populate('user')
+        .populate('images', {deleteHash: 0})
+        .populate('user', {passwordHash:0})
     res.json(posts)
 })
 
 postsRouter.get('/:id', async (req, res) => {
     try {
         const post = await Post.findById(req.params.id)
-        .populate('images').populate('user')
+        .populate('images', {deleteHash: 0})
+        .populate('user', {passwordHash:0})
 
         if (post) {
             res.json(Post.format(post))
@@ -97,7 +98,7 @@ postsRouter.post('/', async (req, res) => {
         const vanha = await Post.findById(req.params.id)
         const uusi = { content }
         console.log('uusi: ', uusi)
-        const updated = await Post.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user').populate('images')
+        const updated = await Post.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user', { passwordHash:0}).populate('images', { deleteHash:0})
 
         res.json(Post.format(updated))
 

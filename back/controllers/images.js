@@ -11,14 +11,14 @@ imagesRouter.get('/', async (req, res) => {
         .find({})
         .populate('band')
         .populate('album')
-    res.json(images)
+    res.json(images.map(Image.format))
 })
 
 imagesRouter.get('/:id', async (req, res) => {
     try {
         const image = await Image.findById(req.params.id).populate('band').populate('album')
         if(image) {
-            res.json(image)
+            res.json(Image.format(image))
         } else {
             res.status(404).end()
         }

@@ -10,7 +10,7 @@ albumsRouter.get('/', async (req, res) => {
     const albums = await Album
         .find({})
         .populate('band')
-        .populate('albumArt')
+        .populate('albumArt', { deleteHash:0 })
     res.json(albums)
 })
 
@@ -55,7 +55,7 @@ albumsRouter.put('/:id', async (req, res) => {
             name: name ? name : vanha.name
         }
         const updated = await Album.findByIdAndUpdate(req.params.id, uusi, { new: true })
-            .populate('band').populate('albumArt')
+            .populate('band').populate('albumArt', {deleteHash: 0})
         res.json(Album.format(updated))
 
     } catch (exception) {
@@ -65,7 +65,7 @@ albumsRouter.put('/:id', async (req, res) => {
 
 albumsRouter.get('/:id', async (req, res) => {
     try {
-        const album = await Album.findById(req.params.id).populate('albumArt').populate('band')
+        const album = await Album.findById(req.params.id).populate('albumArt' , {deleteHash: 0}).populate('band')
         if (album) {
             res.json(Album.format(album))
         } else {

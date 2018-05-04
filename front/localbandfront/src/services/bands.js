@@ -1,5 +1,5 @@
 import axios from 'axios'
-const url = 'http://localhost:3001/api/bands'
+const url = '/api/bands'
 
 let token = null
 
