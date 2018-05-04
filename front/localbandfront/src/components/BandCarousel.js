@@ -9,7 +9,7 @@ const BandCarousel = (props) => {
   return (
     <Row>
       <Col>
-        <Carousel centerMode centerSlidePercentage={50} emulateTouch autoPlay showThumbs={false} infiniteLoop useKeyboardArrows>
+        <Carousel centerMode centerSlidePercentage={50} emulateTouch autoPlay showThumbs={false} showStatus={false} infiniteLoop useKeyboardArrows>
           {props.showcaseBands.map(b =>
             <div key={b._id}>
               <img className="carousel-image" height="400" src={b.backgroundImage ? b.backgroundImage.url : DefaultBackground} alt="ShuffleImages"/>

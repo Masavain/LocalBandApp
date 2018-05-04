@@ -276,12 +276,12 @@ const BandFeed = (props) => {
 
             : <div>
               {bandMatchesLoggedUser ? <form onSubmit={handleYoutubeSubmit}>
-                <div>Add a YouTube url you want others to see and hear<input type='text' name='yturl' /></div>
+                <div>Add a YouTube url you want others to see and hear &nbsp;<input type='text' name='yturl' /></div>
               </form>: <div></div> } </div>}
         </Col>
       </Row>
       <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98.5%', marginBottom: 20, padding: 5 }}>
-        <h2>UPCOMING EVENTS/CONCERTS</h2>
+        <h2>UPCOMING EVENTS / CONCERTS</h2>
         {props.band.concerts.length > 0 ?
           <Table striped style={{ border: '1px solid lightgrey' }}>
             <tbody>
@@ -307,7 +307,7 @@ const BandFeed = (props) => {
 
         {bandMatchesLoggedUser ?
           <div className="wrapper"><div className="inputbutton" id="eventButton"></div>
-            <label htmlFor="eventButton" style={{ position:'absolute', marginBottom: 30, padding:5  }}>+ ADD NEW EVENT</label>
+            <label htmlFor="eventButton" style={{ position:'absolute', marginBottom: 40, padding:5  }}>+ ADD NEW EVENT</label>
             <form className="button" onSubmit={handleEventSubmit} style={{ marginTop: 30 }}>
               <FormGroup>
                 <ControlLabel>Event name:</ControlLabel>
@@ -341,7 +341,7 @@ const BandFeed = (props) => {
                   name="fbURL"
                   style={{ width:'110%' }}
                 />
-                <Button bsStyle="success" type="submit">submit</Button>
+                <Button style={{ marginTop: 8 }} bsStyle="success" type="submit">submit</Button>
               </FormGroup>
             </form>
           </div>

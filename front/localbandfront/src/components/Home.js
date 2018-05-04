@@ -13,7 +13,7 @@ const Home = (props) => {
       {(props.user ? (props.user.role === 'admin') ? <AdminControl /> : <div></div> :  <div></div>)}
       <Row>
         <Col>
-          <Carousel centerMode centerSlidePercentage={50} showThumbs={false}>
+          <Carousel centerMode centerSlidePercentage={50} showThumbs={false} showStatus={false} showIndicators={false}>
             <div>
               <img className="carousel-image" height="500" src={props.mainPost.images[0].url} alt="MainPost"/>
               <Link to={`/post/${props.mainPost._id}`} className="legend"><div style={{ fontSize: '200%' }}>{props.mainPost.title}</div></Link>
@@ -21,7 +21,7 @@ const Home = (props) => {
           </Carousel>
         </Col>
         <Col>
-          <Carousel centerMode centerSlidePercentage={50} emulateTouch autoPlay showThumbs={false} infiniteLoop useKeyboardArrows>
+          <Carousel centerMode centerSlidePercentage={50} emulateTouch autoPlay showThumbs={false} showStatus={false} infiniteLoop useKeyboardArrows>
             <div>
               <img className="carousel-image" height="500" src={props.posts[0].images[0].url} alt="PostPic"/>
               <Link to={`/post/${props.posts[0]._id}`} className="legend"><div style={{ fontSize: '200%' }}>{props.posts[0].title}</div></Link>
