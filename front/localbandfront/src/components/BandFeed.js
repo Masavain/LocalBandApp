@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl  } from 'react-bootstrap'
+import { Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl, Table } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
 import { setDate, clearDate } from './../reducers/dateReducer'
 import bandService from './../services/bands'
@@ -9,6 +9,8 @@ import concertService from './../services/concerts'
 import InstagramEmbed from 'react-instagram-embed'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import 'react-day-picker/lib/style.css'
+import format from 'date-fns/format'
+import parse from 'date-fns/parse'
 
 const BandFeed = (props) => {
 
@@ -109,14 +111,25 @@ const BandFeed = (props) => {
     event.preventDefault()
     const name = event.target.name.value
     const place = event.target.place.value
+    const fbURL = event.target.fbURL.value
     const date = props.date
     const newObject = { name, place, date,
-      about: document.getElementById('concertAbout').value, bandId: props.band._id }
+      about: document.getElementById('concertAbout').value, fbURL, bandId: props.band._id }
     await concertService.createNew(newObject)
     const updatedBand = await bandService.getById(props.band._id)
     props.updateBand(updatedBand)
     props.clearDate()
     window.location.reload()
+  }
+  const deleteConcert = (concert) => async event => {
+    event.preventDefault()
+    if (window.confirm(`Delete ${concert.name}?`)) {
+      await concertService.remove(concert._id)
+      const updatedBand = await bandService.getById(props.band._id)
+      props.updateBand(updatedBand)
+      window.location.reload()
+    }
+
   }
   const BCstyle = {
     position: 'relative',
@@ -128,6 +141,7 @@ const BandFeed = (props) => {
   const ytId = props.band.youtubeID ? props.band.youtubeID : 'So6Qa_4QHYY'
   const ytUrli = `https://www.youtube.com/embed/${ytId}?autoplay=0`
   const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
+  const FORMAT = 'D.M.YYYY'
 
   return(
     <Grid >
@@ -268,7 +282,29 @@ const BandFeed = (props) => {
       </Row>
       <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98.5%', marginBottom: 20, padding: 5 }}>
         <h2>UPCOMING EVENTS/CONCERTS</h2>
-        {props.band.concerts.map(c => <div key={c._id}>{c.name}</div>)}
+        {props.band.concerts.length > 0 ?
+          <Table striped style={{ border: '1px solid lightgrey' }}>
+            <tbody>
+              <tr><td>date</td>
+                <td>name</td>
+                <td>venue/place</td>
+                <td>about</td>
+                <td>Facebook</td>
+                <td></td></tr>
+              {props.band.concerts.map(c =>
+                <tr className="wrapper" key={c._id}>
+                  <td>{c.date}</td>
+                  <td>{c.name}</td>
+                  <td>{c.place}</td>
+                  <td>{c.about}</td>
+                  <td>{c.fbURL ? <a href={c.fbURL}>Facebook</a> : <div>-</div>}</td>
+                  {bandMatchesLoggedUser ? <td><Button className="button" bsSize="sm" bsStyle="danger" onClick={deleteConcert(c)}>x</Button></td> : <div></div>}
+                </tr>)}
+            </tbody>
+          </Table>
+          : <div style={{ color: 'grey' }}>no upcoming events</div>}
+
+
         {bandMatchesLoggedUser ?
           <div className="wrapper"><div className="inputbutton" id="eventButton"></div>
             <label htmlFor="eventButton" style={{ position:'absolute', marginBottom: 30, padding:5  }}>+ ADD NEW EVENT</label>
@@ -286,6 +322,10 @@ const BandFeed = (props) => {
                   dayPickerProps={{
                     todayButton: 'Today',
                   }}
+                  formatDate={format}
+                  parseDate={parse}
+                  format={FORMAT}
+                  placeholder={`${format(new Date(), FORMAT)}`}
                 />
                 <ControlLabel>Venue/City:</ControlLabel>
                 <FormControl
@@ -295,6 +335,12 @@ const BandFeed = (props) => {
                 />
                 <ControlLabel>About:</ControlLabel>
                 <textarea style={{ padding: 0, width:'110%', border: '1px solid lightgray', borderRadius: '3px' }} id='concertAbout'></textarea>
+                <ControlLabel>Facebook Event url:</ControlLabel>
+                <FormControl
+                  type="text"
+                  name="fbURL"
+                  style={{ width:'110%' }}
+                />
                 <Button bsStyle="success" type="submit">submit</Button>
               </FormGroup>
             </form>

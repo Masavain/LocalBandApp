@@ -1,3 +1,6 @@
+const format = require('date-fns/format')
+const parse = require('date-fns/parse')
+
 const concertsRouter = require('express').Router()
 const jwt = require('jsonwebtoken')
 const Band = require('../models/band')
@@ -12,7 +15,7 @@ concertsRouter.get('/', async (req, res) => {
 })
 
 concertsRouter.post('/', async (req, res) => {
-    const { name, date, about, place, bandId } = req.body
+    const { name, date, about, place, fbURL, bandId } = req.body
 
     try {
         if (!name || !date || !place || !bandId) {
@@ -27,7 +30,7 @@ concertsRouter.post('/', async (req, res) => {
         }
         const user = await User.findById(decodedToken.id)
         const band = await Band.findById(bandId)
-        const concert = new Concert({ name, date: date.substring(0, 10), about, place, band: bandId })
+        const concert = new Concert({ name, date: format(date, 'D.M.YYYY'), about, place, fbURL, band: bandId })
         const result = await concert.save()
         result.band = band
         console.log('täällä')
@@ -87,13 +90,15 @@ concertsRouter.delete('/:id', async (req, res) => {
         if (!token || !decodedToken.id) {
             return res.status(401).json({ error: 'token missing or invalid' })
         }
-        const tobeDeleted = await Concert.findById(req.params.id)
-        const band = await Band.findById(tobeDeleted.band)
-        const result = await Concert.findByIdAndRemove(req.params.id)
-        band.concerts = band.concerts.filter(c => c._id !== result._id)
-        await band.save()
+        const result = await Concert.findByIdAndRemove(req.params.id).populate('band')
+        if (result.band) {
+            const band = await Band.findById(result.band._id)
+            band.concerts = band.concerts.filter(a => a._id !== result._id)
+            await band.save()
+        }
+        console.log(result)
         res.status(204).end()
-        
+
       } catch (exception) {
         res.status(400).send({ error: 'malformatted id' })
       }

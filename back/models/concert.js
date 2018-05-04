@@ -5,6 +5,7 @@ const concertSchema = new mongoose.Schema({
   date: String,
   about: String,
   place: String,
+  fbURL: String,
   band: { type: mongoose.Schema.Types.ObjectId, ref: 'Band' }
 })
 
@@ -15,6 +16,7 @@ concertSchema.statics.format = (concert) => {
     date: concert.date,
     about: concert.about,
     place: concert.place,
+    fbURL: concert.fbURL,
     band: concert.band
   
   }
