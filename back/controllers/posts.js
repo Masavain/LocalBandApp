@@ -16,7 +16,9 @@ postsRouter.get('/', async (req, res) => {
 
 postsRouter.get('/:id', async (req, res) => {
     try {
-        const post = await Post.findById(req.params.id).populate('images').populate('user')
+        const post = await Post.findById(req.params.id)
+        .populate('images').populate('user')
+
         if (post) {
             res.json(Post.format(post))
         } else {
@@ -96,6 +98,7 @@ postsRouter.post('/', async (req, res) => {
         const uusi = { content }
         console.log('uusi: ', uusi)
         const updated = await Post.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user').populate('images')
+
         res.json(Post.format(updated))
 
     } catch (exception) {

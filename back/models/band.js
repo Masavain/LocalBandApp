@@ -18,7 +18,8 @@ const bandSchema = new mongoose.Schema({
   facebookURL: String,
   instagramUsername: String,
   instagramPostURL: String,
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  concerts: { type: mongoose.Schema.Types.ObjectId, ref: 'Concert' }
 })
 
 bandSchema.statics.format = (band) => {
@@ -39,7 +40,8 @@ bandSchema.statics.format = (band) => {
     youtubeID: band.youtubeID,
     facebookURL: band.facebookURL,
     instagramUsername: band.instagramUsername,
-    instagramPostURL: band.instagramPostURL
+    instagramPostURL: band.instagramPostURL,
+    concerts: band.concerts
   }
 }
 

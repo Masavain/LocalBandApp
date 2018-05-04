@@ -4,6 +4,7 @@ const Band = require('../models/band')
 const User = require('../models/user')
 const Image = require('../models/image')
 const bandcamp = require('bandcamp-scraper')
+const Concert = require('../models/concert')
 
 bandsRouter.get('/', async (req, res) => {
     const bands = await Band
@@ -20,6 +21,7 @@ bandsRouter.get('/', async (req, res) => {
               model: 'Image'
             }
          })
+        .populate('concerts')
     res.json(bands)
 })
 
@@ -87,7 +89,9 @@ bandsRouter.put('/:id', async (req, res) => {
 
 bandsRouter.get('/:id', async (req, res) => {
     try {
-        const band = await Band.findById(req.params.id).populate('backgroundImage').populate('user').populate('albums')
+        const band = await Band.findById(req.params.id)
+        .populate('backgroundImage')
+        .populate('user').populate('albums').populate('concerts')
         if (band) {
             res.json(Band.format(band))
           } else {
@@ -123,7 +127,7 @@ bandsRouter.post('/:id/bandcamp', async (req, res) => {
             bcAlbumID: bandcampInfo.raw.current.id,
             bcTrackID: bandcampInfo.raw.current.featured_track_id
         }
-        const updatedBand = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
+        const updatedBand = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user').populate('concerts')
         console.log('updated', updatedBand)
         res.status(200).json(Band.format(updatedBand))
     } catch (exception) {
@@ -136,7 +140,7 @@ bandsRouter.post("/:id/youtube", async (req, res) => {
 
         const uusi = { youtubeID: req.body.youtubeID }
         console.log('routerissa uusi: ', uusi)
-        const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
+        const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user').populate('concerts')
         console.log('routerissa updated: ', updated)
         res.json(Band.format(updated))
 

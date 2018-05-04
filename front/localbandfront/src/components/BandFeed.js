@@ -1,10 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Col, Button } from 'react-bootstrap'
+import { Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl  } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
+import { setDate, clearDate } from './../reducers/dateReducer'
 import bandService from './../services/bands'
 import imageService from './../services/images'
 import InstagramEmbed from 'react-instagram-embed'
+import DayPickerInput from 'react-day-picker/DayPickerInput'
+import 'react-day-picker/lib/style.css'
 
 const BandFeed = (props) => {
 
@@ -101,7 +104,18 @@ const BandFeed = (props) => {
     props.updateBand(updatedBand)
     window.location.reload()
   }
+  const handleEventSubmit = async (event) => {
+    event.preventDefault()
+    const name = event.target.name.value
+    const place = event.target.place.value
+    const asd = props.date
+    console.log(asd)
 
+
+    // const updatedBand = await bandService.update(newObject._id, newObject)
+    // props.updateBand(updatedBand)
+    // window.location.reload()
+  }
   const BCstyle = {
     position: 'relative',
     border: 0,
@@ -250,6 +264,38 @@ const BandFeed = (props) => {
               </form>: <div></div> } </div>}
         </Col>
       </Row>
+      <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98.5%', marginBottom: 20, padding: 5 }}>
+        <h2>UPCOMING EVENTS/CONCERTS</h2>
+
+        {bandMatchesLoggedUser ?
+          <div>+ ADD NEW EVENT
+          <form onSubmit={handleEventSubmit}>
+            <FormGroup>
+              <ControlLabel>Event name:</ControlLabel>
+              <FormControl
+                type="text"
+                name="name"
+              />
+              <ControlLabel>Date: </ControlLabel>
+              <DayPickerInput id="date" name="date"
+                onDayChange={(day) => props.setDate(day)}
+                dayPickerProps={{
+                  todayButton: 'Today',
+                }}
+              />
+              <ControlLabel>Venue/City:</ControlLabel>
+              <FormControl
+                type="text"
+                name="place"
+              />
+              <ControlLabel>About:</ControlLabel>
+              <textarea style={{ padding: 0 }} id='concertAbout'></textarea>
+              <Button bsStyle="success" type="submit">submit</Button>
+            </FormGroup>
+          </form>
+          </div>
+          : <div></div>}
+      </Row>
     </Grid>
   )
 }
@@ -258,8 +304,9 @@ const mapStateToProps = (state) => {
   return {
     bands: state.bands,
     user: state.user,
+    date: state.date
   }
 }
 export default connect(
-  mapStateToProps, { updateBand }
+  mapStateToProps, { updateBand, setDate, clearDate }
 )(BandFeed)

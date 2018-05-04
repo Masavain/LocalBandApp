@@ -11,6 +11,7 @@ const loginRouter = require('./controllers/login')
 const imagesRouter = require('./controllers/images')
 const albumsRouter = require('./controllers/albums')
 const postsRouter = require('./controllers/posts')
+const concertsRouter = require('./controllers/concerts')
 
 const config = require('./utils/config')
 
@@ -28,6 +29,7 @@ app.use('/api/login', loginRouter)
 app.use('/api/images', imagesRouter)
 app.use('/api/posts', postsRouter)
 app.use('/api/albums', albumsRouter)
+app.use('/api/concerts', concertsRouter)
 app.use(express.static(__dirname + '/public'))
 
 app.get('/*', (req, res) => {

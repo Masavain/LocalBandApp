@@ -7,13 +7,15 @@ import loginReducer from './reducers/loginReducer'
 import toggleReducer from './reducers/toggleReducer'
 import postReducer from './reducers/postReducer'
 import notificationReducer from './reducers/notificationReducer'
+import dateReducer from './reducers/dateReducer'
 
 const reducer = combineReducers({
   bands: bandReducer,
   user: loginReducer,
   toggle: toggleReducer,
   posts: postReducer,
-  notification: notificationReducer
+  notification: notificationReducer,
+  date: dateReducer
 })
 const store = createStore(reducer,
   composeWithDevTools(applyMiddleware(thunk))
