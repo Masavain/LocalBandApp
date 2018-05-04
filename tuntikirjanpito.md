@@ -56,5 +56,6 @@
 |4.5.|1.5| Concert -model sekä form konsertin luomiseksi|
 |4.5.|0.5| concert formin muotoilu ja hiominen|
 |4.5.|1| fb event mukaan konserttiin, oma table konserteista|
+|4.5.|2| herokuun deployaaminen, toimii muuten paitsi login/sign|
 
-total: 102.5h
+total: 104.5h
