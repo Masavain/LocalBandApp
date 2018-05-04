@@ -57,5 +57,6 @@
 |4.5.|0.5| concert formin muotoilu ja hiominen|
 |4.5.|1| fb event mukaan konserttiin, oma table konserteista|
 |4.5.|2| herokuun deployaaminen, toimii muuten paitsi login/sign|
+|4.5.|0.5| Herokusivun login toimii, About-komponentin selitys sivuston toiminnasta|
 
-total: 104.5h
+total: 105h
