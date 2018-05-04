@@ -20,9 +20,9 @@ import Footer from './components/Footer'
 
 class App extends React.Component {
   componentWillMount = async () => {
+    this.props.initializePosts()
     this.props.initialization()
     this.props.initUser()
-    this.props.initializePosts()
   }
 
   logOut = async () => {
@@ -31,13 +31,6 @@ class App extends React.Component {
   }
 
   render() {
-    const customStyle = {
-      backgroundColor: 'white',
-      marginTop: 58,
-      height: 'auto',
-      paddingLeft: 0,
-      paddingRight: 0,
-    }
     if (this.props.bands.length === 0) {
       return null
     }
@@ -69,7 +62,7 @@ class App extends React.Component {
         <Grid style={{ padding: 0, backgroundColor: '#c1c1c1', height: 'inherit' }}>
           <Router>
             <div style={{ padding: 0, backgroundColor: '#c1c1c1', height: 'inherit' }}>
-              <Navbar className="nav" fixedTop width="auto" collapseOnSelect >
+              <Navbar style={{ width: '100%' }} className="nav" fixedTop collapseOnSelect>
                 <Navbar.Header>
                   <Navbar.Brand>
                     <Link to="/"><div style={{ padding: 2 }}>Localbands App</div></Link>
@@ -129,10 +122,16 @@ class App extends React.Component {
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>
-              <Alert className={`${this.props.notif.visible ? 'fav-alert' : 'fav-alert-hidden'}`} style={{ fontSize: 20, position:'absolute', left: 500, padding: 4, marginTop:10, width: '25%' }} bsStyle="info">
+              <Alert className={`${this.props.notif.visible ? 'fav-alert' : 'fav-alert-hidden'}`} style={{ fontSize: 20, position: 'absolute', left: 500, padding: 4, marginTop: 10, width: '25%' }} bsStyle="info">
                 {this.props.notif.message}
               </Alert>
-              <Grid style={customStyle}>
+              <Grid style={
+                { backgroundColor: 'white',
+                  marginTop: 58,
+                  height: 'auto',
+                  width: 'inherit',
+                  paddingLeft: 0,
+                  paddingRight: 0, }}>
                 <Route exact path="/bands/:id" render={({ match }) => {
                   return <Band band={blogById(match.params.id)} />
                 }}
@@ -151,8 +150,8 @@ class App extends React.Component {
             </div>
           </Router>
         </Grid>
-        <Footer />
-      </div>
+        <Footer/>
+      </div >
     )
   }
 }
