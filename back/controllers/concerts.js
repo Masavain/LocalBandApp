@@ -27,9 +27,10 @@ concertsRouter.post('/', async (req, res) => {
         }
         const user = await User.findById(decodedToken.id)
         const band = await Band.findById(bandId)
-        const concert = new Concert({ name, date, about, place, band: bandId })
+        const concert = new Concert({ name, date: date.substring(0, 10), about, place, band: bandId })
         const result = await concert.save()
         result.band = band
+        console.log('täällä')
 
         band.concerts = band.concerts.concat(concert._id)
         await band.save()

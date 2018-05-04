@@ -5,6 +5,7 @@ import { updateBand } from './../reducers/bandReducer'
 import { setDate, clearDate } from './../reducers/dateReducer'
 import bandService from './../services/bands'
 import imageService from './../services/images'
+import concertService from './../services/concerts'
 import InstagramEmbed from 'react-instagram-embed'
 import DayPickerInput from 'react-day-picker/DayPickerInput'
 import 'react-day-picker/lib/style.css'
@@ -108,13 +109,14 @@ const BandFeed = (props) => {
     event.preventDefault()
     const name = event.target.name.value
     const place = event.target.place.value
-    const asd = props.date
-    console.log(asd)
-
-
-    // const updatedBand = await bandService.update(newObject._id, newObject)
-    // props.updateBand(updatedBand)
-    // window.location.reload()
+    const date = props.date
+    const newObject = { name, place, date,
+      about: document.getElementById('concertAbout').value, bandId: props.band._id }
+    await concertService.createNew(newObject)
+    const updatedBand = await bandService.getById(props.band._id)
+    props.updateBand(updatedBand)
+    props.clearDate()
+    window.location.reload()
   }
   const BCstyle = {
     position: 'relative',
@@ -266,33 +268,36 @@ const BandFeed = (props) => {
       </Row>
       <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98.5%', marginBottom: 20, padding: 5 }}>
         <h2>UPCOMING EVENTS/CONCERTS</h2>
-
+        {props.band.concerts.map(c => <div key={c._id}>{c.name}</div>)}
         {bandMatchesLoggedUser ?
-          <div>+ ADD NEW EVENT
-          <form onSubmit={handleEventSubmit}>
-            <FormGroup>
-              <ControlLabel>Event name:</ControlLabel>
-              <FormControl
-                type="text"
-                name="name"
-              />
-              <ControlLabel>Date: </ControlLabel>
-              <DayPickerInput id="date" name="date"
-                onDayChange={(day) => props.setDate(day)}
-                dayPickerProps={{
-                  todayButton: 'Today',
-                }}
-              />
-              <ControlLabel>Venue/City:</ControlLabel>
-              <FormControl
-                type="text"
-                name="place"
-              />
-              <ControlLabel>About:</ControlLabel>
-              <textarea style={{ padding: 0 }} id='concertAbout'></textarea>
-              <Button bsStyle="success" type="submit">submit</Button>
-            </FormGroup>
-          </form>
+          <div className="wrapper"><div className="inputbutton" id="eventButton"></div>
+            <label htmlFor="eventButton" style={{ position:'absolute', marginBottom: 30, padding:5  }}>+ ADD NEW EVENT</label>
+            <form className="button" onSubmit={handleEventSubmit} style={{ marginTop: 30 }}>
+              <FormGroup>
+                <ControlLabel>Event name:</ControlLabel>
+                <FormControl
+                  type="text"
+                  name="name"
+                  style={{ width:'110%' }}
+                />
+                <ControlLabel>Date: </ControlLabel>
+                <DayPickerInput id="date" name="date"
+                  onDayChange={(day) => props.setDate(day)}
+                  dayPickerProps={{
+                    todayButton: 'Today',
+                  }}
+                />
+                <ControlLabel>Venue/City:</ControlLabel>
+                <FormControl
+                  type="text"
+                  name="place"
+                  style={{ width:'110%' }}
+                />
+                <ControlLabel>About:</ControlLabel>
+                <textarea style={{ padding: 0, width:'110%', border: '1px solid lightgray', borderRadius: '3px' }} id='concertAbout'></textarea>
+                <Button bsStyle="success" type="submit">submit</Button>
+              </FormGroup>
+            </form>
           </div>
           : <div></div>}
       </Row>

@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 const concertSchema = new mongoose.Schema({
   name: String,
-  date: Date,
+  date: String,
   about: String,
   place: String,
   band: { type: mongoose.Schema.Types.ObjectId, ref: 'Band' }

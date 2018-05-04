@@ -45,7 +45,7 @@ bandsRouter.post('/', async (req, res) => {
             genres = genre.split(',');
         }
         console.log(genres)
-        const band = new Band({ name, genre: genres, started, hometown, about: (about || ''), bcURL: '', bcAlbumID: '',bcTrackID: '', active: true, user: user._id })
+        const band = new Band({ name, genre: genres, started, hometown, about: (about || ''), bcURL: '', bcAlbumID: '',bcTrackID: '', active: true, user: user._id, concerts: [] })
         const result = await band.save()
         result.user = user
 

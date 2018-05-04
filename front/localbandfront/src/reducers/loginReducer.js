@@ -4,6 +4,7 @@ import imageService from '.././services/images'
 import albumService from '.././services/albums'
 import userService from '.././services/users'
 import postService from '.././services/posts'
+import concertSercice from '.././services/concerts'
 console.log('loggedUser:', JSON.parse(window.localStorage.getItem('loggedUser')))
 const loginReducer = (state = JSON.parse(window.localStorage.getItem('loggedUser')), action) => {
   console.log('ACTION: ', action)
@@ -30,6 +31,7 @@ export const sign = (username, password) => {
       username: username,
       password: password
     })
+    concertSercice.setToken(user.token)
     albumService.setToken(user.token)
     imageService.setToken(user.token)
     bandService.setToken(user.token)
@@ -49,6 +51,7 @@ export const login = (username, password) => {
       username: username,
       password: password
     })
+    concertSercice.setToken(user.token)
     albumService.setToken(user.token)
     imageService.setToken(user.token)
     bandService.setToken(user.token)
@@ -97,6 +100,7 @@ export const initUser = () => {
       imageService.setToken(user.token)
       bandService.setToken(user.token)
       postService.setToken(user.token)
+      concertSercice.setToken(user.token)
       dispatch({
         type: 'LOGIN',
         user: user
