@@ -53,6 +53,7 @@
 |28.4.|3| Band -komponenttien muotoilua, notificationin muotoilua ja discographyn muotoilua|
 |29.4.|1.5| Band- ja ProfilePage -komponenttien muotoilu 'valmiiksi', Discographyn formin muotoilu ja Postauksen julkaisuaika näkyviin|
 |29.4.|1.5| Bändillä voi olla useampi genre => korjauksia backiin, formeihin ja Explore-komponenttiin|
+|4.5.|1.5| Concert -model sekä form konsertin luomiseksi|
 
 
-total: 99.5h
+total: 101h
