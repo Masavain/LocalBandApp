@@ -62,10 +62,13 @@ class App extends React.Component {
         <Grid style={{ padding: 0, backgroundColor: '#c1c1c1', height: 'inherit' }}>
           <Router>
             <div style={{ padding: 0, backgroundColor: '#c1c1c1', height: 'inherit' }}>
-              <Navbar style={{ width: '100%' }} className="nav" fixedTop collapseOnSelect>
-                <Navbar.Header>
+              <Navbar style={{ width: '100%', marginTop:0 }} className="nav" fixedTop collapseOnSelect>
+                <Navbar.Header style={{ marginTop: -7 }}>
                   <Navbar.Brand>
-                    <Link to="/"><div style={{ padding: 2 }}>Localbands App</div></Link>
+                    <Link to="/">
+                      {/* <div style={{ padding: 2 }}>Localbands App</div> */}
+                      <img style={{ position: 'center center' }} src={'/logo-test.png'} height={38} alt='logo'/>
+                    </Link>
                   </Navbar.Brand>
                   <Navbar.Toggle />
                 </Navbar.Header>

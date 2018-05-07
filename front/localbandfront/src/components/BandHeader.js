@@ -4,7 +4,7 @@ import { Grid, Row, Col, Button } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
 import bandService from './../services/bands'
 import imageService from './../services/images'
-import defaultBackground from './../nakemys_opa.jpg'
+const bgs = [ '/default_bg1.png', '/default_bg2.png', '/default_bg3.png', '/default_bg4.png', '/default_bg5.png']
 
 const BandHeader = (props) => {
 
@@ -46,7 +46,7 @@ const BandHeader = (props) => {
   const headerStyle = {
     marginTop: 0,
     backgroundImage: props.band.backgroundImage ? `url(${props.band.backgroundImage.url})`
-      : `url(${defaultBackground})`,
+      : `url(${bgs[Math.floor(Math.random() * 5)]})`,
     height: 250,
     backgroundSize:'cover',
     backgroundRepeat:   'no-repeat',
