@@ -138,4 +138,28 @@ imagesRouter.post('/postimage', async (req, res) => {
     }
 })
 
+imagesRouter.delete('/:id', async (req, res) => {
+    try{
+      const token = req.token
+      const decodedToken = jwt.verify(token, process.env.SECRET)
+      console.log('decoded', decodedToken)
+
+      if (!token || !decodedToken.id) {
+          return res.status(401).json({ error: 'token missing or invalid' })
+      }
+      const result = await Image.findByIdAndRemove(req.params.id).populate('band')
+      if (result.band) {
+          const band = await Band.findById(result.band._id)
+          band.gallery = band.gallery.filter(a => a._id !== result._id)
+          await band.save()
+      }
+      console.log(result)
+      res.status(204).end()
+
+    } catch (exception) {
+      res.status(400).send({ error: 'malformatted id' })
+    }
+  
+})
+
 module.exports = imagesRouter

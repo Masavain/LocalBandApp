@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import bandService from './../services/bands'
 import imageService from './../services/images'
-import { Row, Button } from 'react-bootstrap'
+import { Row, Button, Col } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
 import { initiatePhotoIndex, setPhotoIndex, toggleIsOpen, toggle, openFromIndex } from './../reducers/toggleReducer'
 import Lightbox from 'react-image-lightbox'
@@ -33,12 +33,21 @@ const Gallery = (props) => {
       console.log('Error: ', error)
     }
   }
+  const deleteImage = (id) => async event => {
+    event.preventDefault()
+    if (window.confirm('Delete image?')) {
+      await imageService.remove(id)
+      const updatedBand = await bandService.getById(props.band._id)
+      props.updateBand(updatedBand)
+      window.location.reload()
+    }
+
+  }
 
   const imgStyle = {
     backgroundColor: 'black',
     objectFit: 'scale-down',
     overflow: 'hidden',
-    margin: '1px'
   }
   const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
 
@@ -48,9 +57,14 @@ const Gallery = (props) => {
         {props.band.gallery.length === 0 ?
           <div>
           </div>
-          : <div style={{ display: 'block', marginLeft: '35px', marginright: '35px' }}>
+          : <div style={{ display: 'inline-block', marginLeft: '28px', marginright: '35px' }}>
             {props.band.gallery.map(image =>
-              <img key={image._id} src={image.url} style={imgStyle} onClick={() => props.openFromIndex(props.band.gallery.indexOf(image))} width="300" height="300" alt="galleryImage"/>
+              <Col xs={4} key={image._id} className="wrapper" style={{ position: 'relative', padding: '0' }}>
+                <img src={image.url} style={imgStyle} onClick={() => props.openFromIndex(props.band.gallery.indexOf(image))} width="300" height="300" alt="galleryImage"/>
+                {bandMatchesLoggedUser
+                  ? <Button style={{ position:'absolute', zIndex: 99, marginTop: 280, bottom: 5,left: 5 }} className="button" bsSize="xs" bsStyle="danger" onClick={deleteImage(image._id)}>X</Button>
+                  : <div></div>}
+              </Col>
             )}
             {props.isOpen && (
               <Lightbox
@@ -66,7 +80,7 @@ const Gallery = (props) => {
               />
             )}
           </div>}
-        {bandMatchesLoggedUser ? <div style={{ margin: 20 }}><form onSubmit={handleGallerySubmit}>
+        {bandMatchesLoggedUser ? <div style={{ margin: 50 }}><form onSubmit={handleGallerySubmit}>
           <input type="file" className="inputbutton" accept="image/*" id="galleryImage" name="image"/>
           <label htmlFor="galleryImage">Choose image</label>&nbsp;
           <Button bsStyle="primary" bsSize='xsmall' type='submit'>add</Button>

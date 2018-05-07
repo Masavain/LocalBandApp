@@ -49,4 +49,12 @@ const postImage = async (newObject) => {
   return response.data
 }
 
-export default { setToken, getAll, getById, postImgur, postImage, postAlbumArt, postHeadArt }
+const remove = async (id) => {
+  const config = {
+    headers: { 'Authorization': token }
+  }
+  const response = await axios.delete(`${url}/${id}`, config)
+  return response.data
+}
+
+export default { setToken, getAll, getById, postImgur, postImage, postAlbumArt, postHeadArt, remove }
