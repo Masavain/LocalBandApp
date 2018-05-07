@@ -62,5 +62,6 @@
 |7.5.|1| viimeisiä muotoiluja. Mobiiliview näyttää nyt myös hyvältä|
 |7.5.|1| logo ja default taustakuvia|
 |7.5.|2| sisältöä sivulle, kuvien poisto backiin ja galleriaan. Poisto tulee muuttumaan hieman vielä|
+|7.5.|1| kuvan poisto poistaa kuvan myös Imgurista|
 
-total: 110.5h
+total: 111.5h
