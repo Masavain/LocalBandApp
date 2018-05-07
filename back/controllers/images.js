@@ -27,6 +27,31 @@ imagesRouter.get('/:id', async (req, res) => {
     }
 })
 
+imagesRouter.get('/:id/full', async (req, res) => {
+    try {
+        const token = req.token
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        console.log('decoded', decodedToken)
+
+        if (!token || !decodedToken.id) {
+            return res.status(401).json({ error: 'token missing or invalid' })
+        }
+        const image = await Image.findById(req.params.id).populate('band').populate('album')
+        if(image) {
+            console.log('deco id', decodedToken.id.toString(), 'user', image.user.toString())
+            if (image.user.toString() === decodedToken.id.toString()) {
+                console.log('tääälllä!!')
+                res.json(image)
+            }
+        } else {
+            res.status(404).end()
+        }
+        
+        
+    } catch (exception) {
+        res.status(400).send({ error: 'malformatted id' })
+    }
+})
 
 imagesRouter.post('/', async (req, res) => {
     const { url, imageType, height, width, animated, deleteHash, size, type, bandId } = req.body
@@ -153,6 +178,7 @@ imagesRouter.delete('/:id', async (req, res) => {
           band.gallery = band.gallery.filter(a => a._id !== result._id)
           await band.save()
       }
+      
       console.log(result)
       res.status(204).end()
 

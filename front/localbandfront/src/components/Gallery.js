@@ -36,7 +36,9 @@ const Gallery = (props) => {
   const deleteImage = (id) => async event => {
     event.preventDefault()
     if (window.confirm('Delete image?')) {
+      const img = await imageService.getByIdFull(id)
       await imageService.remove(id)
+      await imageService.removeImgur(img.deleteHash)
       const updatedBand = await bandService.getById(props.band._id)
       props.updateBand(updatedBand)
       window.location.reload()
@@ -48,21 +50,22 @@ const Gallery = (props) => {
     backgroundColor: 'black',
     objectFit: 'scale-down',
     overflow: 'hidden',
+    marginRight: 8,
   }
   const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
 
   return(
-    <div style={{ padding: 10 }}>
+    <div>
       <Row>
         {props.band.gallery.length === 0 ?
           <div>
           </div>
-          : <div style={{ display: 'inline-block', marginLeft: '28px', marginright: '35px' }}>
+          : <div style={{ display: 'inline-block', marginLeft: '45px', marginright: '30px' }}>
             {props.band.gallery.map(image =>
-              <Col xs={4} key={image._id} className="wrapper" style={{ position: 'relative', padding: '0' }}>
+              <Col xs={12} sm={5} md={4} key={image._id} className="wrapper" style={{ padding: 0 }}>
                 <img src={image.url} style={imgStyle} onClick={() => props.openFromIndex(props.band.gallery.indexOf(image))} width="300" height="300" alt="galleryImage"/>
                 {bandMatchesLoggedUser
-                  ? <Button style={{ position:'absolute', zIndex: 99, marginTop: 280, bottom: 5,left: 5 }} className="button" bsSize="xs" bsStyle="danger" onClick={deleteImage(image._id)}>X</Button>
+                  ? <Button style={{ position:'absolute', zIndex: 99, marginTop: 280, bottom: 5,left: 10 }} className="button" bsSize="xs" bsStyle="danger" onClick={deleteImage(image._id)}>X</Button>
                   : <div></div>}
               </Col>
             )}
