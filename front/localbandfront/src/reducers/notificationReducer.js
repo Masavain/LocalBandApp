@@ -18,7 +18,7 @@ export const notify = (notif, seconds) => {
       type: 'NEW_NOTIF',
       notif
     })
-    setTimeout(() => {
+    await setTimeout(() => {
       dispatch({
         type: 'HIDE_VISIBLE',
       })

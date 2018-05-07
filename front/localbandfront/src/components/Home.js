@@ -9,7 +9,7 @@ import { Carousel } from 'react-responsive-carousel'
 const Home = (props) => {
   console.log(props.posts)
   return(
-    <Grid >
+    <Grid>
       {(props.user ? (props.user.role === 'admin') ? <AdminControl /> : <div></div> :  <div></div>)}
       <Row>
         <Col>

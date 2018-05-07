@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Col, Button, FormGroup, ControlLabel, FormControl, Table } from 'react-bootstrap'
+import { Row, Col, Button, FormGroup, ControlLabel, FormControl, Table } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
 import { setDate, clearDate } from './../reducers/dateReducer'
 import bandService from './../services/bands'
@@ -144,7 +144,7 @@ const BandFeed = (props) => {
   const FORMAT = 'D.M.YYYY'
 
   return(
-    <Grid >
+    <div style={{ padding: 15 }}>
       <Row>
         <Col lg={4} md={4} sm={5} xs={12} className="wrapper"
           style={{ paddingTop: 0, paddingRight:0, paddingLeft: 35, position:'center' }}>
@@ -238,7 +238,7 @@ const BandFeed = (props) => {
         </Col>
       </Row>
 
-      <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98.5%', marginBottom: 20, padding: 5 }}>
+      <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98.0%', marginBottom: 20, padding: 5 }}>
         <h2>LISTEN  /  WATCH</h2>
         <Col xs={12} sm={8} md={5} lg={4} style={{ paddingTop: 20, paddingLeft:0 }}>
           {props.band.bcURL
@@ -263,12 +263,13 @@ const BandFeed = (props) => {
                 : <div></div>}
             </div>}
         </Col>
-        <Col xs={12} sm={8} md={8} lg={5} style={{ paddingTop: 20, paddingLeft:0 }}>
+        <Col xs={12} sm={8} md={8} lg={6} style={{ paddingTop: 20, paddingLeft:0 }}>
           {props.band.youtubeID
             ? <div className="wrapper">
-              <iframe title="youtube" id="ytplayer" type="text/html" width="640" height="360"
-                src={ytUrli}
-                frameBorder="0"></iframe>
+              <div className="video-container">
+                <iframe title="youtube" id="ytplayer" type="text/html" width="640" height="360"
+                  src={ytUrli}
+                  frameBorder="0"></iframe></div>
               {bandMatchesLoggedUser ? <form className="button" onSubmit={handleYoutubeSubmit}>
                 <div>edit YouTube url<input type='text' name='yturl' /></div>
               </form>: <div></div> }
@@ -280,7 +281,7 @@ const BandFeed = (props) => {
               </form>: <div></div> } </div>}
         </Col>
       </Row>
-      <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98.5%', marginBottom: 20, padding: 5 }}>
+      <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98%', marginBottom: 20, padding: 5 }}>
         <h2>UPCOMING EVENTS / CONCERTS</h2>
         {props.band.concerts.length > 0 ?
           <Table striped style={{ border: '1px solid lightgrey' }}>
@@ -347,7 +348,7 @@ const BandFeed = (props) => {
           </div>
           : <div></div>}
       </Row>
-    </Grid>
+    </div>
   )
 }
 

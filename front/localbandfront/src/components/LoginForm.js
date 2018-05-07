@@ -33,7 +33,7 @@ const LoginForm = (props) => {
             type="password"
             name="password"
           />
-          <Button bsStyle="success" type="submit">login</Button>
+          <Button style={{ marginTop: 5 }} bsStyle="success" type="submit">login</Button>
         </FormGroup>
       </form>
     </div>

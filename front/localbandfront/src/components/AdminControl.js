@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap'
+import { FormControl, FormGroup, ControlLabel, Button } from 'react-bootstrap'
 import { postCreation, postUpdate } from './../reducers/postReducer'
 import postService from '.././services/posts'
 import imageService from '.././services/images'
@@ -40,7 +40,7 @@ const AdminControl = (props) => {
     props.toggleIsOpen()
   }
   return (
-    <Grid>
+    <div>
       {props.toggle.isOpen ? <form onSubmit={handleNewPost}>
         <FormGroup>
           <ControlLabel>title:</ControlLabel>
@@ -67,7 +67,7 @@ const AdminControl = (props) => {
       </form>
         : <div></div>}
       <button onClick={toggleFormToggle}>toggle admin control</button>
-    </Grid>
+    </div>
   )
 }
 

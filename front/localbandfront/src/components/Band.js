@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid, Row, Button, Col } from 'react-bootstrap'
+import { Row, Button, Col } from 'react-bootstrap'
 import BandFeed from './BandFeed'
 import Gallery from './Gallery'
 import Discography from './Discography'
@@ -69,7 +69,7 @@ const Band = (props) => {
   const bandIsFavourited = (props.user ? (props.favBandIds.includes(props.band._id)) ? true : false : false)
   return (
 
-    <Grid fluid style={rowStyle}>
+    <div style={rowStyle}>
       <Row style={rowStyle}>
         <BandHeader band={props.band}/>
       </Row>
@@ -99,7 +99,7 @@ const Band = (props) => {
         {componentByToggle()}
       </Row>
       <div className='bottom-border'></div>
-    </Grid>
+    </div>
 
   )
 }

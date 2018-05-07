@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Table, Grid, Row, Col } from 'react-bootstrap'
+import { Table, Row, Col } from 'react-bootstrap'
 import Filter from '../components/Filter'
 import { Link } from 'react-router-dom'
 import { changePageIndex } from '../reducers/toggleReducer'
@@ -29,19 +29,19 @@ const Explore = (props) => {
   }
 
   return(
-    <Grid style={{ marginTop: 10, marginBottom: 10 , paddingLeft: 0, paddingRight: 0  }}>
+    <div style={{ marginTop: 10, marginBottom: 10 , paddingLeft: 0, paddingRight: 0  }}>
       <Row style={{ paddingLeft: 10, paddingRight: 10  }}>
         <Col sm={10}>
           <Filter />
         </Col>
-        <Col>
+        <Col xs={10}>
           <div>{props.numberOfPages > 0 ? 'page: ' : ''}
             {pageButtons()}
           </div>
         </Col>
       </Row>
 
-      <Table fluid striped>
+      <Table striped>
         <tbody>
           <tr>
             <td></td>
@@ -71,7 +71,7 @@ const Explore = (props) => {
           )}
         </tbody>
       </Table>
-    </Grid>
+    </div>
   )
 }
 const bandsToShow = (bands, filter, filterType, pageIndex) => {

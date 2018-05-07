@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import bandService from './../services/bands'
 import imageService from './../services/images'
-import { Grid, Row, Button } from 'react-bootstrap'
+import { Row, Button } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
 import { initiatePhotoIndex, setPhotoIndex, toggleIsOpen, toggle, openFromIndex } from './../reducers/toggleReducer'
 import Lightbox from 'react-image-lightbox'
@@ -43,7 +43,7 @@ const Gallery = (props) => {
   const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
 
   return(
-    <Grid>
+    <div style={{ padding: 10 }}>
       <Row>
         {props.band.gallery.length === 0 ?
           <div>
@@ -72,7 +72,7 @@ const Gallery = (props) => {
           <Button bsStyle="primary" bsSize='xsmall' type='submit'>add</Button>
         </form></div> : <div></div>}
       </Row>
-    </Grid>
+    </div>
   )
 }
 const mapStateToProps = (state) => {

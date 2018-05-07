@@ -30,7 +30,7 @@ const JoinForm = (props) => {
             type="password"
             name="password"
           />
-          <Button bsStyle="success" type="submit">sign</Button>
+          <Button style={{ marginTop: 5 }} bsStyle="success" type="submit">sign</Button>
         </FormGroup>
       </form>
     </div>

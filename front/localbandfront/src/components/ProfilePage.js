@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import BandForm from './BandForm'
 import { Link } from 'react-router-dom'
-import { Grid, Row, Button, Col, Table } from 'react-bootstrap'
+import { Row, Button, Col, Table } from 'react-bootstrap'
 import bandService from './../services/bands'
 import userService from './../services/users'
 import { notify } from './../reducers/notificationReducer'
@@ -29,7 +29,7 @@ const ProfilePage = (props) => {
   }
 
   return (
-    <Grid>
+    <div style={{ padding: 20 }}>
       <h3>Profile: {props.user && props.user.username}</h3>
       <Row>
         <Col xs={6} md={3} style={{ margin: 10, border: '1px solid gray' }}>
@@ -62,7 +62,7 @@ const ProfilePage = (props) => {
       <Row>
         <BandForm history={props.history}/>
       </Row>
-    </Grid>
+    </div>
   )
 }
 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Grid , Row, FormControl, FormGroup, Col , Button, ControlLabel, Form, Table } from 'react-bootstrap'
+import { Row, FormControl, FormGroup, Col , Button, ControlLabel, Form, Table } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
 import albumService from './../services/albums'
 import bandService from './../services/bands'
@@ -81,7 +81,7 @@ const Discography = (props) => {
 
   const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
   return(
-    <Grid>
+    <div style={{ padding: 10 }}>
       <Row>
         <Table>
           <tbody>
@@ -151,7 +151,7 @@ const Discography = (props) => {
           <Col xs={6} >
             <div className="wrapper">
               <div className="inputbutton" id="asd"></div>
-              <label htmlFor="asd" style={{ position:'absolute' }}>&#9660;</label>
+              <label htmlFor="asd" style={{ position:'absolute', left: 35 }}>&#9660;</label>
               <div className="button">
                 <Form horizontal style={{ padding: 30 }}onSubmit={albumFormSubmit} className='form-inline'>
                   <FormGroup className='form-group' bsSize='sm'>
@@ -183,7 +183,7 @@ const Discography = (props) => {
           </Col>
         </Row>
         : <div></div>}
-    </Grid>
+    </div>
   )
 }
 const mapStateToProps = (state) => {

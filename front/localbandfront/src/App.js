@@ -122,7 +122,8 @@ class App extends React.Component {
                   </Nav>
                 </Navbar.Collapse>
               </Navbar>
-              <Alert className={`${this.props.notif.visible ? 'fav-alert' : 'fav-alert-hidden'}`} style={{ fontSize: 20, position: 'absolute', left: 500, padding: 4, marginTop: 10, width: '25%' }} bsStyle="info">
+              <Alert className={`${this.props.notif.visible ? 'fav-alert' : 'fav-alert-hidden'}`}
+                style={{ fontSize: 20, position: 'fixed', left: 500, padding: 4, marginTop: 10, width: '25%' }} bsStyle="info">
                 {this.props.notif.message}
               </Alert>
               <Grid style={
