@@ -4,6 +4,8 @@ LocalBandApp on websovellus undergoundeista undergroundeimmille pienille ja tule
 
 Instagram-, YouTube- ja Bandcamp -upotteet ovat toteutettu valmiita kirjastoja hyödyntäen ja kuvien lisäämiseen hyödynsin Imgurin omaa APIa, jotta kuvat eivät veisi turhaan tilaa tietokannasta. Ulkoasu on toteutettu React-Bootstrapilla sekä omilla CSS-muotoiluilla.
 
+Sovelluksen backend on toteutettu node.js:llä (express, mongoose jne.) ja frontend React- ja Redux kirjastoja hyödyntäen.
+
 Toteutan sovellusta osana Helsingin Yliopiston tietojenkäsittelytieteen kurssia FullStack -websovelluskehitys harjoitustyö
 
 Sovellus on käynnissä osoitteessa http://localbands.herokuapp.com/
