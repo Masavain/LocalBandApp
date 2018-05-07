@@ -61,5 +61,6 @@
 |4.5.|1.5| turhaa muotoilua mobiililaitteiden viewin kuntoonsaamiseksi. ei onnistunut|
 |7.5.|1| viimeisiä muotoiluja. Mobiiliview näyttää nyt myös hyvältä|
 |7.5.|1| logo ja default taustakuvia|
+|7.5.|2| sisältöä sivulle, kuvien poisto backiin ja galleriaan. Poisto tulee muuttumaan hieman vielä|
 
-total: 108.5h
+total: 110.5h
