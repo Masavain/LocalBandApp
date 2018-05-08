@@ -5,13 +5,39 @@ import { Link } from 'react-router-dom'
 import { Row, Button, Col, Table } from 'react-bootstrap'
 import bandService from './../services/bands'
 import userService from './../services/users'
+import imageService from './../services/images'
 import { notify } from './../reducers/notificationReducer'
 import { updateUser } from './../reducers/loginReducer'
 
 const ProfilePage = (props) => {
-  const deleteBand = (band) => async event => {
+  const deleteAlbumArts = (albums) => {
+    const promises = albums.map(async (a) => {
+      if (a.albumArt) {
+        const oldArt = await imageService.getByIdFull(a.albumArt._id)
+        return {
+          deleted: await imageService.removeImgur(oldArt.deleteHash)
+        }
+      } else {
+        return null
+      }
+    })
+    return Promise.all(promises)
+  }
+  const deleteBand = (band) => async (event) => {
     if (window.confirm(`Are you sure you want to delete ${band.name}?`)) {
       event.preventDefault()
+      if (band.albums) {
+        deleteAlbumArts(band.albums)
+      }
+      if (band.avatar) {
+        const oldAvatar = await imageService.getByIdFull(band.avatar._id)
+        await imageService.removeImgur(oldAvatar.deleteHash)
+      }
+      if (band.backgroundImage) {
+        const oldBG = await imageService.getByIdFull(band.backgroundImage._id)
+        await imageService.removeImgur(oldBG.deleteHash)
+      }
+
       await bandService.remove(band._id)
       window.location.reload()
     }

@@ -91,8 +91,11 @@ const BandFeed = (props) => {
       await imageService.postImage(image)
       const updatedBand = await bandService.getById(props.band._id)
       props.updateBand(updatedBand)
+      if (props.band.avatar) {
+        const oldAvatar = await imageService.getByIdFull(props.band.avatar._id)
+        await imageService.removeImgur(oldAvatar.deleteHash)
+      }
       window.location.reload()
-
     }
     reader.onerror = function (error) {
       console.log('Error: ', error)

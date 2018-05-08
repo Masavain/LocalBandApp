@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import bandService from './../services/bands'
 import imageService from './../services/images'
-import { Row, Button, Col } from 'react-bootstrap'
+import { Row, Button, Col, Grid } from 'react-bootstrap'
 import { updateBand } from './../reducers/bandReducer'
 import { initiatePhotoIndex, setPhotoIndex, toggleIsOpen, toggle, openFromIndex } from './../reducers/toggleReducer'
 import Lightbox from 'react-image-lightbox'
@@ -55,14 +55,14 @@ const Gallery = (props) => {
   const bandMatchesLoggedUser = (props.user ? (props.band.user.name === props.user.name) ? true : false : false)
 
   return(
-    <div>
+    <Grid>
       <Row>
         {props.band.gallery.length === 0 ?
           <div>
           </div>
-          : <div style={{ display: 'inline-block', marginLeft: '45px', marginright: '30px' }}>
+          : <div style={{ display: 'inline' }}>
             {props.band.gallery.map(image =>
-              <Col xs={12} sm={5} md={4} key={image._id} className="wrapper" style={{ padding: 0 }}>
+              <Col xs={12} sm={4} md={3} lg={3} key={image._id} className="wrapper" style={{ marginRight: window.innerWidth < 770 ? 65 : 15  }}>
                 <img src={image.url} style={imgStyle} onClick={() => props.openFromIndex(props.band.gallery.indexOf(image))} width="300" height="300" alt="galleryImage"/>
                 {bandMatchesLoggedUser
                   ? <Button style={{ position:'absolute', zIndex: 99, marginTop: 280, bottom: 5,left: 10 }} className="button" bsSize="xs" bsStyle="danger" onClick={deleteImage(image._id)}>X</Button>
@@ -83,13 +83,16 @@ const Gallery = (props) => {
               />
             )}
           </div>}
+
+      </Row>
+      <Row>
         {bandMatchesLoggedUser ? <div style={{ margin: 50 }}><form onSubmit={handleGallerySubmit}>
           <input type="file" className="inputbutton" accept="image/*" id="galleryImage" name="image"/>
           <label htmlFor="galleryImage">Choose image</label>&nbsp;
           <Button bsStyle="primary" bsSize='xsmall' type='submit'>add</Button>
         </form></div> : <div></div>}
       </Row>
-    </div>
+    </Grid>
   )
 }
 const mapStateToProps = (state) => {

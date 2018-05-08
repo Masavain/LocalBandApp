@@ -33,8 +33,11 @@ const Discography = (props) => {
       await imageService.postAlbumArt(image)
       const updatedBand = await bandService.getById(props.band._id)
       props.updateBand(updatedBand)
+      if (album.albumArt) {
+        const oldAvatar = await imageService.getByIdFull(album.albumArt._id)
+        await imageService.removeImgur(oldAvatar.deleteHash)
+      }
       window.location.reload()
-
     }
     reader.onerror = function (error) {
       console.log('Error: ', error)
@@ -52,6 +55,10 @@ const Discography = (props) => {
   const deleteAlbum = (album) => async event => {
     event.preventDefault()
     if (window.confirm(`Delete ${album.name}?`)) {
+      if (album.albumArt) {
+        const oldAvatar = await imageService.getByIdFull(album.albumArt._id)
+        await imageService.removeImgur(oldAvatar.deleteHash)
+      }
       await albumService.remove(album._id)
       const updatedBand = await bandService.getById(props.band._id)
       props.updateBand(updatedBand)

@@ -24,6 +24,10 @@ const BandHeader = (props) => {
         deleteHash: imgurFile.data.deletehash, size: imgurFile.data.size,
         type: 'background', bandId: props.band._id }
 
+      if (props.band.backgroundImage) {
+        const oldBg = await imageService.getByIdFull(props.band.backgroundImage._id)
+        await imageService.removeImgur(oldBg.deleteHash)
+      }
       await imageService.postImage(image)
       const updatedBand = await bandService.getById(props.band._id)
       props.updateBand(updatedBand)
