@@ -64,6 +64,7 @@
 |7.5.|2| sisältöä sivulle, kuvien poisto backiin ja galleriaan. Poisto tulee muuttumaan hieman vielä|
 |7.5.|1| kuvan poisto poistaa kuvan myös Imgurista|
 |8.5.|2| favicon ja albumin tai bändin poiston yhteydessä poistetaan myös niihin liittyvät kuvat imgurista|
+|9.5.|1| Gallerian lopullinen muotoilu|
 
 
-total: 113.5h
+total: 114.5h
