@@ -232,7 +232,7 @@ const BandFeed = (props) => {
                 onSuccess={() => {}}
                 onAfterRender={() => {}}
                 onFailure={() => {}}
-              /> : (props.band.instagramPostURL ? <div>Add a link to an Instagram photo you would like others to see</div> : <div></div>)}</div>
+              /> : (bandMatchesLoggedUser ? <div>Add a link to an Instagram photo you would like others to see</div> : <div></div> )}</div>
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleIGPostSubmit}>
                 <div>edit Instagram post url</div><input type='text' name='instagramPostURL'/>
