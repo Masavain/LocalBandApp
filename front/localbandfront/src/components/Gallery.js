@@ -62,10 +62,10 @@ const Gallery = (props) => {
           </div>
           : <div style={{ display: 'inline' }}>
             {props.band.gallery.map(image =>
-              <Col xs={12} sm={4} md={3} lg={3} key={image._id} className="wrapper" style={{ marginRight: window.innerWidth < 770 ? 65 : 15  }}>
-                <img src={image.url} style={imgStyle} onClick={() => props.openFromIndex(props.band.gallery.indexOf(image))} width="300" height="300" alt="galleryImage"/>
+              <Col xs={11} xsOffset={1} smOffset={0} sm={5} md={4} lg={3} key={image._id} className="wrapper" style={{ marginRight: 1  }}>
+                <img src={image.url} style={imgStyle} onClick={() => props.openFromIndex(props.band.gallery.indexOf(image))} width="290" height="290" alt="galleryImage"/>
                 {bandMatchesLoggedUser
-                  ? <Button style={{ position:'absolute', zIndex: 99, marginTop: 280, bottom: 5,left: 10 }} className="button" bsSize="xs" bsStyle="danger" onClick={deleteImage(image._id)}>X</Button>
+                  ? <Button style={{ position:'absolute', zIndex: 99, marginTop: 280, bottom: 5,left: 15, backgroundColor:'transparent', color:'#ff99fa' }} className="button" bsSize="xs" bsStyle="" onClick={deleteImage(image._id)}>X</Button>
                   : <div></div>}
               </Col>
             )}
