@@ -16,7 +16,7 @@ const BandFeed = (props) => {
 
   const handleGenreSubmit = async (event) => {
     event.preventDefault()
-    const newObject = { ...props.band, genre: event.target.genre.value }
+    const newObject = { ...props.band, newGenre: event.target.genre.value }
     const updatedBand = await bandService.update(newObject._id, newObject)
     props.updateBand(updatedBand)
     window.location.reload()
@@ -53,6 +53,8 @@ const BandFeed = (props) => {
   const handleIGPostSubmit = async (event) => {
     event.preventDefault()
     const newObject = { ...props.band, instagramPostURL: event.target.instagramPostURL.value }
+    console.log('bandfeedissä', newObject)
+
     const updatedBand = await bandService.update(newObject._id, newObject)
     props.updateBand(updatedBand)
     window.location.reload()
@@ -212,7 +214,7 @@ const BandFeed = (props) => {
               </form> : <div></div>}
           </div>
           <div className="wrapper">
-            <div>{props.band.facebookURL ? <a href={props.band.facebookURL}>Facebook</a> : (props.band.facebookURL ? <div>Add a link to your bands Facebook</div> : <div></div>)}</div>
+            <div>{props.band.facebookURL ? <a href={props.band.facebookURL}>Facebook</a> : (bandMatchesLoggedUser ? <div>Add a link to your bands Facebook</div> : <div></div>)}</div>
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleFBSubmit}>
                 <div>edit Facebook url</div><input type='text' name='facebookURL'/>

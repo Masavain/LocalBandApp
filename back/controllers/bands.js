@@ -45,7 +45,7 @@ bandsRouter.post('/', async (req, res) => {
             genres = genre.split(',');
         }
         console.log(genres)
-        const band = new Band({ name, genre: genres, started, hometown, about: (about || ''), bcURL: '', bcAlbumID: '',bcTrackID: '', active: true, user: user._id, concerts: [] })
+        const band = new Band({ name, genre: genres, started, hometown, about: (about || ''), instagramPostURL: '', bcURL: '', bcAlbumID: '',bcTrackID: '', active: true, user: user._id, concerts: [] })
         const result = await band.save()
         result.user = user
 
@@ -65,20 +65,28 @@ bandsRouter.post('/', async (req, res) => {
 
 bandsRouter.put('/:id', async (req, res) => {
     try {
-        const { about, genre, started, facebookURL, instagramUsername, instagramPostURL } = req.body
+        const { about, genre, newGenre, started, facebookURL, instagramUsername, instagramPostURL } = req.body
         const vanha = await Band.findById(req.params.id)
+        console.log('backissä',genre)
+
         var genres = []
-        if(genre.trim() != ''){
-            genres = genre.split(',');
+        if (newGenre) {
+            console.log('backissä',newGenre)
+            if(newGenre.trim() != ''){
+                genres = newGenre.split(',');
+            }
+            
+
         }
+        const newGenres = genre.concat(genres)
+
         const uusi = { about: about ? about : vanha.about,
-            genre: genres ? genres : vanha.genre,
+            genre: newGenres ? newGenres : vanha.genre,
             started: started ? started : vanha.started ,
             facebookURL: facebookURL ? facebookURL : vanha.facebookURL,
             instagramUsername: instagramUsername 
             ? instagramUsername : vanha.instagramUsername,
-            instagramPostURL: instagramPostURL ? instagramPostURL : vanha.instagramPostURL}
-
+            instagramPostURL: instagramPostURL ? instagramPostURL.toString() : vanha.instagramPostURL}
         const updated = await Band.findByIdAndUpdate(req.params.id, uusi, { new: true }).populate('user')
         res.status(200).json(Band.format(updated))
 
