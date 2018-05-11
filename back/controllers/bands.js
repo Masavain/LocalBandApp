@@ -65,7 +65,7 @@ bandsRouter.post('/', async (req, res) => {
 
 bandsRouter.put('/:id', async (req, res) => {
     try {
-        const { about, genre, newGenre, started, facebookURL, instagramUsername, instagramPostURL } = req.body
+        const { about, genre, newGenre, started, facebookURL, instagramUsername, instagramPostURL, genreClear } = req.body
         const vanha = await Band.findById(req.params.id)
         console.log('backissä',genre)
 
@@ -75,11 +75,10 @@ bandsRouter.put('/:id', async (req, res) => {
             if(newGenre.trim() != ''){
                 genres = newGenre.split(',');
             }
-            
 
         }
-        const newGenres = genre.concat(genres)
-
+        var newGenres = genre.concat(genres)
+        if (genreClear) newGenres = []
         const uusi = { about: about ? about : vanha.about,
             genre: newGenres ? newGenres : vanha.genre,
             started: started ? started : vanha.started ,

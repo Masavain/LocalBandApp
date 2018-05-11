@@ -25,6 +25,7 @@ const BandCarousel = (props) => {
 
 const shuffleBands = (bands) => {
   const shuffle = bands
+
   var currentIndex = shuffle.length, temporaryValue, randomIndex
 
   while (0 !== currentIndex) {
@@ -36,6 +37,7 @@ const shuffleBands = (bands) => {
     shuffle[currentIndex] = shuffle[randomIndex]
     shuffle[randomIndex] = temporaryValue
   }
+  if (shuffle.length < 6) return shuffle
   return shuffle.slice(0, 6)
 }
 const mapStateToProps = (state) => {

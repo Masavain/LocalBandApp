@@ -21,6 +21,13 @@ const BandFeed = (props) => {
     props.updateBand(updatedBand)
     window.location.reload()
   }
+  const handleGenreClear = async (event) => {
+    event.preventDefault()
+    const newObject = { ...props.band, genreClear: true }
+    const updatedBand = await bandService.update(newObject._id, newObject)
+    props.updateBand(updatedBand)
+    window.location.reload()
+  }
   const handleStartedSubmit = async (event) => {
     event.preventDefault()
     const newObject = { ...props.band, started: event.target.started.value }
@@ -175,6 +182,7 @@ const BandFeed = (props) => {
               <form className="button" style={{ paddingBottom: 0 }} onSubmit={handleIGSubmit}>
                 <div style={{ paddingBottom: 0 }}>edit Instagram username</div>
                 <input style={{ paddingBottom: 0 }} type='text' name='instagramUsername'/>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
               </form> : <div></div>}
           </div>
         </Col>
@@ -185,6 +193,11 @@ const BandFeed = (props) => {
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleGenreSubmit}>
                 <div>edit genre, separate by comma</div><input type='text' name='genre'/>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
+              </form> : <div></div>}
+            {bandMatchesLoggedUser ?
+              <form className="button" onSubmit={handleGenreClear}>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">clear genres</button>
               </form> : <div></div>}
           </div>
           <div className="wrapper">
@@ -193,6 +206,7 @@ const BandFeed = (props) => {
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleStartedSubmit}>
                 <div>edit starting year</div><input type='number' name='started'/>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
               </form> : <div></div>}
           </div>
           <div className="wrapper">
@@ -200,7 +214,8 @@ const BandFeed = (props) => {
             <div>{props.band.hometown ? props.band.hometown : ''}</div>
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleHometownSubmit}>
-                <div>edit genre</div><input type='text' name='hometown'/>
+                <div>edit location</div><input type='text' name='hometown'/>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
               </form> : <div></div>}
           </div>
           <div className="wrapper">
@@ -210,7 +225,7 @@ const BandFeed = (props) => {
               <form style={{ width: '100px' }} className="button" onSubmit={handleAboutSubmit}>
                 <div >edit about</div>
                 <textarea style={{ padding: 0 }} id='about'></textarea>
-                <button className="page-button" style={{ position: 'relative' }} type="submit">edit</button>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
               </form> : <div></div>}
           </div>
           <div className="wrapper">
@@ -218,6 +233,7 @@ const BandFeed = (props) => {
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleFBSubmit}>
                 <div>edit Facebook url</div><input type='text' name='facebookURL'/>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
               </form> : <div></div>}
           </div>
         </Col>
@@ -238,10 +254,15 @@ const BandFeed = (props) => {
             {bandMatchesLoggedUser ?
               <form className="button" onSubmit={handleIGPostSubmit}>
                 <div>edit Instagram post url</div><input type='text' name='instagramPostURL'/>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
               </form> : <div></div>}
           </div>
         </Col>
       </Row>
+
+      {bandMatchesLoggedUser ? <Row style={{ margin: 15 }}>
+        <Col sm={6} >(when editing info/URLs, press enter to save)</Col>
+      </Row> : <div></div>}
 
       <Row style={{ position:'relative', borderTop: '1px solid lightgray', margin:15, width: '98.0%', marginBottom: 20, padding: 5 }}>
         <h2>LISTEN  /  WATCH</h2>
@@ -256,6 +277,7 @@ const BandFeed = (props) => {
               {bandMatchesLoggedUser ?
                 <form className="button" onSubmit={handleBandcampSubmit}>
                   <div>edit bandcamp url<input type='text' name='bcurl' /></div>
+                  <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
                 </form>
                 : <div></div>}
             </div>
@@ -264,6 +286,7 @@ const BandFeed = (props) => {
                 <form onSubmit={handleBandcampSubmit}>
                   <div>Add a Bandcamp album url you want others to see and hear
                   <input type='text' name='bcurl' /></div>
+                  <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
                 </form>
                 : <div></div>}
             </div>}
@@ -277,12 +300,14 @@ const BandFeed = (props) => {
                   frameBorder="0"></iframe></div>
               {bandMatchesLoggedUser ? <form className="button" onSubmit={handleYoutubeSubmit}>
                 <div>edit YouTube url<input type='text' name='yturl' /></div>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
               </form>: <div></div> }
             </div>
 
             : <div>
               {bandMatchesLoggedUser ? <form onSubmit={handleYoutubeSubmit}>
                 <div>Add a YouTube url you want others to see and hear &nbsp;<input type='text' name='yturl' /></div>
+                <button className="page-button" style={{ position: 'relative' }} type="submit">save</button>
               </form>: <div></div> } </div>}
         </Col>
       </Row>
