@@ -65,6 +65,7 @@
 |7.5.|1| kuvan poisto poistaa kuvan myös Imgurista|
 |8.5.|2| favicon ja albumin tai bändin poiston yhteydessä poistetaan myös niihin liittyvät kuvat imgurista|
 |9.5.|1| Gallerian lopullinen muotoilu|
+|9.5.|0.5| debuggailua|
 
 
-total: 114.5h
+total: 115h
